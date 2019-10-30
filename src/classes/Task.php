@@ -61,7 +61,7 @@ class Task
       $this->setStatus('progress');
       echo $this->getStatus();
 
-      //TODO: others action there....
+      //TODO: others action there...
 
       $this->setStatus('completed');
       echo $this->getStatus();
