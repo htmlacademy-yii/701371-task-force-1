@@ -1,0 +1,15 @@
+{
+    "name": "elelion/701371-task-force-1",
+    "authors": [
+        {
+            "name": "elelion",
+            "email": "elelion@yandex.ru"
+        }
+    ],
+    "require": {},
+
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+}
