@@ -1,4 +1,6 @@
 <?php
+namespace classes;
+
 class Task
 {
   private $action = null;
@@ -59,7 +61,7 @@ class Task
       $this->setStatus('progress');
       echo $this->getStatus();
 
-      //NOTE: others action there...
+      //TODO: others action there...
 
       $this->setStatus('completed');
       echo $this->getStatus();
