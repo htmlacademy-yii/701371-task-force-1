@@ -2,6 +2,14 @@
 require_once __DIR__ . '/vendor/autoload.php';
 use classes\Task;
 
-$test = new Task;
-echo $test->getAction();
-?>
+$myTask = new Task;
+
+$myTask->setUserAction('abort');
+echo $myTask->getUserAction();
+$myTask->checkStatus();
+$myTask->beginEvent();
+
+$myTask->setUserAction('new');
+echo $myTask->getUserAction();
+$myTask->checkStatus();
+$myTask->beginEvent();
