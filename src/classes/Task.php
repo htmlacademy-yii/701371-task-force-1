@@ -3,72 +3,57 @@ namespace classes;
 
 class Task
 {
-  private $action = null;
-  private $status = null;
+  const STATUS_NEW = 'new';
+  const STATUS_ABORT = 'aborted';
+  const STATUS_PROGRESS = 'progress';
+  const STATUS_COMPLETED = 'completed';
 
-  public function __construct()
+  const ACTION_NEW = 'new';
+  const ACTION_ABORT = 'abort';
+
+  public $userAction = null;
+  public $userStatus = null;
+
+  // **
+
+  public function __construct() {}
+
+  // **
+
+  public function setUserAction(string $action): void
   {
-    $this->setAction('new');
+    $this->userAction = $action;
+  }
+
+  public function getUserAction(): string
+  {
+    return 'User action: ' . $this->userAction . PHP_EOL;
   }
 
   // **
 
-  public function setAction(string $actionType = 'new')
+  public function checkStatus(): void
   {
-    $this->action = ($actionType === 'new') ? 'new' : 'abort';
+    if ($this->userAction === self::ACTION_NEW) {
+      $this->userStatus = true;
+    }
+
+    if ($this->userAction === self::ACTION_ABORT) {
+      $this->userStatus = false;
+    }
   }
 
-  public function getAction()
+  public function beginEvent(): void
   {
-    return $this->action;
-  }
+    if ($this->userAction === self::ACTION_NEW && $this->userStatus === true) {
+      echo 'status: ' . self::STATUS_NEW . PHP_EOL;
+      echo 'status: ' . self::STATUS_PROGRESS . PHP_EOL;
 
-  // **
+      // TODO: code there...
 
-  public function setStatus(string $state)
-  {
-    if ($state !== 'new' || $state !== 'progress' || $state !== 'completed') {
-      echo 'error format';
+      echo 'status: ' . self::STATUS_COMPLETED . PHP_EOL;
     } else {
-      $this->status = $state;
+      echo 'status: ' . self::STATUS_ABORT . PHP_EOL;
     }
-  }
-
-  public function getStatus()
-  {
-    return $this->status;
-  }
-
-  // **
-
-  protected function prepare()
-  {
-    if ($this->action === 'new' && empty($this->status)) {
-      $this->setStatus('new');
-    }
-
-    if ($this->action === 'abort' && $this->status === 'new') {
-      $this->setStatus(null);
-    }
-  }
-
-
-  public function beginEvent()
-  {
-    $this->prepare();
-
-    if ($this->action === 'new' && $this->status === 'new') {
-      $this->setStatus('progress');
-      echo $this->getStatus();
-
-      //TODO: others action there...
-
-      $this->setStatus('completed');
-      echo $this->getStatus();
-    }
-
-    $this->setAction(null);
-    $this->setStatus(null);
   }
 }
-?>
