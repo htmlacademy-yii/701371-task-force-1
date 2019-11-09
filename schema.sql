@@ -3,8 +3,8 @@
 -- **
 
 CREATE TABLE category (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(32) NOT NULL,
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(32) NOT NULL,
 	css_class VARCHAR(16) NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -13,18 +13,17 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE task (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(32) NOT NULL,
+	title VARCHAR(64) NOT NULL,
 	description TEXT NOT NULL,
-	category TEXT NOT NULL,
-	latitude TEXT(64) NOT NULL,
-	longitude TEXT(64) NOT NULL,
+	latitude TEXT(16) NOT NULL,
+	longitude TEXT(16) NOT NULL,
 	price FLOAT(8) NOT NULL,
 	deadline DATETIME NOT NULL,
 	created DATETIME NOT NULL DEFAULT NOW(),
 
-	category_id INT(8),
-	status_id INT(8),
-	rating_id INT(8)
+	category_id INT,
+	status_id INT,
+	rating_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -33,7 +32,7 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE task_image (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	image_path VARCHAR(45) NOT NULL,
-	task_id INT(8) NOT NULL
+	task_id INT NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -58,19 +57,18 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE comment (
   id INT AUTO_INCREMENT PRIMARY KEY,
-	author TEXT NOT NULL,
 
-	ststus_id INT(8),
-	rating_id INT(8),
-	task_id INT(8)
+	-- NOTE: from table -> user
+	user_id TEXT NOT NULL,
+	ststus_id INT,
+	rating_id INT,
+	task_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- **
 
--- CREATE FULLTEXT INDEX index_category ON category(id);
 CREATE INDEX index_category ON category(id);
--- ALTER TABLE task ADD FOREIGN KEY (category_id) REFERENCES category(id);
 
 ALTER TABLE task ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
 ALTER TABLE comment ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
