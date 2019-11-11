@@ -92,15 +92,33 @@ CREATE TABLE account (
 	address TEXT NOT NULL,
 	born DATETIME NOT NULL DEFAULT NOW(),
 	about TEXT,
-	phone INT NOT NULL,
-	skype VARCHAR(64) NOT NULL,
-	messanger VARCHAR(64),
 	visit DATETIME NOT NULL DEFAULT NOW(),
 	quest_completed INT(4),
 
 	city_id INT,
+	phone_id INT,
+	skype_id INT,
+	messanger_id INT,
 	specialization_id INT,
 	notification_id INT
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE phone (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	number INT
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE skype (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nickname VARCHAR(64)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE messanger (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nickname VARCHAR(64)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -141,8 +159,11 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 ALTER TABLE message ADD FOREIGN KEY (account_id) REFERENCES account(id);
 
+ALTER TABLE account ADD FOREIGN KEY (city_id) REFERENCES city(id);
+ALTER TABLE account ADD FOREIGN KEY (phone_id) REFERENCES phone(id);
+ALTER TABLE account ADD FOREIGN KEY (skype_id) REFERENCES skype(id);
+ALTER TABLE account ADD FOREIGN KEY (messanger_id) REFERENCES messanger(id);
 ALTER TABLE account ADD FOREIGN KEY (specialization_id) REFERENCES specialization(id);
 ALTER TABLE account ADD FOREIGN KEY (notification_id) REFERENCES notification(id);
-ALTER TABLE account ADD FOREIGN KEY (city_id) REFERENCES city(id);
 
 ALTER TABLE user_image ADD FOREIGN KEY (account_id) REFERENCES account(id);
