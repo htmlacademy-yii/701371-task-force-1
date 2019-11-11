@@ -10,8 +10,6 @@ CREATE TABLE category (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- **
-
 CREATE TABLE task (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(64) NOT NULL,
@@ -24,11 +22,11 @@ CREATE TABLE task (
 
 	category_id INT,
 	status_id INT,
-	rating_id INT
+	rating_id INT,
+	reviews_id INT,
+	feedback_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- **
 
 CREATE TABLE task_image (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,15 +35,11 @@ CREATE TABLE task_image (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- **
-
 CREATE TABLE status (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title TEXT NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- **
 
 CREATE TABLE rating (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,31 +48,25 @@ CREATE TABLE rating (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- **
-
-CREATE TABLE comment (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-	account_id TEXT NOT NULL,
+CREATE TABLE feedback (
+	id INT AUTO_INCREMENT PRIMARY KEY,
 
 	ststus_id INT,
 	rating_id INT,
-	task_id INT
+	task_id INT,
+	account_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- **
+CREATE TABLE reviews (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	description TEXT NOT NULL,
 
-CREATE INDEX index_category ON category(id);
-
-ALTER TABLE task ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
-
-ALTER TABLE comment ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
-ALTER TABLE comment ADD FOREIGN KEY (task_id) REFERENCES task(id);
-ALTER TABLE comment ADD FOREIGN KEY (ststus_id) REFERENCES status(id);
-
-ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES status(id);
-
-ALTER TABLE task_image ADD FOREIGN KEY (task_id) REFERENCES task(id);
+	ststus_id INT,
+	raiting_id INT,
+	task_id INT
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 
 -- NOTE: user -----------------------------------------------------------------
@@ -95,35 +83,23 @@ CREATE TABLE account (
 	quest_completed INT(4) NOT NULL,
 
 	city_id INT,
-	phone_id INT,
-	skype_id INT,
-	messanger_id INT,
+	contacts_id INT,
 	specialization_id INT,
 	notification_id INT
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
-CREATE TABLE phone (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	number INT NOT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
-CREATE TABLE skype (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	nickname VARCHAR(64) NOT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
-CREATE TABLE messanger (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	nickname VARCHAR(64) NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE city (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(32) NOT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE user_contacts (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	phone INT,
+	skype VARCHAR(64),
+	messanger VARCHAR(64)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -156,15 +132,34 @@ CREATE TABLE message (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
+
+-- **
+
+CREATE INDEX index_category ON category(id);
+
+ALTER TABLE task ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
+ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES status(id);
+ALTER TABLE task ADD FOREIGN KEY (reviews_id) REFERENCES reviews(id);
+ALTER TABLE task ADD FOREIGN KEY (feedback_id) REFERENCES feedback(id);
+
+ALTER TABLE feedback ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
+ALTER TABLE feedback ADD FOREIGN KEY (task_id) REFERENCES task(id);
+ALTER TABLE feedback ADD FOREIGN KEY (ststus_id) REFERENCES status(id);
+ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES account(id);
+
+ALTER TABLE reviews ADD FOREIGN KEY (ststus_id) REFERENCES status(id);
+ALTER TABLE reviews ADD FOREIGN KEY (task_id) REFERENCES task(id);
+ALTER TABLE reviews ADD FOREIGN KEY (raiting_id) REFERENCES rating(id);
+
+ALTER TABLE task_image ADD FOREIGN KEY (task_id) REFERENCES task(id);
+
 -- **
 
 ALTER TABLE message ADD FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE comment ADD FOREIGN KEY (account_id) REFERENCES account(id);
+ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES account(id);
 
 ALTER TABLE account ADD FOREIGN KEY (city_id) REFERENCES city(id);
-ALTER TABLE account ADD FOREIGN KEY (phone_id) REFERENCES phone(id);
-ALTER TABLE account ADD FOREIGN KEY (skype_id) REFERENCES skype(id);
-ALTER TABLE account ADD FOREIGN KEY (messanger_id) REFERENCES messanger(id);
+ALTER TABLE account ADD FOREIGN KEY (contacts_id) REFERENCES user_contacts(id);
 ALTER TABLE account ADD FOREIGN KEY (specialization_id) REFERENCES specialization(id);
 ALTER TABLE account ADD FOREIGN KEY (notification_id) REFERENCES notification(id);
 
