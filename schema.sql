@@ -20,6 +20,7 @@ CREATE TABLE task (
 	deadline DATETIME NOT NULL,
 	created DATETIME NOT NULL DEFAULT NOW(),
 
+	image_id INT,
 	category_id INT,
 	status_id INT,
 	rating_id INT,
@@ -30,12 +31,19 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE task_image (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	image_path VARCHAR(45) NOT NULL,
-	task_id INT NOT NULL
+	image_path VARCHAR(45) NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
-CREATE TABLE status (
+-- NOTE: статусы заданий
+CREATE TABLE status_task (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	title TEXT NOT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- NOTE: статусы откликов
+CREATE TABLE status_feedback (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title TEXT NOT NULL
 )
@@ -48,23 +56,23 @@ CREATE TABLE rating (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
+-- NOTE: отклики
 CREATE TABLE feedback (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 
 	ststus_id INT,
 	rating_id INT,
-	task_id INT,
 	account_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
+-- NOTE: отзывы
 CREATE TABLE reviews (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	description TEXT NOT NULL,
 
 	ststus_id INT,
-	raiting_id INT,
-	task_id INT
+	raiting_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -138,29 +146,21 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE INDEX index_category ON category(id);
 
 ALTER TABLE task ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
-ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES status(id);
+ALTER TABLE task ADD FOREIGN KEY (category_id) REFERENCES category(id);
+ALTER TABLE task ADD FOREIGN KEY (image_id) REFERENCES task_image(id);
 ALTER TABLE task ADD FOREIGN KEY (reviews_id) REFERENCES reviews(id);
 ALTER TABLE task ADD FOREIGN KEY (feedback_id) REFERENCES feedback(id);
-
 ALTER TABLE feedback ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
-ALTER TABLE feedback ADD FOREIGN KEY (task_id) REFERENCES task(id);
-ALTER TABLE feedback ADD FOREIGN KEY (ststus_id) REFERENCES status(id);
 ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES account(id);
-
-ALTER TABLE reviews ADD FOREIGN KEY (ststus_id) REFERENCES status(id);
-ALTER TABLE reviews ADD FOREIGN KEY (task_id) REFERENCES task(id);
 ALTER TABLE reviews ADD FOREIGN KEY (raiting_id) REFERENCES rating(id);
-
-ALTER TABLE task_image ADD FOREIGN KEY (task_id) REFERENCES task(id);
 
 -- **
 
 ALTER TABLE message ADD FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES account(id);
-
+ALTER TABLE feedback ADD FOREIGN KEY (ststus_id) REFERENCES status_feedback(id);
 ALTER TABLE account ADD FOREIGN KEY (city_id) REFERENCES city(id);
 ALTER TABLE account ADD FOREIGN KEY (contacts_id) REFERENCES user_contacts(id);
 ALTER TABLE account ADD FOREIGN KEY (specialization_id) REFERENCES specialization(id);
 ALTER TABLE account ADD FOREIGN KEY (notification_id) REFERENCES notification(id);
-
 ALTER TABLE user_image ADD FOREIGN KEY (account_id) REFERENCES account(id);
+ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES status_task(id);
