@@ -14,45 +14,42 @@ CREATE TABLE task (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(64) NOT NULL,
 	description TEXT NOT NULL,
-	latitude TEXT(16) NOT NULL,
-	longitude TEXT(16) NOT NULL,
+	address VARCHAR(255) NOT NULL,
+	-- latitude TEXT(16) NOT NULL,
+	-- longitude TEXT(16) NOT NULL,
 	price FLOAT(8) NOT NULL,
 	deadline DATETIME NOT NULL,
 	created DATETIME NOT NULL DEFAULT NOW(),
 
-	image_id INT,
-	category_id INT,
+	-- image_id INT,
+	city_id INT,
+	executor_id INT,
 	status_id INT,
-	rating_id INT,
-	reviews_id INT,
-	feedback_id INT
+	category_id INT
+	-- rating_id INT,
+	-- reviews_id INT,
+	-- feedback_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
-CREATE TABLE task_image (
+CREATE TABLE task_file (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	image_path VARCHAR(45) NOT NULL
+	image_path VARCHAR(45) NOT NULL,
+	task_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- NOTE: статусы заданий
-CREATE TABLE status_task (
+CREATE TABLE task_status (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title TEXT NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- NOTE: статусы откликов
-CREATE TABLE status_feedback (
+CREATE TABLE feedback_status (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	title TEXT NOT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
-CREATE TABLE rating (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	stars TINYINT(1) NOT NULL,
-	rating FLOAT(3) NOT NULL DEFAULT 0
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -60,9 +57,10 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE feedback (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 
-	ststus_id INT,
 	rating_id INT,
-	account_id INT
+	account_id INT,
+	task_id INT,
+	status_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -70,16 +68,17 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE reviews (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	description TEXT NOT NULL,
+	raiting TINYINT(1) NOT NULL,
 
 	ststus_id INT,
-	raiting_id INT
+	account_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 
--- NOTE: user -----------------------------------------------------------------
+-- NOTE: users -----------------------------------------------------------------
 
-CREATE TABLE account (
+CREATE TABLE users (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	email VARCHAR(64) NOT NULL,
 	name VARCHAR(64) NOT NULL,
@@ -89,29 +88,36 @@ CREATE TABLE account (
 	about TEXT NOT NULL,
 	visit DATETIME NOT NULL DEFAULT NOW(),
 	quest_completed INT(4) NOT NULL,
+	views_counter INT NOT NULL,
+	hide_account TINYINT(1) NOT NULL,
+	show_contacts_to_customer TINYINT(1) NOT NULL,
 
+	avatar_id INT,
+	role_id INT,
+	raiting_id INT,
 	city_id INT,
 	contacts_id INT,
-	specialization_id INT,
 	notification_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
-CREATE TABLE city (
+CREATE TABLE users_favorites (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(32) NOT NULL
+
+	favorites_account_id INT,
+	account_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
-CREATE TABLE user_contacts (
+CREATE TABLE users_contacts (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	phone INT,
-	skype VARCHAR(64),
-	messanger VARCHAR(64)
+	phone INT(10) NOT NULL,
+	skype VARCHAR(64) NOT NULL,
+	messanger VARCHAR(64) NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
-CREATE TABLE user_image (
+CREATE TABLE users_image (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	image_path VARCHAR(45) NOT NULL,
 
@@ -119,16 +125,41 @@ CREATE TABLE user_image (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
-
-CREATE TABLE specialization (
+CREATE TABLE users_avatar (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(32) NOT NULL
+	image_path VARCHAR(45) NOT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE users_category (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+
+	account_id INT,
+	category_id INT
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE users_roles (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(32) NOT NULL,
+	key_code VARCHAR(64) NOT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE city (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(32) NOT NULL,
+
+	latitude VARCHAR(24) NOT NULL,
+	longitude VARCHAR(24) NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE notification (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(32) NOT NULL
+	new_messages TINYINT(1) NOT NULL,
+	task_actions TINYINT(1) NOT NULL,
+	new_responds TINYINT(1) NOT NULL
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -136,7 +167,8 @@ CREATE TABLE message (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	message TEXT NOT NULL,
 
-	account_id INT
+	sender_id INT,
+	reciever_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -145,22 +177,28 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 CREATE INDEX index_category ON category(id);
 
-ALTER TABLE task ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
 ALTER TABLE task ADD FOREIGN KEY (category_id) REFERENCES category(id);
-ALTER TABLE task ADD FOREIGN KEY (image_id) REFERENCES task_image(id);
-ALTER TABLE task ADD FOREIGN KEY (reviews_id) REFERENCES reviews(id);
-ALTER TABLE task ADD FOREIGN KEY (feedback_id) REFERENCES feedback(id);
-ALTER TABLE feedback ADD FOREIGN KEY (rating_id) REFERENCES rating(id);
-ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE reviews ADD FOREIGN KEY (raiting_id) REFERENCES rating(id);
+ALTER TABLE task ADD FOREIGN KEY (executor_id) REFERENCES users(id);
+ALTER TABLE reviews ADD FOREIGN KEY (account_id) REFERENCES users(id);
+ALTER TABLE feedback ADD FOREIGN KEY (task_id) REFERENCES task(id);
+ALTER TABLE task ADD FOREIGN KEY (city_id) REFERENCES city(id);
+ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES users(id);
+ALTER TABLE feedback ADD FOREIGN KEY (status_id) REFERENCES feedback_status(id);
+ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
+ALTER TABLE task_file ADD FOREIGN KEY (task_id) REFERENCES task(id);
+
 
 -- **
 
-ALTER TABLE message ADD FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE feedback ADD FOREIGN KEY (ststus_id) REFERENCES status_feedback(id);
-ALTER TABLE account ADD FOREIGN KEY (city_id) REFERENCES city(id);
-ALTER TABLE account ADD FOREIGN KEY (contacts_id) REFERENCES user_contacts(id);
-ALTER TABLE account ADD FOREIGN KEY (specialization_id) REFERENCES specialization(id);
-ALTER TABLE account ADD FOREIGN KEY (notification_id) REFERENCES notification(id);
-ALTER TABLE user_image ADD FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES status_task(id);
+ALTER TABLE message ADD FOREIGN KEY (sender_id) REFERENCES users(id);
+ALTER TABLE message ADD FOREIGN KEY (reciever_id) REFERENCES users(id);
+ALTER TABLE users ADD FOREIGN KEY (city_id) REFERENCES city(id);
+ALTER TABLE users ADD FOREIGN KEY (contacts_id) REFERENCES users_contacts(id);
+ALTER TABLE users ADD FOREIGN KEY (avatar_id) REFERENCES users_avatar(id);
+ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES users_roles(id);
+ALTER TABLE users ADD FOREIGN KEY (notification_id) REFERENCES notification(id);
+ALTER TABLE users_category ADD FOREIGN KEY (category_id) REFERENCES category(id);
+ALTER TABLE users_category ADD FOREIGN KEY (account_id) REFERENCES users(id);
+ALTER TABLE users_favorites ADD FOREIGN KEY (favorites_account_id) REFERENCES users(id);
+ALTER TABLE users_favorites ADD FOREIGN KEY (account_id) REFERENCES users(id);
+ALTER TABLE users_image ADD FOREIGN KEY (account_id) REFERENCES users(id);
