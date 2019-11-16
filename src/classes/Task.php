@@ -40,7 +40,7 @@ class Task
 
   // **
 
-  public function checkStatus(): void
+  private function checkStatus(): void
   {
     if ($this->action === self::ACTION_NEW) {
       $this->status = true;
@@ -53,6 +53,8 @@ class Task
 
   public function beginEvent(): void
   {
+    $this->checkStatus();
+
     if ($this->action === self::ACTION_NEW && $this->status === true) {
       echo 'status: ' . self::STATUS_NEW . PHP_EOL;
       echo 'status: ' . self::STATUS_PROGRESS . PHP_EOL;
