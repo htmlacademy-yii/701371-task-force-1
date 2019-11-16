@@ -16,12 +16,15 @@ class Task
   const ACTION_FAIL = 'fail';
   const ACTION_CANCEL = 'abort';
 
-  public $userAction = null;
-  public $userStatus = null;
+  public $action = null;
+  public $status = null;
 
   // **
 
-  public function __construct() {}
+  public function __construct()
+  {
+    $this->status = self::STATUS_NEW;
+  }
 
   // **
 
