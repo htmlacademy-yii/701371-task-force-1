@@ -3,10 +3,11 @@ namespace classes;
 
 class Task
 {
-  const STATUS_NEW = 'new';
-  const STATUS_ABORT = 'aborted';
-  const STATUS_PROGRESS = 'progress';
-  const STATUS_COMPLETED = 'completed';
+  const STATUS_NEW = 'Новое';
+  const STATUS_ABORT = 'Отменено';
+  const STATUS_PROGRESS = 'Выполняется';
+  const STATUS_COMPLETED = 'Завершено';
+  const STATUS_FAILED = 'Провалена';
 
   const ACTION_NEW = 'new';
   const ACTION_ABORT = 'abort';
