@@ -5,11 +5,11 @@ use classes\Task;
 $myTask = new Task;
 
 $myTask->setUserAction('abort');
-echo $myTask->getUserAction();
+echo 'User action: ' . $myTask->getUserAction();
 $myTask->checkStatus();
 $myTask->beginEvent();
 
 $myTask->setUserAction('new');
-echo $myTask->getUserAction();
+echo 'User action: ' . $myTask->getUserAction();
 $myTask->checkStatus();
 $myTask->beginEvent();
