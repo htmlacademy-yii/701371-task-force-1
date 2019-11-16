@@ -6,10 +6,8 @@ $myTask = new Task;
 
 $myTask->setUserAction('abort');
 echo 'User action: ' . $myTask->getUserAction();
-$myTask->checkStatus();
 $myTask->beginEvent();
 
 $myTask->setUserAction('new');
 echo 'User action: ' . $myTask->getUserAction();
-$myTask->checkStatus();
 $myTask->beginEvent();
