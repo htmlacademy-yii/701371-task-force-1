@@ -30,30 +30,30 @@ class Task
 
   public function setUserAction(string $action): void
   {
-    $this->userAction = $action;
+    $this->action = $action;
   }
 
   public function getUserAction(): string
   {
-    return $this->userAction . PHP_EOL;
+    return $this->action . PHP_EOL;
   }
 
   // **
 
   public function checkStatus(): void
   {
-    if ($this->userAction === self::ACTION_NEW) {
-      $this->userStatus = true;
+    if ($this->action === self::ACTION_NEW) {
+      $this->status = true;
     }
 
-    if ($this->userAction === self::ACTION_ABORT) {
-      $this->userStatus = false;
+    if ($this->action === self::ACTION_ABORT) {
+      $this->status = false;
     }
   }
 
   public function beginEvent(): void
   {
-    if ($this->userAction === self::ACTION_NEW && $this->userStatus === true) {
+    if ($this->action === self::ACTION_NEW && $this->status === true) {
       echo 'status: ' . self::STATUS_NEW . PHP_EOL;
       echo 'status: ' . self::STATUS_PROGRESS . PHP_EOL;
 
