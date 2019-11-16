@@ -14,7 +14,6 @@ class Task
   const ACTION_PROGRESS = 'progress';
   const ACTION_COMPLETE = 'complete';
   const ACTION_FAIL = 'fail';
-  const ACTION_CANCEL = 'abort';
 
   public $action = null;
   public $status = null;
