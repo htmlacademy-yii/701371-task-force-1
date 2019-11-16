@@ -35,7 +35,7 @@ class Task
 
   public function getUserAction(): string
   {
-    return 'User action: ' . $this->userAction . PHP_EOL;
+    return $this->userAction . PHP_EOL;
   }
 
   // **
