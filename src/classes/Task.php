@@ -3,20 +3,24 @@ namespace classes;
 
 class Task
 {
+  const ACTION_NEW = 'new';
+  const ACTION_CANCEL = 'cancel';
+  const ACTION_COMPLE = 'completed';
+  const ACTION_FAIL = 'fail';
+
   const STATUS_NEW = 'new';
-  const STATUS_ABORT = 'abort';
+  const STATUS_CANCELED = 'cancel';
   const STATUS_PROGRESS = 'progress';
   const STATUS_COMPLETED = 'completed';
   const STATUS_FAILED = 'failed';
 
-  const ACTION_NEW = 'new';
-  const ACTION_ABORT = 'abort';
-  const ACTION_PROGRESS = 'progress';
-  const ACTION_COMPLETE = 'complete';
-  const ACTION_FAIL = 'fail';
+  const ROLES_ANONYMUS = 'anonymous';
+  const ROLES_REGISTRED = 'registered';
 
-  public $action = null;
   public $status = null;
+  public $id_executor = null;
+  public $id_client = null;
+  public $completed = null;
 
   // **
 
@@ -27,42 +31,81 @@ class Task
 
   // **
 
-  public function setUserAction(string $action): void
+  public function getNewAction()
   {
-    $this->action = $action;
+    return self::ACTION_NEW;
   }
 
-  public function getUserAction(): string
+  public function getCancelAction()
   {
-    return $this->action . PHP_EOL;
+    return self::ACTION_CANCEL;
+  }
+
+  public function getCompleteAction()
+  {
+    return self::ACTION_COMPLE;
+  }
+
+  public function getFailAction()
+  {
+    return self::ACTION_FAIL;
   }
 
   // **
 
-  private function checkStatus(): void
+  public function getNewStatus()
   {
-    if ($this->action === self::ACTION_NEW) {
-      $this->status = true;
-    }
-
-    if ($this->action === self::ACTION_ABORT) {
-      $this->status = false;
-    }
+    return self::STATUS_NEW;
   }
 
-  public function beginEvent(): void
+  public function getCancelStatus()
   {
-    $this->checkStatus();
+    return self::STATUS_CANCELED;
+  }
 
-    if ($this->action === self::ACTION_NEW && $this->status === true) {
-      echo 'status: ' . self::STATUS_NEW . PHP_EOL;
-      echo 'status: ' . self::STATUS_PROGRESS . PHP_EOL;
+  public function getProgressStatus()
+  {
+    return self::STATUS_PROGRESS;
+  }
+
+  public function getCompleteStatus()
+  {
+    return self::STATUS_COMPLETED;
+  }
+
+  public function getFailStatus()
+  {
+    return self::STATUS_FAILED;
+  }
+
+  // **
+
+  private function checkStatus($action): void
+  {
+    $this->status = ($action === $this->getNewAction()) ? true : false;
+    $this->status = ($action === $this->getCancelAction()) ? false : true;
+  }
+
+  private function beginEvent($action): void
+  {
+    $this->checkStatus($action);
+
+    if ($action === self::ACTION_NEW && $this->status === true) {
+      echo 'status: ' . $this->getNewStatus() . PHP_EOL;
+      echo 'status: ' . $this->getProgressStatus() . PHP_EOL;
 
       // TODO: code there...
 
-      echo 'status: ' . self::STATUS_COMPLETED . PHP_EOL;
+      echo 'status: ' . $this->getCompleteStatus() . PHP_EOL;
     } else {
-      echo 'status: ' . self::STATUS_ABORT . PHP_EOL;
+      echo 'status: ' . $this->getCancelStatus() . PHP_EOL;
     }
+  }
+
+  public function userAction(string $action): void
+  {
+    echo 'User action: ' . $action . PHP_EOL;
+
+    $this->beginEvent($action);
   }
 }
