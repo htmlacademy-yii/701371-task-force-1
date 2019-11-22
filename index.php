@@ -4,5 +4,5 @@ use classes\Task;
 
 $myTask = new Task;
 
-$myTask->cancelTask();
-$myTask->createTask();
+// $myTask->cancelTask();
+// $myTask->createTask();
