@@ -35,10 +35,13 @@ class Task
 
   // **
 
-  public function __construct(int $idClient, int $idExecutor)
-  {
-    $this->idClient = $idClient;
-    $this->idExecutor = $idExecutor;
+  public function __construct(array $data = []) {
+    foreach ($data as $key => $value) {
+      if (property_exists($this, $key)) {
+        // NOTE: $this - ссылка на текущий класс
+        $this->{$key} = $value;
+      }
+    }
   }
 
   // **
