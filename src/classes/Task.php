@@ -35,9 +35,10 @@ class Task
 
   // **
 
-  public function __construct()
+  public function __construct(int $idClient, int $idExecutor)
   {
-    // $this->status = self::STATUS_NEW;
+    $this->idClient = $idClient;
+    $this->idExecutor = $idExecutor;
   }
 
   // **
