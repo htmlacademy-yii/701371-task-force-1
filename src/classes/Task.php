@@ -38,11 +38,11 @@ class Task
 	public function __construct(array $data = []) {
 		foreach ($data as $key => $value) {
 			if (property_exists($this, $key)) {
-			// NOTE: $this - ссылка на текущий класс
-			$this->{$key} = $value;
-			echo $this->{$key} . PHP_EOL;
+				// NOTE: $this - ссылка на текущий класс
+				$this->{$key} = $value;
+				echo $this->{$key} . PHP_EOL;
+			}
 		}
-	}
 	}
 
 	// **
