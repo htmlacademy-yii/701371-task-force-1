@@ -16,7 +16,7 @@ class Task
 	const STATUS_CANCELED = 'cancel';
 	const STATUS_COMPLETED = 'completed';
 	const STATUS_FAILED = 'failed';
-    
+
 	const ROLES_ANONYMUS = 'anonymous';
 	const ROLES_REGISTRED = 'registered';
 
