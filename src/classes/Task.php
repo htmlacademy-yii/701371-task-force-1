@@ -6,13 +6,14 @@ namespace classes;
 class Task
 {
   const ACTION_NEW = 'new';
+  const ACTION_START = 'start';
   const ACTION_CANCEL = 'cancel';
   const ACTION_COMPLE = 'completed';
   const ACTION_FAIL = 'fail';
 
   const STATUS_NEW = 'new';
-  const STATUS_CANCELED = 'cancel';
   const STATUS_PROGRESS = 'progress';
+  const STATUS_CANCELED = 'cancel';
   const STATUS_COMPLETED = 'completed';
   const STATUS_FAILED = 'failed';
 
@@ -23,6 +24,14 @@ class Task
   public $idExecutor = null;
   public $idClient = null;
   public $completed = null;
+
+  private const RELATIONS = [
+    self::ACTION_NEW => self::STATUS_NEW,
+    self::ACTION_START => self::STATUS_PROGRESS,
+    self::ACTION_CANCEL => self::STATUS_CANCELED,
+    self::ACTION_COMPLE => self::STATUS_COMPLETED,
+    self::ACTION_FAIL => self::STATUS_FAILED
+  ];
 
   // **
 
@@ -52,6 +61,16 @@ class Task
       self::STATUS_COMPLETED,
       self::STATUS_FAILED
     ];
+  }
+
+  public function getIdExecutor(): int
+  {
+    return $this->idExecutor;
+  }
+
+  public function getCurrentStatus(): string
+  {
+    return $this->status;
   }
 
   // **
