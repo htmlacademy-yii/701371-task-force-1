@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-use classes\Task;
+use config\Task;
 
 $myTask = new Task([
 	'idClient' => 5,
