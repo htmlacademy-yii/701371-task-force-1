@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-use config\Task;
+use config\AvailableActions;
 
-$myTask = new Task([
+$myTask = new AvailableActions([
 	'idClient' => 5,
 	'idExecutor' => 3,
 ]);

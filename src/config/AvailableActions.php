@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace config;
 
-class Task
+class AvailableActions
 {
 	const ACTION_NEW = 'new';
 	const ACTION_START = 'start';
