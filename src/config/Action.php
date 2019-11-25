@@ -21,5 +21,8 @@ abstract class Action
 
   // **
 
-  abstract public static function rightsVerification($rightsVerification): bool;
+  abstract public static function rightsVerification(
+    AvailableActions $AvailableActions,
+    int $userId
+  ): bool;
 }
