@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace config;
+namespace components;
 
-class StatusAction extends Action
+class CompleteAction extends Action
 {
   public static function rightsVerification(AvailableActions $availableActions,
   int $userId): bool
   {
-    if (AvailableActions::STATUS_PROGRESS === $availableActions->getCurrentStatus()
+    if (AvailableActions::STATUS_COMPLETED === $availableActions->getCurrentStatus()
       && $availableActions->getIdExecutor() === $userId) {
         return true;
     } else {
@@ -18,6 +18,6 @@ class StatusAction extends Action
 
   public static function getTitle(): string
   {
-    return 'Задание в работе';
+    return 'Завершить задание';
   }
 }
