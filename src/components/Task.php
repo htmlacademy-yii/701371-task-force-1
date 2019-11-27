@@ -33,8 +33,6 @@ class Task
 	// 	self::ACTION_FAIL => self::STATUS_FAILED
 	// ];
 
-	// **
-
 	public function __construct(array $data = []) {
 		foreach ($data as $key => $value) {
 			if (property_exists($this, $key)) {
@@ -42,8 +40,6 @@ class Task
 			}
 		}
 	}
-
-	// **
 
 	// public function getActions(): array
 	// {
