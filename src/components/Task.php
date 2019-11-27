@@ -39,7 +39,6 @@ class Task
 		foreach ($data as $key => $value) {
 			if (property_exists($this, $key)) {
 				$this->{$key} = $value;
-				echo $this->{$key} . PHP_EOL;
 			}
 		}
 	}

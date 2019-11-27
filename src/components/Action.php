@@ -9,7 +9,7 @@ abstract class Action
 
   // **
 
-  public static function getAction()
+  public static function getAction(): string
   {
     return static::class;
   }
@@ -19,19 +19,7 @@ abstract class Action
   abstract public static function rightsVerification(
     AvailableActions $AvailableActions,
     int $userId
-  ): bool;
+  ): bool {
+    // method body
+  }
 }
-
-// class NewAction extends Action
-// {
-// }
-
-// class NewActionChild extends NewAction
-// {
-// }
-
-// class FailAction extends Action
-// {
-// }
-
-// echo NewAction::getAction();

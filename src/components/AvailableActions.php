@@ -27,8 +27,9 @@ class AvailableActions
   public static function getNextAction(User $user, Task $task): array
   {
     $actions = [];
-    foreach (static::getActions() as $action) {
-      if (!class_exists($action)) {
+
+    foreach (self::getActions() as $action) {
+      if (!in_array($action)) {
         throw new \Exception('Действие не существует');
       }
       if ($action::rightsVerification($user, $task)) {
