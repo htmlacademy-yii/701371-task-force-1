@@ -10,6 +10,6 @@ $myTask = new Task([
 ]);
 
 // Я не понимаю как проверить этот класс и что в него нужно передавать
-$temp = new NewAction(NewAction::STATUS_NEW, 2);
+$temp = new NewAction(Task::STATUS_NEW, 2);
 $test = new AvailableActions;
 $test->getNextStatus($temp);
