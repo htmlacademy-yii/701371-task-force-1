@@ -5,15 +5,10 @@ namespace components;
 
 class FailAction extends Action
 {
-  public static function rightsVerification(AvailableActions $availableActions,
-  int $userId): bool
+  public static function rightsVerification(Task $task, int $userId): bool
   {
-    if (AvailableActions::STATUS_FAILED === $availableActions->getCurrentStatus()
-      && $availableActions->getIdExecutor() === $userId) {
-        return true;
-    } else {
-      return false;
-    }
+    return Task::STATUS_FAILED === $task->getCurrentStatus()
+      && $task->getIdExecutor() === $userId;
   }
 
   public static function getTitle(): string

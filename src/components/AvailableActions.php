@@ -12,12 +12,6 @@ class AvailableActions
 	const ACTION_COMPLE = 'completed';
   const ACTION_FAIL = 'fail';
 
-  /**
-   * я не понимаю как это будет работать
-   * понимаю если будет так:
-   * Task::STATUS_NEW => self::ACTION_NEW, ...
-   * а в текущем виде как мы сделали, ну не понимаю.
-   */
   const RELATIONS_MAP = [
 		self::ACTION_NEW => Task::STATUS_NEW,
 		self::ACTION_START => Task::STATUS_PROGRESS,
@@ -27,6 +21,8 @@ class AvailableActions
 	];
 
   protected $actions = [];
+
+  /**/
 
   public function getActions(): array
 	{
@@ -42,19 +38,4 @@ class AvailableActions
   {
     return self::RELATIONS_MAP[Action::class] ?? null;
   }
-
-  // public static function getNextStatus(User $user, Task $task): array
-  // {
-  //   $actions = [];
-
-  //   foreach (self::getActions() as $action) {
-  //     if (!in_array($action)) {
-  //       throw new \Exception('Действие не существует');
-  //     }
-  //     if ($action::rightsVerification($user, $task)) {
-  //       $actions[] = $action;
-  //     }
-  //   }
-  //   return $actions;
-  // }
 }

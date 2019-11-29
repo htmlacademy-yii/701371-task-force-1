@@ -5,15 +5,10 @@ namespace components;
 
 class CompleteAction extends Action
 {
-  public static function rightsVerification(AvailableActions $availableActions,
-  int $userId): bool
+  public static function rightsVerification(Task $task, int $userId): bool
   {
-    if (AvailableActions::STATUS_COMPLETED === $availableActions->getCurrentStatus()
-      && $availableActions->getIdExecutor() === $userId) {
-        return true;
-    } else {
-      return false;
-    }
+    return Task::STATUS_COMPLETED === $task->getCurrentStatus()
+      && $task->getIdExecutor() === $userId;
   }
 
   public static function getTitle(): string
