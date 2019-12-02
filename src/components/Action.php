@@ -13,7 +13,7 @@ abstract class Action
   }
 
   abstract public static function rightsVerification(
-    AvailableActions $AvailableActions,
+    Task $AvailableActions,
     int $userId
   ): bool;
 }
