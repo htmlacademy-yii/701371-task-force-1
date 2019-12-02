@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace components;
+namespace app\components;
 
 abstract class Action
 {

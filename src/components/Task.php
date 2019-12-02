@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace components;
+namespace app\components;
 
 class Task
 {
-	// const STATUS_NEW = 'new';
+	const STATUS_NEW = 'new';
 	const STATUS_PROGRESS = 'progress';
 	const STATUS_CANCELED = 'cancel';
 	const STATUS_COMPLETED = 'completed';

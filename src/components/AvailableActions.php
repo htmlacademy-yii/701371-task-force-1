@@ -1,13 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace components;
-use components\Task;
+namespace app\components;
 
-use components\RespondAction;
-use components\CancelAction;
-use components\CompleteAction;
-use components\FailAction;
+/**/
 
 class AvailableActions
 {
@@ -18,14 +14,12 @@ class AvailableActions
   const ACTION_FAIL = 'fail';
 
   const RELATIONS_MAP = [
-		// NewAction::class => Task::STATUS_NEW,
+		NewAction::class => Task::STATUS_NEW,
 		RespondAction::class => Task::STATUS_PROGRESS,
 		CancelAction::class => Task::STATUS_CANCELED,
 		CompleteAction::class => Task::STATUS_COMPLETED,
 		FailAction::class => Task::STATUS_FAILED
 	];
-
-	// protected $actions = [];
 
 	/**/
 

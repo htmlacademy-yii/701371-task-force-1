@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace components;
-use components\Action;
+namespace app\components;
 
 class RespondAction extends Action
 {

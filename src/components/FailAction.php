@@ -1,15 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace components;
-use components\Action;
+namespace app\components;
 
 class FailAction extends Action
 {
   public static function rightsVerification(Task $task, int $userId): bool
   {
-    return Task::STATUS_FAILED === $task->getCurrentStatus()
-      && $task->getIdExecutor() === $userId;
+    return $task->getCurrentStatus() === Task::STATUS_FAILED
+      && $task->getCurrentIdClient() === $userId;
   }
 
   public static function getTitle(): string

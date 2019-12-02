@@ -4,14 +4,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 /**/
 
-use components\Task;
-use components\Action;
-use components\AvailableActions;
+use app\components\Task;
+use app\components\Action;
+use app\components\AvailableActions;
 
-use components\RespondAction;
-use components\CancelAction;
-use components\CompleteAction;
-use components\FailAction;
+use app\components\RespondAction;
+use app\components\CancelAction;
+use app\components\CompleteAction;
+use app\components\FailAction;
 
 /**/
 
