@@ -1,18 +1,21 @@
 <?php
-declare(strict_types=1);
+// declare(strict_types=1);
 
-namespace components;
+// namespace components;
 
-class NewAction extends Action
-{
-  public static function rightsVerification(Task $task, int $userId): bool
-  {
-    return Task::STATUS_NEW === $task->getCurrentStatus()
-      && $task->getIdExecutor() === $userId;
-  }
+// require_once 'Action.php';
+// use components\Action;
 
-  public static function getTitle(): string
-  {
-    return 'Добавить задание';
-  }
-}
+// class NewAction extends Action
+// {
+//   public static function rightsVerification(Task $task, int $userId): bool
+//   {
+//     return $task->getCurrentStatus() === Task::STATUS_NEW
+//       && $task->getCurrentIdClient() === $userId;
+//   }
+
+//   public static function getTitle(): string
+//   {
+//     return 'Добавить задание';
+//   }
+// }

@@ -2,7 +2,13 @@
 declare(strict_types=1);
 
 namespace components;
-use components;
+
+use components\Task;
+// use components\NewAction;
+use components\RespondAction;
+use components\CancelAction;
+use components\CompleteAction;
+use components\FailAction;
 
 class AvailableActions
 {
@@ -13,18 +19,18 @@ class AvailableActions
   const ACTION_FAIL = 'fail';
 
   const RELATIONS_MAP = [
-		self::ACTION_NEW => Task::STATUS_NEW,
-		self::ACTION_START => Task::STATUS_PROGRESS,
-		self::ACTION_CANCEL => Task::STATUS_CANCELED,
-		self::ACTION_COMPLE => Task::STATUS_COMPLETED,
-		self::ACTION_FAIL => Task::STATUS_FAILED
+		// NewAction::class => Task::STATUS_NEW,
+		RespondAction::class => Task::STATUS_PROGRESS,
+		CancelAction::class => Task::STATUS_CANCELED,
+		CompleteAction::class => Task::STATUS_COMPLETED,
+		FailAction::class => Task::STATUS_FAILED
 	];
 
-  protected $actions = [];
+	// protected $actions = [];
 
-  /**/
+	/**/
 
-  public function getActions(): array
+	public function getActions(): array
 	{
 		return [
 			self::ACTION_NEW,
@@ -34,8 +40,8 @@ class AvailableActions
 		];
   }
 
-  public static function getNextStatus(Action $action): ?string
-  {
-    return self::RELATIONS_MAP[Action::class] ?? null;
-  }
+	public static function getNextStatus(Action $action): ?string
+	{
+		return self::RELATIONS_MAP[$action::getAction()] ?? null;
+	}
 }

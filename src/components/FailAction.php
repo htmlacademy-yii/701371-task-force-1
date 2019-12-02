@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace components;
 
+require_once 'Action.php';
+use components\Action;
+
 class FailAction extends Action
 {
   public static function rightsVerification(Task $task, int $userId): bool

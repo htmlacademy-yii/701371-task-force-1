@@ -3,12 +3,15 @@ declare(strict_types=1);
 
 namespace components;
 
+require_once 'Action.php';
+use components\Action;
+
 class CancelAction extends Action
 {
   public static function rightsVerification(Task $task, int $userId): bool
   {
-    return Task::STATUS_CANCELED === $task->getCurrentStatus()
-      && $task->getIdExecutor() === $userId;
+    return $task->getCurrentStatus() === Task::STATUS_NEW
+      && $task->getCurrentIdClient() === $userId;
   }
 
   public static function getTitle(): string
