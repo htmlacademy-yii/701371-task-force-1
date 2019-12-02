@@ -13,6 +13,6 @@ class FailAction extends Action
 
   public static function getTitle(): string
   {
-    return 'Ой ой, случилось что то ужасное...';
+    return 'Отказаться';
   }
 }

@@ -13,6 +13,6 @@ class RespondAction extends Action
 
   public static function getTitle(): string
   {
-    return 'Задание в работе';
+    return 'Откликнуться';
   }
 }

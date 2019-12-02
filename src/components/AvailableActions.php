@@ -7,15 +7,12 @@ namespace app\components;
 
 class AvailableActions
 {
-  const ACTION_NEW = 'new';
-	const ACTION_START = 'start';
+	const ACTION_RESPOND = 'respond';
 	const ACTION_CANCEL = 'cancel';
 	const ACTION_COMPLE = 'completed';
   const ACTION_FAIL = 'fail';
 
   const RELATIONS_MAP = [
-		NewAction::class => Task::STATUS_NEW,
-		RespondAction::class => Task::STATUS_PROGRESS,
 		CancelAction::class => Task::STATUS_CANCELED,
 		CompleteAction::class => Task::STATUS_COMPLETED,
 		FailAction::class => Task::STATUS_FAILED
@@ -26,7 +23,7 @@ class AvailableActions
 	public function getActions(): array
 	{
 		return [
-			self::ACTION_NEW,
+			self::ACTION_RESPOND,
 			self::ACTION_CANCEL,
 			self::ACTION_COMPLE,
 			self::ACTION_FAIL
