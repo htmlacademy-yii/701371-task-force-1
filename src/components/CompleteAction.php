@@ -7,7 +7,7 @@ class CompleteAction extends Action
 {
   public static function rightsVerification(Task $task, int $userId): bool
   {
-    return $task->getCurrentStatus() === Task::STATUS_COMPLETED
+    return $task->getCurrentStatus() === Task::STATUS_PROGRESS
       && $task->getCurrentIdClient() === $userId;
   }
 

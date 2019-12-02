@@ -10,9 +10,9 @@ class AvailableActions
 	const ACTION_RESPOND = 'respond';
 	const ACTION_CANCEL = 'cancel';
 	const ACTION_COMPLE = 'completed';
-  const ACTION_FAIL = 'fail';
+	const ACTION_FAIL = 'fail';
 
-  const RELATIONS_MAP = [
+	const RELATIONS_MAP = [
 		CancelAction::class => Task::STATUS_CANCELED,
 		CompleteAction::class => Task::STATUS_COMPLETED,
 		FailAction::class => Task::STATUS_FAILED

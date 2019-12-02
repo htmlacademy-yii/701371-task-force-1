@@ -20,4 +20,4 @@ $myTask = new Task([
 	'idExecutor' => 3,
 ]);
 
-var_dump(AvailableActions::getNextStatus(new RespondAction));
+var_dump(AvailableActions::getNextStatus(new FailAction));

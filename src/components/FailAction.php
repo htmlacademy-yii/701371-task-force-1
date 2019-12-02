@@ -7,7 +7,7 @@ class FailAction extends Action
 {
   public static function rightsVerification(Task $task, int $userId): bool
   {
-    return $task->getCurrentStatus() === Task::STATUS_FAILED
+    return $task->getCurrentStatus() === Task::STATUS_PROGRESS
       && $task->getCurrentIdClient() === $userId;
   }
 
