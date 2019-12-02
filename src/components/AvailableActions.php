@@ -9,7 +9,7 @@ class AvailableActions
 {
 	const ACTION_RESPOND = 'respond';
 	const ACTION_CANCEL = 'cancel';
-	const ACTION_COMPLE = 'completed';
+	const ACTION_COMPLETE = 'completed';
 	const ACTION_FAIL = 'fail';
 
 	const RELATIONS_MAP = [
