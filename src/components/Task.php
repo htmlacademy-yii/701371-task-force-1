@@ -15,8 +15,8 @@ class Task
 	const ROLES_REGISTRED = 'registered';
 
 	private $status;
-	private $idExecutor;
-	private $idClient;
+	private $executorId;
+	private $clientId;
 	private $completed;
 
 	public function __construct(array $data = []) {
@@ -40,7 +40,7 @@ class Task
 
 	public function getIdExecutor(): int
 	{
-		return $this->idExecutor;
+		return $this->executorId;
 	}
 
 	public function getCurrentStatus(): string
@@ -50,6 +50,6 @@ class Task
 
 	public function getCurrentIdClient(): string
 	{
-		return $this->idClient;
+		return $this->clientId;
 	}
 }
