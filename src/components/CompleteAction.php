@@ -2,8 +2,6 @@
 declare(strict_types=1);
 
 namespace components;
-
-require_once 'Action.php';
 use components\Action;
 
 class CompleteAction extends Action
