@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace app\components;
+use app\components\exception\ExceptionAction;
 
 class Task
 {
@@ -22,10 +23,16 @@ class Task
 	public function __construct(array $data = []) {
 		foreach ($data as $key => $value) {
 			if (property_exists($this, $key)) {
+				if (!is_int($value)) {
+					throw new ExceptionAction('Invalid argument. Task.php: __construct');
+				}
+
 				$this->{$key} = $value;
 			}
 		}
 	}
+
+	/**/
 
 	public function getStatuses(): array
 	{
@@ -43,13 +50,13 @@ class Task
 		return $this->executorId;
 	}
 
+	public function getCurrentIdClient(): int
+	{
+		return $this->clientId;
+	}
+
 	public function getCurrentStatus(): string
 	{
 		return $this->status;
-	}
-
-	public function getCurrentIdClient(): string
-	{
-		return $this->clientId;
 	}
 }
