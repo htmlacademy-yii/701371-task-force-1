@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace app\components;
+use app\components\exception\TaskException;
 
 class Task
 {
@@ -25,7 +26,13 @@ class Task
 				$this->{$key} = $value;
 			}
 		}
+
+		if ($this->status && !in_array($this->status, $this->getStatuses())) {
+			throw new TaskException('Invalid Task::status exception');
+		}
 	}
+
+	/**/
 
 	public function getStatuses(): array
 	{
@@ -38,18 +45,18 @@ class Task
 		];
 	}
 
-	public function getIdExecutor(): int
+	public function getIdExecutor(): ?int
 	{
 		return $this->executorId;
 	}
 
-	public function getCurrentStatus(): string
-	{
-		return $this->status;
-	}
-
-	public function getCurrentIdClient(): string
+	public function getCurrentIdClient(): ?int
 	{
 		return $this->clientId;
+	}
+
+	public function getCurrentStatus(): ?string
+	{
+		return $this->status;
 	}
 }

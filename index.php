@@ -15,9 +15,22 @@ use app\components\FailAction;
 
 /**/
 
-$myTask = new Task([
-	'idClient' => 5,
-	'idExecutor' => 3,
-]);
+try {
+	$myTask = new Task([
+		'status' => 'foo',
+		'executorId' => 3,
+		'clientId' => 5,
+		'completed' => '2019-12-24'
+	]);
 
+	// $myTask = new Task('foo');
+	// $myTask = new Task('STATUS_NEW');
+} catch (Throwable $exception) {
+	error_log($exception->getMessage());
+}
+
+echo PHP_EOL;
 var_dump(AvailableActions::getNextStatus(new FailAction));
+
+$task = new Task;
+var_dump($task->getCurrentIdClient());
