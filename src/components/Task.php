@@ -45,12 +45,12 @@ class Task
 		];
 	}
 
-	public function getIdExecutor(): int
+	public function getIdExecutor(): ?int
 	{
 		return $this->executorId;
 	}
 
-	public function getCurrentIdClient(): int
+	public function getCurrentIdClient(): ?int
 	{
 		return $this->clientId;
 	}
