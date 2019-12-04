@@ -55,7 +55,7 @@ class Task
 		return $this->clientId;
 	}
 
-	public function getCurrentStatus()
+	public function getCurrentStatus(): ?string
 	{
 		return $this->status;
 	}
