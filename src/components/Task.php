@@ -25,10 +25,10 @@ class Task
 			if (property_exists($this, $key)) {
 				$this->{$key} = $value;
 			}
+		}
 
-			if ($this->status && !in_array($this->status, $this->getStatuses())) {
-				throw new ExceptionAction('Invalid argument. Task.php: __construct');
-			}
+		if ($this->status && !in_array($this->status, $this->getStatuses())) {
+			throw new ExceptionAction('Invalid argument. Task.php: __construct');
 		}
 	}
 
