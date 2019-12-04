@@ -23,19 +23,13 @@ class Task
 	public function __construct(array $data = []) {
 		foreach ($data as $key => $value) {
 			if (property_exists($this, $key)) {
-				if (
-					$key === 'status'
-					&& !in_array($data['status'], $this->getStatuses())
-				) {
-					throw new ExceptionAction('Invalid argument. Task.php: __construct');
-				}
-
 				$this->{$key} = $value;
 			}
-		}
 
-		echo 'executorId: ' . $this->executorId . PHP_EOL;
-		echo 'clientId: ' . $this->clientId . PHP_EOL;
+			if ($this->status && !in_array($this->status, $this->getStatuses())) {
+				throw new ExceptionAction('Invalid argument. Task.php: __construct');
+			}
+		}
 	}
 
 	/**/
