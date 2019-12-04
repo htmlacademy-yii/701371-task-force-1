@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace app\components;
-use app\components\exception\ExceptionAction;
+use app\components\exception\ActionException;
 
 class Task
 {
@@ -28,7 +28,7 @@ class Task
 		}
 
 		if ($this->status && !in_array($this->status, $this->getStatuses())) {
-			throw new ExceptionAction('Invalid argument. Task.php: __construct');
+			throw new ActionException('Invalid Task::status exception');
 		}
 	}
 
