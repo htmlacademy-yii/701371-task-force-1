@@ -31,3 +31,6 @@ try {
 
 echo PHP_EOL;
 var_dump(AvailableActions::getNextStatus(new FailAction));
+
+$task = new Task;
+var_dump($task->getCurrentStatus());
