@@ -17,9 +17,14 @@ use app\components\FailAction;
 
 try {
 	$myTask = new Task([
-		'clientId' => 'test',
-		'executorId' => 3
+		'status' => 'foo',
+		'executorId' => 3,
+		'clientId' => 5,
+		'completed' => '2019-12-24'
 	]);
+
+	// $myTask = new Task('foo');
+	// $myTask = new Task('STATUS_NEW');
 } catch (Throwable $exception) {
 	error_log($exception->getMessage());
 }
