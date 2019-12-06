@@ -25,12 +25,12 @@ try {
 		'completed' => '2019-12-24'
 	]);
 } catch (Throwable $exception) {
-	error_log($exception->getMessage());
+	echo $exception->getMessage();
 }
 
 /**/
 
-echo PHP_EOL;
+echo '<br>';
 var_dump(AvailableActions::getNextStatus(new FailAction));
 
 $task = new Task;

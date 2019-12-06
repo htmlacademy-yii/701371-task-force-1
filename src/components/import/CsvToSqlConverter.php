@@ -65,31 +65,29 @@ class CsvToSqlConverter
     $this->checkErrors();
     // echo 'ERROR DEBUGGING: ' . $this->errors;
 
+    echo '<br><br><br>';
+    $data = [];
     if ($this->errors === false) {
+      $stringRow = 0;
       $importFile = fopen($this->getFileName(), 'r');
 
-      // echo '<table class = admin__import-view_table cellspacing = 0>';
-
       while (!feof($importFile)) {
-        $string = fgetcsv($importFile, 1024, ';');
-        $emptyStringCheck = count($string);
+        $string = fgetcsv($importFile, 1024, ',');
+        $stringNumbers = count($string);
+        $stringRow++;
 
-        // читаешь файл построчно
-        if ($emptyStringCheck > 1) {
-          // echo '<tr>';
-          for ($i = 1; $i < 4; $i++) {
-            // echo '<td>';
-            // echo $string[$i];
-            // echo '</td>';
-          }
+        for ($c=0; $c < $stringNumbers ; $c++) {
+          $data[$stringRow] = $string[$c];
+          echo 'string: ' . $stringRow . ' ' . $string[$c] . '<br>';
         }
-      } 
+      }
 
-      // echo '</table>';
       fclose($importFile);
     } else {
       throw new TaskException('Invalid CSV');
     }
+    echo '<br><br><br>';
+    print_r($data);
   }
 }
 
