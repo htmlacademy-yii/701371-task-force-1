@@ -24,6 +24,11 @@ class Csv2SqlConverter
       }
 
       $currentLineValues = $splFileObject->fgetcsv(',');
+
+      if (count($columns) != count($currentLineValues)) {
+        continue;
+      }
+
       $valuesString = implode(', ', array_map(function($item) {
         return "'{$item}'";
       }, $currentLineValues));
