@@ -42,12 +42,13 @@ class Csv2SqlConverter
         implode(', ' . PHP_EOL, $values)
       );
 
-      $outputFileName = rtrim($outPutDirectory, DIRECTORY_SEPARATOR)
-        . DIRECTORY_SEPARATOR . "{$tableName}.sql";
+    }
 
-      if (!file_put_contents($outputFileName, $sqlQuery)) {
-        throw new ImportException('Can not output SQL file');
-      }
+    $outputFileName = rtrim($outPutDirectory, DIRECTORY_SEPARATOR)
+      . DIRECTORY_SEPARATOR . "{$tableName}.sql";
+
+    if (!file_put_contents($outputFileName, $sqlQuery)) {
+      throw new ImportException('Can not output SQL file');
     }
   }
 
