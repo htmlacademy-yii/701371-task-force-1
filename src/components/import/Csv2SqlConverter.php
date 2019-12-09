@@ -11,7 +11,8 @@ class Csv2SqlConverter
   {
     self::checkExists($filePath);
     $splFileObject = new SplFileObject($filePath);
-    self::checkExtensionAndSize($splFileObject);
+    self::checkExtension($splFileObject);
+    self::checkSize($splFileObject);
 
     $columns = [];
     $values = [];
@@ -23,19 +24,22 @@ class Csv2SqlConverter
       }
 
       $currentLineValues = $splFileObject->fgetcsv(',');
-      $valuesString = implode('", "', $currentLineValues);
-      $valuesString = sprintf('("%s")', $valuesString);
+      $valuesString = implode(', ', array_map(function($item) {
+        return "'{$item}'";
+      }, $currentLineValues));
+
+      $valuesString = sprintf('(%s)', $valuesString);
       $values[] = $valuesString;
 
       // NOTE: write data from array into the SQL file
       $tableName = str_replace('.csv', '', basename($splFileObject->getFileName()));
       $sqlQuery = sprintf(
-        "INSERT INTO `%s` (%s) \r\n VALUES \r\n %s;",
+        "INSERT INTO `%s` (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "%s;",
         $tableName,
         implode(', ', array_map(function($item) {
           return "`{$item}`";
         }, $columns)),
-        implode(', ' . "\r\n", $values)
+        implode(', ' . PHP_EOL, $values)
       );
 
       $outputFileName = rtrim($outPutDirectory, DIRECTORY_SEPARATOR)
@@ -56,12 +60,16 @@ class Csv2SqlConverter
     }
   }
 
-  private static function checkExtensionAndSize($splFileObject):void
+  private static function checkExtension($splFileObject):void
   {
     if ($splFileObject->getExtension() !== 'csv') {
       throw new ImportException('Invalid file extension');
     }
 
+  }
+
+  private static function checkSize($splFileObject):void
+  {
     if ($splFileObject->getSize() === 0) {
       throw new ImportException('File is empty');
     }
