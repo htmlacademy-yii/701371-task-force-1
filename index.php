@@ -8,7 +8,7 @@ use app\components\Task;
 use app\components\Action;
 use app\components\AvailableActions;
 
-use app\components\import\CsvToSqlConverter;
+use app\components\import\Csv2SqlConverter;
 
 use app\components\RespondAction;
 use app\components\CancelAction;
@@ -38,13 +38,8 @@ var_dump($task->getCurrentIdClient());
 
 /**/
 
-echo PHP_EOL;
 try {
-	$import = new CsvToSqlConverter;
-	$import->setFileName('categories.csv');
-	$import->beginEvent();
+	Csv2SqlConverter::parse('data/categories.csv', 'data/sql');
 } catch (Throwable $exception) {
-	error_log($exception->getMessage());
+	echo $exception->getMessage();
 }
-// $sql = CsvToSqlConverter::getSqlFromCsv('data/cities.csv', $value_map, 'city');
-// CsvToSqlConverter::writeInSqlFile('data/sql/city.sql', $sql);
