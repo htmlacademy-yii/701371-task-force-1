@@ -25,7 +25,7 @@ class Csv2SqlConverter
     while (!$splFileObject->eof()) {
       if ($splFileObject->key() === 0) {
         $columns = $splFileObject->fgetcsv(',');
-        $splFileObject->fgetcsv(',');
+        $splFileObject->next();
       } else {
         $currentLineValues = $splFileObject->fgetcsv(',');
         $valuesString = implode(', ', $currentLineValues);
