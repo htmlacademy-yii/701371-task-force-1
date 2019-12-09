@@ -8,6 +8,8 @@ use app\components\Task;
 use app\components\Action;
 use app\components\AvailableActions;
 
+use app\components\import\Csv2SqlConverter;
+
 use app\components\RespondAction;
 use app\components\CancelAction;
 use app\components\CompleteAction;
@@ -22,15 +24,22 @@ try {
 		'clientId' => 5,
 		'completed' => '2019-12-24'
 	]);
-
-	// $myTask = new Task('foo');
-	// $myTask = new Task('STATUS_NEW');
 } catch (Throwable $exception) {
-	error_log($exception->getMessage());
+	echo $exception->getMessage();
 }
 
-echo PHP_EOL;
+/**/
+
+echo '<br>';
 var_dump(AvailableActions::getNextStatus(new FailAction));
 
 $task = new Task;
 var_dump($task->getCurrentIdClient());
+
+/**/
+
+try {
+	Csv2SqlConverter::parse('data/categories.csv', 'data/sql');
+} catch (Throwable $exception) {
+	echo $exception->getMessage();
+}
