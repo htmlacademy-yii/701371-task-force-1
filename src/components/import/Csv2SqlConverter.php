@@ -24,7 +24,6 @@ class Csv2SqlConverter
       }
 
       $currentLineValues = $splFileObject->fgetcsv(',');
-
       if (count($columns) != count($currentLineValues)) {
         continue;
       }
