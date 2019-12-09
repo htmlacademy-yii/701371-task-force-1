@@ -9,10 +9,20 @@ class Csv2SqlConverter
 {
   public static function parse(string $filePath, string $outPutDirectory): void
   {
-    self::checkExists($filePath);
+    if (!file_exists($filePath)) {
+      throw new ImportException('File does not exists');
+    }
+
     $splFileObject = new SplFileObject($filePath);
-    self::checkExtension($splFileObject);
-    self::checkSize($splFileObject);
+    if ($splFileObject->getExtension() !== 'csv') {
+      throw new ImportException('Invalid file extension');
+    }
+
+    if ($splFileObject->getSize() === 0) {
+      throw new ImportException('File is empty');
+    }
+
+    /**/
 
     $columns = [];
     $values = [];
@@ -52,30 +62,6 @@ class Csv2SqlConverter
 
     if (!file_put_contents($outputFileName, $sqlQuery)) {
       throw new ImportException('Can not output SQL file');
-    }
-  }
-
-  /**/
-
-  private static function checkExists(string $filePath): void
-  {
-    if (!file_exists($filePath)) {
-      throw new ImportException('File does not exists');
-    }
-  }
-
-  private static function checkExtension($splFileObject):void
-  {
-    if ($splFileObject->getExtension() !== 'csv') {
-      throw new ImportException('Invalid file extension');
-    }
-
-  }
-
-  private static function checkSize($splFileObject):void
-  {
-    if ($splFileObject->getSize() === 0) {
-      throw new ImportException('File is empty');
     }
   }
 }
