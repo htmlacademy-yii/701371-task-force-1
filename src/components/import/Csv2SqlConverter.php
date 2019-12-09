@@ -30,19 +30,18 @@ class Csv2SqlConverter
 
       $valuesString = sprintf('(%s)', $valuesString);
       $values[] = $valuesString;
-
-      // NOTE: write data from array into the SQL file
-      $tableName = str_replace('.csv', '', basename($splFileObject->getFileName()));
-      $sqlQuery = sprintf(
-        "INSERT INTO `%s` (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "%s;",
-        $tableName,
-        implode(', ', array_map(function($item) {
-          return "`{$item}`";
-        }, $columns)),
-        implode(', ' . PHP_EOL, $values)
-      );
-
     }
+
+    // NOTE: write data from array into the SQL file
+    $tableName = str_replace('.csv', '', basename($splFileObject->getFileName()));
+    $sqlQuery = sprintf(
+      "INSERT INTO `%s` (%s) " . PHP_EOL . "VALUES " . PHP_EOL . "%s;",
+      $tableName,
+      implode(', ', array_map(function($item) {
+        return "`{$item}`";
+      }, $columns)),
+      implode(', ' . PHP_EOL, $values)
+    );
 
     $outputFileName = rtrim($outPutDirectory, DIRECTORY_SEPARATOR)
       . DIRECTORY_SEPARATOR . "{$tableName}.sql";
