@@ -15,23 +15,17 @@ class Csv2SqlConverter
 
     $columns = [];
     $values = [];
-    $currentLineValues = null;
-    $valuesString = null;
-    $tableName = null;
-    $sqlQuery = null;
-    $outputFileName = null;
 
     // NOTE: get data from CSV into the array
     while (!$splFileObject->eof()) {
       if ($splFileObject->key() === 0) {
         $columns = $splFileObject->fgetcsv(',');
-        $splFileObject->next();
-      } else {
-        $currentLineValues = $splFileObject->fgetcsv(',');
-        $valuesString = implode(', ', $currentLineValues);
-        $valuesString = sprintf('("%s")', $valuesString);
-        $values[] = $valuesString;
       }
+
+      $currentLineValues = $splFileObject->fgetcsv(',');
+      $valuesString = implode(', ', $currentLineValues);
+      $valuesString = sprintf('("%s")', $valuesString);
+      $values[] = $valuesString;
 
       // NOTE: write data from array into the SQL file
       $tableName = str_replace('.csv', '', basename($splFileObject->getFileName()));
