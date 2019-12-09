@@ -35,7 +35,7 @@ class Csv2SqlConverter
         implode(', ', array_map(function($item) {
           return "`{$item}`";
         }, $columns)),
-        implode(', ', $values)
+        implode(', ' . "\r\n", $values)
       );
 
       $outputFileName = rtrim($outPutDirectory, DIRECTORY_SEPARATOR)
