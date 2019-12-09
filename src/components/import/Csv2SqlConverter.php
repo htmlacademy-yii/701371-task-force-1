@@ -55,16 +55,14 @@ class Csv2SqlConverter
 
   /**/
 
-  public function __construct() {}
-
-  private function checkExists(string $filePath): void
+  private static function checkExists(string $filePath): void
   {
     if (!file_exists($filePath)) {
       throw new ImportException('File does not exists');
     }
   }
 
-  private function checkExtensionAndSize($splFileObject):void
+  private static function checkExtensionAndSize($splFileObject):void
   {
     if ($splFileObject->getExtension() !== 'csv') {
       throw new ImportException('Invalid file extension');
