@@ -73,6 +73,22 @@ phpunit.phar
 /frontend/runtime/*
 /frontend/tests/*
 
+/frontend/web/favicon.ico
+/frontend/web/index-test.php
+/frontend/web/index.php
+/frontend/web/robots.txt
+
+/frontend/site/_index.php
+/frontend/site/about.php
+/frontend/site/contact.php
+/frontend/site/error.php
+/frontend/site/login.php
+/frontend/site/requestPasswordResetToken.php
+/frontend/site/resendVerificationEmail.php
+/frontend/site/resetPassword.php
+/frontend/site/signup.php
+
+/frontend/codeception.yml
 /frontend/Dockerfile
 
 #root files
