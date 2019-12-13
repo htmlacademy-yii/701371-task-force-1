@@ -44,12 +44,38 @@ phpunit.phar
 
 #my rules
 /backend/*
-/common/*
 /console/*
 /environments/*
 /vagrant/*
 /vendor/*
 
+#common -> files
+/common/config/.gitignore
+/common/config/bootstrap.php
+/common/config/codeception-local.php
+/common/config/main-local.php
+/common/config/params-local.php
+/common/config/params.php
+/common/config/test-local.php
+/common/config/test.php
+
+/common/fixtures/*
+/common/mail/*
+/common/models/*
+/common/tests/*
+/common/widgets/*
+/common/codeception.yml
+
+#frontend -> files
+/frontend/config/*
+/frontend/controllers/*
+/frontend/models/*
+/frontend/runtime/*
+/frontend/tests/*
+
+/frontend/Dockerfile
+
+#root files
 codeception.yml
 composer.json
 composer.lock
