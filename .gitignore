@@ -42,12 +42,12 @@ phpunit.phar
 /backend/web/index-test.php
 /backend/web/robots.txt
 
-#my rules
-/backend/*
-/console/*
-/environments/*
-/vagrant/*
-/vendor/*
+#my general rules
+/backend/
+/console/
+/environments/
+/vagrant/
+/vendor/
 
 #common -> files
 /common/config/.gitignore
@@ -59,22 +59,21 @@ phpunit.phar
 /common/config/test-local.php
 /common/config/test.php
 
-/common/fixtures/*
-/common/mail/*
-/common/models/*
-/common/tests/*
-/common/widgets/*
+/common/fixtures/
+/common/mail/
+/common/models/
+/common/tests/
+/common/widgets/
 /common/codeception.yml
 
 #frontend -> files
-/frontend/config/*
-/frontend/controllers/*
-/frontend/models/*
-/frontend/runtime/*
-/frontend/tests/*
+/frontend/config/
+/frontend/controllers/
+/frontend/models/
+/frontend/runtime
+/frontend/tests/
 
-/frontend/web/assets/*
-
+/frontend/web/assets
 /frontend/web/favicon.ico
 /frontend/web/index-test.php
 /frontend/web/index.php
@@ -89,6 +88,17 @@ phpunit.phar
 /frontend/site/resendVerificationEmail.php
 /frontend/site/resetPassword.php
 /frontend/site/signup.php
+
+/frontend/views/layouts/_main.php
+/frontend/views/site/_index.php
+/frontend/views/site/about.php
+/frontend/views/site/contact.php
+/frontend/views/site/error.php
+/frontend/views/site/login.php
+/frontend/views/site/requestPasswordResetToken.php
+/frontend/views/site/resendVerificationEmail.php
+/frontend/views/site/resetPassword.php
+/frontend/views/site/signup.php
 
 /frontend/codeception.yml
 /frontend/Dockerfile
