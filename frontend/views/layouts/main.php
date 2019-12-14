@@ -123,7 +123,11 @@ AppAsset::register($this);
         </div>
     </header>
 
-    <?php /* $content */ ?>
+    <main class="page-main">
+        <div class="main-container page-container">
+            <?= $content ?>
+        </div>
+    </main>
 
     <footer class="page-footer">
         <div class="main-container page-footer__container">
