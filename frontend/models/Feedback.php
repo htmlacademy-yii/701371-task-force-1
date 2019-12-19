@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "feedback".
@@ -17,7 +18,7 @@ use Yii;
  * @property Users $account
  * @property FeedbackStatus $status
  */
-class Feedback extends \yii\db\ActiveRecord
+class Feedback extends ActiveRecord
 {
     /**
      * {@inheritdoc}

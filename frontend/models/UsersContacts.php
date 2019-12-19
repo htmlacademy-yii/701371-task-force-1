@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "users_contacts".
@@ -14,7 +15,7 @@ use Yii;
  *
  * @property Users[] $users
  */
-class UsersContacts extends \yii\db\ActiveRecord
+class UsersContacts extends ActiveRecord
 {
     /**
      * {@inheritdoc}

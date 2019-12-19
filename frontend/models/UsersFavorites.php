@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "users_favorites".
@@ -14,7 +15,7 @@ use Yii;
  * @property Users $favoritesAccount
  * @property Users $account
  */
-class UsersFavorites extends \yii\db\ActiveRecord
+class UsersFavorites extends ActiveRecord
 {
     /**
      * {@inheritdoc}

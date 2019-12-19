@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "users_roles".
@@ -13,7 +14,7 @@ use Yii;
  *
  * @property Users[] $users
  */
-class UsersRoles extends \yii\db\ActiveRecord
+class UsersRoles extends ActiveRecord
 {
     /**
      * {@inheritdoc}

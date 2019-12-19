@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "task".
@@ -26,7 +27,7 @@ use Yii;
  * @property TaskStatus $status
  * @property TaskFile[] $taskFiles
  */
-class Task extends \yii\db\ActiveRecord
+class Task extends ActiveRecord
 {
     /**
      * {@inheritdoc}
