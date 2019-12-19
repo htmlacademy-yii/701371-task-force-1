@@ -50,17 +50,17 @@ class Category extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getTasks()
+    public function getTasks(): ActiveQuery
     {
         return $this->hasMany(Task::className(), ['category_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUsersCategories()
+    public function getUsersCategories(): ActiveQuery
     {
         return $this->hasMany(UsersCategory::className(), ['category_id' => 'id']);
     }

@@ -50,17 +50,17 @@ class UsersCategory extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCategory()
+    public function getCategory(): ActiveQuery
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAccount()
+    public function getAccount(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'account_id']);
     }

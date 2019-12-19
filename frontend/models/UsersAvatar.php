@@ -46,9 +46,9 @@ class UsersAvatar extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUsers()
+    public function getUsers(): ActiveQuery
     {
         return $this->hasMany(Users::className(), ['avatar_id' => 'id']);
     }

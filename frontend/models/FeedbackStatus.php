@@ -46,9 +46,9 @@ class FeedbackStatus extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFeedbacks()
+    public function getFeedbacks(): ActiveQuery
     {
         return $this->hasMany(Feedback::className(), ['status_id' => 'id']);
     }

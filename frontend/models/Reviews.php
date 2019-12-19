@@ -54,9 +54,9 @@ class Reviews extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAccount()
+    public function getAccount(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'account_id']);
     }

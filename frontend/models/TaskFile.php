@@ -50,9 +50,9 @@ class TaskFile extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getTask()
+    public function getTask(): ActiveQuery
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }

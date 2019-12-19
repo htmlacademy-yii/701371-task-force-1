@@ -54,17 +54,17 @@ class Message extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSender()
+    public function getSender(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'sender_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getReciever()
+    public function getReciever(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'reciever_id']);
     }

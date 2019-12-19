@@ -46,9 +46,9 @@ class TaskStatus extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getTasks()
+    public function getTasks(): ActiveQuery
     {
         return $this->hasMany(Task::className(), ['status_id' => 'id']);
     }

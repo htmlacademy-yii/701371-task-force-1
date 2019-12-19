@@ -99,113 +99,113 @@ class Users extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFeedbacks()
+    public function getFeedbacks(): ActiveQuery
     {
         return $this->hasMany(Feedback::className(), ['account_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getMessages()
+    public function getMessages(): ActiveQuery
     {
         return $this->hasMany(Message::className(), ['sender_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getMessages0()
+    public function getMessages0(): ActiveQuery
     {
         return $this->hasMany(Message::className(), ['reciever_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getReviews()
+    public function getReviews(): ActiveQuery
     {
         return $this->hasMany(Reviews::className(), ['account_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getTasks()
+    public function getTasks(): ActiveQuery
     {
         return $this->hasMany(Task::className(), ['executor_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCity()
+    public function getCity(): ActiveQuery
     {
         return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getContacts()
+    public function getContacts(): ActiveQuery
     {
         return $this->hasOne(UsersContacts::className(), ['id' => 'contacts_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAvatar()
+    public function getAvatar(): ActiveQuery
     {
         return $this->hasOne(UsersAvatar::className(), ['id' => 'avatar_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getRole()
+    public function getRole(): ActiveQuery
     {
         return $this->hasOne(UsersRoles::className(), ['id' => 'role_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getNotification()
+    public function getNotification(): ActiveQuery
     {
         return $this->hasOne(Notification::className(), ['id' => 'notification_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUsersCategories()
+    public function getUsersCategories(): ActiveQuery
     {
         return $this->hasMany(UsersCategory::className(), ['account_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUsersFavorites()
+    public function getUsersFavorites(): ActiveQuery
     {
         return $this->hasMany(UsersFavorites::className(), ['favorites_account_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUsersFavorites0()
+    public function getUsersFavorites0(): ActiveQuery
     {
         return $this->hasMany(UsersFavorites::className(), ['account_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUsersImages()
+    public function getUsersImages(): ActiveQuery
     {
         return $this->hasMany(UsersImage::className(), ['account_id' => 'id']);
     }

@@ -49,9 +49,9 @@ class UsersRoles extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUsers()
+    public function getUsers(): ActiveQuery
     {
         return $this->hasMany(Users::className(), ['role_id' => 'id']);
     }

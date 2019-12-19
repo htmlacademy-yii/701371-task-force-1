@@ -56,25 +56,25 @@ class Feedback extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getTask()
+    public function getTask(): ActiveQuery
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAccount()
+    public function getAccount(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'account_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getStatus()
+    public function getStatus(): ActiveQuery
     {
         return $this->hasOne(FeedbackStatus::className(), ['id' => 'status_id']);
     }

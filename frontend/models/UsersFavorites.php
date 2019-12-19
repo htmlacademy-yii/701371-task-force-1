@@ -50,17 +50,17 @@ class UsersFavorites extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFavoritesAccount()
+    public function getFavoritesAccount(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'favorites_account_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAccount()
+    public function getAccount(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'account_id']);
     }
