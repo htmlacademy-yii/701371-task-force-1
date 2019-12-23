@@ -69,9 +69,15 @@ phpunit.phar
 #frontend -> files
 /frontend/config/
 /frontend/controllers/
-/frontend/models/
 /frontend/runtime
 /frontend/tests/
+
+/frontend/models/ContactForm.php
+/frontend/models/PasswordResetRequestForm.php
+/frontend/models/ResendVerificationEmailForm.php
+/frontend/models/ResetPasswordForm.php
+/frontend/models/SignupForm.php
+/frontend/models/VerifyEmailForm.php
 
 /frontend/web/assets
 /frontend/web/favicon.ico
