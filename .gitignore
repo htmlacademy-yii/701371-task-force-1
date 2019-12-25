@@ -105,6 +105,9 @@ phpunit.phar
 /frontend/views/site/resendVerificationEmail.php
 /frontend/views/site/resetPassword.php
 /frontend/views/site/signup.php
+/frontend/views/tasks_index.php
+
+/frontend/controllers/_TasksController.php
 
 /frontend/codeception.yml
 /frontend/Dockerfile
@@ -120,9 +123,9 @@ init.bat
 LICENSE.md
 requirements.php
 Vagrantfile
-vsc.code-workspace
 yii
 yii.bat
+queries.sql
 .gitattributes
 .bowerrc
 .editorconfig
