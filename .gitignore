@@ -68,7 +68,6 @@ phpunit.phar
 
 #frontend -> files
 /frontend/config/
-/frontend/controllers/
 /frontend/runtime
 /frontend/tests/
 
@@ -108,6 +107,7 @@ phpunit.phar
 /frontend/views/tasks_index.php
 
 /frontend/controllers/_TasksController.php
+/frontend/controllers/SiteController.php
 
 /frontend/codeception.yml
 /frontend/Dockerfile
