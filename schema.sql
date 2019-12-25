@@ -15,11 +15,11 @@ CREATE TABLE task (
 	title VARCHAR(64) NOT NULL,
 	description TEXT NOT NULL,
 	address VARCHAR(255) NOT NULL,
-	-- latitude TEXT(16) NOT NULL,
-	-- longitude TEXT(16) NOT NULL,
+	latitude TEXT(16) NOT NULL,
+	longitude TEXT(16) NOT NULL,
 	price FLOAT(8) NOT NULL,
 	deadline DATETIME NOT NULL,
-	created DATETIME NOT NULL DEFAULT NOW(),
+    created DATETIME NOT NULL DEFAULT NOW(),
 
 	-- image_id INT,
 	city_id INT,
@@ -85,6 +85,7 @@ CREATE TABLE users (
 	password CHAR(64) NOT NULL,
 	address TEXT NOT NULL,
 	born DATETIME NOT NULL DEFAULT NOW(),
+    create DATETIME NOT NULL DEFAULT NOW(),
 	about TEXT NOT NULL,
 	visit DATETIME NOT NULL DEFAULT NOW(),
 	quest_completed INT(4) NOT NULL,
@@ -171,6 +172,14 @@ CREATE TABLE message (
 	reciever_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+# CREATE TABLE opinions (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     created DATETIME NOT NULL DEFAULT NOW(),
+#     rate INT,
+#     description TEXT NOT NULL
+# )
+# ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 
 -- **
