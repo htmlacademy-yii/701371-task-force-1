@@ -21,7 +21,7 @@ class UsersFavorites extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users_favorites';
     }
@@ -29,7 +29,7 @@ class UsersFavorites extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['favorites_account_id', 'account_id'], 'integer'],
@@ -41,7 +41,7 @@ class UsersFavorites extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

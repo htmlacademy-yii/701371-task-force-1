@@ -21,7 +21,7 @@ class UsersCategory extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users_category';
     }
@@ -29,7 +29,7 @@ class UsersCategory extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['account_id', 'category_id'], 'integer'],
@@ -41,7 +41,7 @@ class UsersCategory extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

@@ -5,7 +5,7 @@ use frontend\models\Task;
 
 class TasksController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex(): void
     {
         $models = Task::find()->all();
         return $this->render('index', ['models' => $models]);

@@ -33,7 +33,7 @@ class Task extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'task';
     }
@@ -41,7 +41,7 @@ class Task extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title', 'description', 'address', 'price', 'deadline'], 'required'],
@@ -61,7 +61,7 @@ class Task extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

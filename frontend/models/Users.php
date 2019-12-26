@@ -48,7 +48,7 @@ class Users extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users';
     }
@@ -56,7 +56,7 @@ class Users extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['email', 'name', 'password', 'address', 'about', 'quest_completed', 'views_counter', 'hide_account', 'show_contacts_to_customer'], 'required'],
@@ -75,7 +75,7 @@ class Users extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

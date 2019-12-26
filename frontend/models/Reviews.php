@@ -22,7 +22,7 @@ class Reviews extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'reviews';
     }
@@ -30,7 +30,7 @@ class Reviews extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['description', 'raiting'], 'required'],
@@ -43,7 +43,7 @@ class Reviews extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
