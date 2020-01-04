@@ -84,10 +84,6 @@ phpunit.phar
 /frontend/web/index.php
 /frontend/web/robots.txt
 
-#/frontend/web/fonts/PTSans-Bold.ttf
-#/frontend/web/fonts/PTSans-Italic.ttf
-#/frontend/web/fonts/PTSans-Regular.ttf
-
 /frontend/site/_index.php
 /frontend/site/about.php
 /frontend/site/contact.php
