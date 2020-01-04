@@ -34,7 +34,12 @@ class UsersImage extends ActiveRecord
             [['image_path'], 'required'],
             [['account_id'], 'integer'],
             [['image_path'], 'string', 'max' => 45],
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
+            [['account_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Users::className(),
+                'targetAttribute' => ['account_id' => 'id']
+            ],
         ];
     }
 

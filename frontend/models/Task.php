@@ -44,17 +44,42 @@ class Task extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['title', 'description', 'address', 'price', 'deadline'], 'required'],
+            [['title',
+                'description',
+                'address',
+                'price',
+                'deadline'], 'required'
+            ],
             [['description'], 'string'],
             [['price'], 'number'],
             [['deadline', 'created'], 'safe'],
             [['city_id', 'executor_id', 'status_id', 'category_id'], 'integer'],
             [['title'], 'string', 'max' => 64],
             [['address'], 'string', 'max' => 255],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['executor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['executor_id' => 'id']],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['category_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Category::className(),
+                'targetAttribute' => ['category_id' => 'id']
+            ],
+            [['executor_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Users::className(),
+                'targetAttribute' => ['executor_id' => 'id']
+            ],
+            [['city_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => City::className(),
+                'targetAttribute' => ['city_id' => 'id']
+            ],
+            [['status_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => TaskStatus::className(),
+                'targetAttribute' => ['status_id' => 'id']
+            ],
         ];
     }
 

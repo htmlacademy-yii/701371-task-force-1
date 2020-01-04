@@ -33,8 +33,18 @@ class UsersCategory extends ActiveRecord
     {
         return [
             [['account_id', 'category_id'], 'integer'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
+            [['category_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Category::className(),
+                'targetAttribute' => ['category_id' => 'id']
+            ],
+            [['account_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Users::className(),
+                'targetAttribute' => ['account_id' => 'id']
+            ],
         ];
     }
 

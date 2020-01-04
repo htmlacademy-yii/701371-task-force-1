@@ -33,8 +33,18 @@ class UsersFavorites extends ActiveRecord
     {
         return [
             [['favorites_account_id', 'account_id'], 'integer'],
-            [['favorites_account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['favorites_account_id' => 'id']],
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
+            [['favorites_account_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Users::className(),
+                'targetAttribute' => ['favorites_account_id' => 'id']
+            ],
+            [['account_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Users::className(),
+                'targetAttribute' => ['account_id' => 'id']
+            ],
         ];
     }
 
@@ -55,7 +65,8 @@ class UsersFavorites extends ActiveRecord
      */
     public function getFavoritesAccount(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'favorites_account_id']);
+        return $this->hasOne(Users::className(),
+            ['id' => 'favorites_account_id']);
     }
 
     /**

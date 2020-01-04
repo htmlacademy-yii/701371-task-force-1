@@ -34,7 +34,12 @@ class TaskFile extends ActiveRecord
             [['image_path'], 'required'],
             [['task_id'], 'integer'],
             [['image_path'], 'string', 'max' => 45],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
+            [['task_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Task::className(),
+                'targetAttribute' => ['task_id' => 'id']
+            ],
         ];
     }
 
