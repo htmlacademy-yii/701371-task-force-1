@@ -7,9 +7,7 @@ class TasksController extends Controller
 {
     public function actionIndex(): string
     {
-        $models = Task::find()
-            ->all();
-
+        $models = Task::find()->all();
         return $this->render('index', ['models' => $models]);
     }
 }
