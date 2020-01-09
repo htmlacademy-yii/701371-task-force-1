@@ -1,23 +1,14 @@
-# yii console commands
-/yii
-/yii_test
-/yii_test.bat
-
-# phpstorm project files
+.DS_Store
 .idea
-
-# netbeans project files
-nbproject
-
-# zend studio for eclipse project files
-.buildpath
-.project
-.settings
-
-# windows thumbnail cache
+*.ai
+*.log
+*.pdf
+*.psd
+*.sublime*
 Thumbs.db
 
-# composer vendor dir
+# composer 
+dir
 /vendor
 
 # composer itself is not needed
