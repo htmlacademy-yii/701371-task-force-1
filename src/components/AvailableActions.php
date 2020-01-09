@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace app\components;
 
-/**/
+/*1*/
 
 class AvailableActions
 {

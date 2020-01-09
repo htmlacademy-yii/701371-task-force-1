@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "users".
@@ -47,7 +48,7 @@ class Users extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users';
     }
@@ -55,26 +56,69 @@ class Users extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            [['email', 'name', 'password', 'address', 'about', 'quest_completed', 'views_counter', 'hide_account', 'show_contacts_to_customer'], 'required'],
+            [['email',
+                'name',
+                'password',
+                'address',
+                'about',
+                'quest_completed',
+                'views_counter',
+                'hide_account',
+                'show_contacts_to_customer'], 'required'
+            ],
             [['address', 'about'], 'string'],
             [['born', 'visit'], 'safe'],
-            [['quest_completed', 'views_counter', 'hide_account', 'show_contacts_to_customer', 'avatar_id', 'role_id', 'raiting_id', 'city_id', 'contacts_id', 'notification_id'], 'integer'],
+            [['quest_completed',
+                'views_counter',
+                'hide_account',
+                'show_contacts_to_customer',
+                'avatar_id',
+                'role_id',
+                'raiting_id',
+                'city_id',
+                'contacts_id',
+                'notification_id'], 'integer'
+            ],
             [['email', 'name', 'password'], 'string', 'max' => 64],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
-            [['contacts_id'], 'exist', 'skipOnError' => true, 'targetClass' => UsersContacts::className(), 'targetAttribute' => ['contacts_id' => 'id']],
-            [['avatar_id'], 'exist', 'skipOnError' => true, 'targetClass' => UsersAvatar::className(), 'targetAttribute' => ['avatar_id' => 'id']],
-            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => UsersRoles::className(), 'targetAttribute' => ['role_id' => 'id']],
-            [['notification_id'], 'exist', 'skipOnError' => true, 'targetClass' => Notification::className(), 'targetAttribute' => ['notification_id' => 'id']],
+            [['city_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => City::className(),
+                'targetAttribute' => ['city_id' => 'id']
+            ],
+            [['contacts_id'], 'exist',
+                'skipOnError' => true,
+                'targetClass' => UsersContacts::className(),
+                'targetAttribute' => ['contacts_id' => 'id']
+            ],
+            [['avatar_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => UsersAvatar::className(),
+                'targetAttribute' => ['avatar_id' => 'id']
+            ],
+            [['role_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => UsersRoles::className(),
+                'targetAttribute' => ['role_id' => 'id']
+            ],
+            [['notification_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Notification::className(),
+                'targetAttribute' => ['notification_id' => 'id']
+            ],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -151,7 +195,8 @@ class Users extends ActiveRecord
      */
     public function getContacts(): ActiveQuery
     {
-        return $this->hasOne(UsersContacts::className(), ['id' => 'contacts_id']);
+        return $this->hasOne(UsersContacts::className(),
+            ['id' => 'contacts_id']);
     }
 
     /**
@@ -175,7 +220,8 @@ class Users extends ActiveRecord
      */
     public function getNotification(): ActiveQuery
     {
-        return $this->hasOne(Notification::className(), ['id' => 'notification_id']);
+        return $this->hasOne(Notification::className(),
+            ['id' => 'notification_id']);
     }
 
     /**
@@ -183,7 +229,8 @@ class Users extends ActiveRecord
      */
     public function getUsersCategories(): ActiveQuery
     {
-        return $this->hasMany(UsersCategory::className(), ['account_id' => 'id']);
+        return $this->hasMany(UsersCategory::className(),
+            ['account_id' => 'id']);
     }
 
     /**
@@ -191,7 +238,8 @@ class Users extends ActiveRecord
      */
     public function getUsersFavorites(): ActiveQuery
     {
-        return $this->hasMany(UsersFavorites::className(), ['favorites_account_id' => 'id']);
+        return $this->hasMany(UsersFavorites::className(),
+            ['favorites_account_id' => 'id']);
     }
 
     /**
@@ -199,7 +247,8 @@ class Users extends ActiveRecord
      */
     public function getUsersFavorites0(): ActiveQuery
     {
-        return $this->hasMany(UsersFavorites::className(), ['account_id' => 'id']);
+        return $this->hasMany(UsersFavorites::className(),
+            ['account_id' => 'id']);
     }
 
     /**
@@ -207,6 +256,7 @@ class Users extends ActiveRecord
      */
     public function getUsersImages(): ActiveQuery
     {
-        return $this->hasMany(UsersImage::className(), ['account_id' => 'id']);
+        return $this->hasMany(UsersImage::className(),
+            ['account_id' => 'id']);
     }
 }

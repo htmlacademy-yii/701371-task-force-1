@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "users_favorites".
@@ -20,7 +21,7 @@ class UsersFavorites extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users_favorites';
     }
@@ -28,19 +29,29 @@ class UsersFavorites extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['favorites_account_id', 'account_id'], 'integer'],
-            [['favorites_account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['favorites_account_id' => 'id']],
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
+            [['favorites_account_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Users::className(),
+                'targetAttribute' => ['favorites_account_id' => 'id']
+            ],
+            [['account_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Users::className(),
+                'targetAttribute' => ['account_id' => 'id']
+            ],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -54,7 +65,8 @@ class UsersFavorites extends ActiveRecord
      */
     public function getFavoritesAccount(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'favorites_account_id']);
+        return $this->hasOne(Users::className(),
+            ['id' => 'favorites_account_id']);
     }
 
     /**
