@@ -126,6 +126,6 @@ Vagrantfile
 yii
 yii.bat
 queries.sql
-#.gitattributes
+.gitattributes
 .bowerrc
 .editorconfig
