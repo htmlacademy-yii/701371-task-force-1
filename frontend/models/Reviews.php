@@ -1,0 +1,64 @@
+<?php
+
+namespace frontend\models;
+
+use Yii;
+use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
+
+/**
+ * This is the model class for table "reviews".
+ *
+ * @property int $id
+ * @property string $description
+ * @property int $raiting
+ * @property int|null $ststus_id
+ * @property int|null $account_id
+ *
+ * @property Users $account
+ */
+class Reviews extends ActiveRecord
+{
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName(): string
+    {
+        return 'reviews';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules(): array
+    {
+        return [
+            [['description', 'raiting'], 'required'],
+            [['description'], 'string'],
+            [['raiting', 'ststus_id', 'account_id'], 'integer'],
+            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => 'ID',
+            'description' => 'Description',
+            'raiting' => 'Raiting',
+            'ststus_id' => 'Ststus ID',
+            'account_id' => 'Account ID',
+        ];
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getAccount(): ActiveQuery
+    {
+        return $this->hasOne(Users::className(), ['id' => 'account_id']);
+    }
+}
