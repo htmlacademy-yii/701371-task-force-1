@@ -9,7 +9,7 @@
     <section class="new-task">
         <div class="new-task__wrapper">
             <h1>Новые задания</h1>
-            <?php foreach ($models as $task): ?>
+            <?php foreach ($tasks as $task): ?>
                 <div class="new-task__card">
                     <div class="new-task__title">
                         <a href="#" class="link-regular"><h2><?= $task->title; ?></h2></a>
@@ -28,8 +28,7 @@
         <div class="new-task__pagination">
             <ul class="new-task__pagination-list">
                 <li class="pagination__item"><a href="#"></a></li>
-                <li class="pagination__item pagination__item--current">
-                    <a>1</a></li>
+                <li class="pagination__item pagination__item--current"><a>1</a></li>
                 <li class="pagination__item"><a href="#">2</a></li>
                 <li class="pagination__item"><a href="#">3</a></li>
                 <li class="pagination__item"><a href="#"></a></li>
@@ -41,16 +40,19 @@
             <form class="search-task__form" name="test" method="post" action="#">
                 <fieldset class="search-task__categories">
                     <legend>Категории</legend>
-                    <input class="visually-hidden checkbox__input" id="1" type="checkbox" name="" value="" checked>
-                    <label for="1">Курьерские услуги </label>
-                    <input class="visually-hidden checkbox__input" id="2" type="checkbox" name="" value="" checked>
-                    <label  for="2">Грузоперевозки </label>
-                    <input class="visually-hidden checkbox__input" id="3" type="checkbox" name="" value="">
-                    <label  for="3">Переводы </label>
-                    <input class="visually-hidden checkbox__input" id="4" type="checkbox" name="" value="">
-                    <label  for="4">Строительство и ремонт </label>
-                    <input class="visually-hidden checkbox__input" id="5" type="checkbox" name="" value="">
-                    <label  for="5">Выгул животных </label>
+                    <?php foreach ($categoryes as $category): ?>
+                        <input class="visually-hidden checkbox__input" id="<?= $category->id; ?>" type="checkbox" name="" value="">
+                        <label for="<?= $category->id; ?>"><?= $category->name; ?></label>
+<!--                        <label for="1">Курьерские услуги </label>-->
+<!--                        <input class="visually-hidden checkbox__input" id="2" type="checkbox" name="" value="" checked>-->
+<!--                        <label  for="2">Грузоперевозки </label>-->
+<!--                        <input class="visually-hidden checkbox__input" id="3" type="checkbox" name="" value="">-->
+<!--                        <label  for="3">Переводы </label>-->
+<!--                        <input class="visually-hidden checkbox__input" id="4" type="checkbox" name="" value="">-->
+<!--                        <label  for="4">Строительство и ремонт </label>-->
+<!--                        <input class="visually-hidden checkbox__input" id="5" type="checkbox" name="" value="">-->
+<!--                        <label  for="5">Выгул животных </label>-->
+                    <?php endforeach; ?>
                 </fieldset>
                 <fieldset class="search-task__categories">
                     <legend>Дополнительно</legend>
