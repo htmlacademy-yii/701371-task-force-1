@@ -1,7 +1,6 @@
 <?php
-/**
- * @var Task[] $models
- */
+/** @var Task[] $tasks */
+/** @var Category[] $categories */
 ?>
 
 <main class="page-main">
@@ -9,21 +8,23 @@
     <section class="new-task">
         <div class="new-task__wrapper">
             <h1>Новые задания</h1>
-            <?php foreach ($tasks as $task): ?>
-                <div class="new-task__card">
-                    <div class="new-task__title">
-                        <a href="#" class="link-regular"><h2><?= $task->title; ?></h2></a>
-                        <a  class="new-task__type link-regular" href="#"><p><?= $task->category->name; ?></p></a>
+
+                <?php foreach ($tasks as $task): ?>
+                    <div class="new-task__card">
+                        <div class="new-task__title">
+                            <a href="#" class="link-regular"><h2><?= $task->title; ?></h2></a>
+                            <a  class="new-task__type link-regular" href="#"><p><?= $task->category->name; ?></p></a>
+                        </div>
+                        <div class="new-task__icon new-task__icon--<?= $task->category->css_class; ?>"></div>
+                        <p class="new-task_description">
+                            <?= $task->description; ?>
+                        </p>
+                        <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
+                        <p class="new-task__place"><?= $task->address; ?></p>
+                        <span class="new-task__time">4 часа назад</span>
                     </div>
-                    <div class="new-task__icon new-task__icon--<?= $task->category->css_class; ?>"></div>
-                    <p class="new-task_description">
-                        <?= $task->description; ?>
-                    </p>
-                    <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
-                    <p class="new-task__place"><?= $task->address; ?></p>
-                    <span class="new-task__time">4 часа назад</span>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+
         </div>
         <div class="new-task__pagination">
             <ul class="new-task__pagination-list">
@@ -40,19 +41,12 @@
             <form class="search-task__form" name="test" method="post" action="#">
                 <fieldset class="search-task__categories">
                     <legend>Категории</legend>
-                    <?php foreach ($categoryes as $category): ?>
-                        <input class="visually-hidden checkbox__input" id="<?= $category->id; ?>" type="checkbox" name="" value="">
-                        <label for="<?= $category->id; ?>"><?= $category->name; ?></label>
-<!--                        <label for="1">Курьерские услуги </label>-->
-<!--                        <input class="visually-hidden checkbox__input" id="2" type="checkbox" name="" value="" checked>-->
-<!--                        <label  for="2">Грузоперевозки </label>-->
-<!--                        <input class="visually-hidden checkbox__input" id="3" type="checkbox" name="" value="">-->
-<!--                        <label  for="3">Переводы </label>-->
-<!--                        <input class="visually-hidden checkbox__input" id="4" type="checkbox" name="" value="">-->
-<!--                        <label  for="4">Строительство и ремонт </label>-->
-<!--                        <input class="visually-hidden checkbox__input" id="5" type="checkbox" name="" value="">-->
-<!--                        <label  for="5">Выгул животных </label>-->
-                    <?php endforeach; ?>
+
+                        <?php foreach ($categories as $category): ?>
+                            <input class="visually-hidden checkbox__input" id="<?= $category->id; ?>" type="checkbox" name="" value="">
+                            <label for="<?= $category->id; ?>"><?= $category->name; ?></label>
+                        <?php endforeach; ?>
+
                 </fieldset>
                 <fieldset class="search-task__categories">
                     <legend>Дополнительно</legend>
