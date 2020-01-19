@@ -34,6 +34,7 @@ class TaskFilter extends Model
             $tasks->andWhere(['executor_id' => $this->remoteWork]);
         }
 
+        // TODO: ???
         switch ($this->period) {
             case 'day':
                 $tasks->andWhere(['>', 'created', new Expression(
@@ -51,6 +52,7 @@ class TaskFilter extends Model
                 break;
         }
 
+        // TODO: ???
         if ($this->search) {
             $tasks->andWhere("MATCH(task.description, task.title) 
                 AGAINST ('$this->search')");
