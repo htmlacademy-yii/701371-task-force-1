@@ -1,6 +1,14 @@
 <?php
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+
 /** @var Task[] $tasks */
 /** @var Category[] $categories */
+/** @var TaskFilter[] $taskFilter */
+
+$this->title = 'Главная страница';
+Yii::$app->formatter->language = 'ru-RU';
 ?>
 
 <main class="page-main">
@@ -48,22 +56,46 @@
                         <?php endforeach; ?>
 
                 </fieldset>
-                <fieldset class="search-task__categories">
-                    <legend>Дополнительно</legend>
-                    <input class="visually-hidden checkbox__input" id="6" type="checkbox" name="" value="">
-                    <label for="6">Без исполнителя </label>
-                   <input class="visually-hidden checkbox__input" id="7" type="checkbox" name="" value="" checked>
-                    <label for="7">Удаленная работа </label>
-                </fieldset>
-               <label class="search-task__name" for="8">Период</label>
-                   <select class="multiple-select input" id="8"size="1" name="time[]">
-                    <option value="day">За день</option>
-                    <option selected value="week">За неделю</option>
-                    <option value="month">За месяц</option>
-                </select>
-                <label class="search-task__name" for="9">Поиск по названию</label>
-                    <input class="input-middle input" id="9" type="search" name="q" placeholder="">
-                <button class="button" type="submit">Искать</button>
+
+                <?php $form = ActiveForm::begin(); ?>
+                    <fieldset class="search-task__categories">
+
+<!--                        --><?//= $form->field($taskFilter, 'categories')
+//                            ->checkBoxList(ArrayHelper::map(
+//                                $categories, 'id', 'name')); ?>
+
+                        <legend>Дополнительно</legend>
+<!--                            --><?//= html::activeCheckboxList(); ?>
+                        <input class="visually-hidden checkbox__input" id="16" type="checkbox" name="" value="">
+                        <label for="16">Без исполнителя </label>
+                       <input class="visually-hidden checkbox__input" id="17" type="checkbox" name="" value="" checked>
+                        <label for="17">Удаленная работа </label>
+                    </fieldset>
+
+                    <label class="search-task__name" for="8">Период</label>
+    <!--                    <select class="multiple-select input" id="8"size="1" name="time[]">-->
+    <!--                        <option value="day">За день</option>-->
+    <!--                        <option selected value="week">За неделю</option>-->
+    <!--                        <option value="month">За месяц</option>-->
+    <!--                    </select>-->
+
+
+                        <?= html::activeDropDownList($taskFilter, 'period', [
+                                'all' => 'За все время',
+                                'day' => 'За день',
+                                'week' => 'За неделю',
+                                'month' => 'За менсяц'
+                            ], [
+                                'class' => 'multiple-select input'
+                            ]);
+                        ?>
+
+                    <label class="search-task__name" for="9">Поиск по названию</label>
+                        <?= Html::input('search', 'nameSearch_q', '', ['class' => 'input-middle input', 'id' => '9']) ?>
+
+                    <?= Html::submitButton('Искать', ['class' => 'button']); ?>
+                <?php ActiveForm::end(); ?>
+
             </form>
         </div>
     </section>
