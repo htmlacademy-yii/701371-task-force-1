@@ -7,6 +7,10 @@ use yii\helpers\Html;
 /** @var Category[] $categories */
 /** @var TaskFilter[] $taskFilter */
 
+use yii\widgets\LinkPager;
+use yii\base\Widget;
+/** @var Task[] $pages */
+
 $this->title = 'Главная страница';
 Yii::$app->formatter->language = 'ru-RU';
 ?>
@@ -16,6 +20,9 @@ Yii::$app->formatter->language = 'ru-RU';
     <section class="new-task">
         <div class="new-task__wrapper">
             <h1>Новые задания</h1>
+
+                <!-- TODO: почему выводит пустой массив ? -->
+                <?= print_r($taskFilter);?>
 
                 <?php foreach ($tasks as $task): ?>
                     <div class="new-task__card">
@@ -29,18 +36,32 @@ Yii::$app->formatter->language = 'ru-RU';
                         </p>
                         <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
                         <p class="new-task__place"><?= $task->address; ?></p>
-                        <span class="new-task__time">4 часа назад</span>
+
+                        <?php
+                              // TODO: почему diff не работает в yii2 ?
+//                            $currentDate = date('d.m.y');
+//                            $createDate = date('d.m.y', strtotime($task->created));
+//                            $interval = $currentDate->diff($createDate);
+//                            echo $interval;
+                        ?>
+
+                        <!-- TODO: правильно ли вывожу дату ? -->
+                        <span class="new-task__time"><?= date('d.m.y', strtotime($task->created)) ?></span>
                     </div>
                 <?php endforeach; ?>
 
         </div>
+        <!-- TODO: как сделать пагинацию ? -->
         <div class="new-task__pagination">
             <ul class="new-task__pagination-list">
-                <li class="pagination__item"><a href="#"></a></li>
-                <li class="pagination__item pagination__item--current"><a>1</a></li>
-                <li class="pagination__item"><a href="#">2</a></li>
-                <li class="pagination__item"><a href="#">3</a></li>
-                <li class="pagination__item"><a href="#"></a></li>
+<!--                <li class="pagination__item"><a href="#"></a></li>-->
+<!--                <li class="pagination__item pagination__item--current"><a>1</a></li>-->
+<!--                <li class="pagination__item"><a href="#">2</a></li>-->
+<!--                <li class="pagination__item"><a href="#">3</a></li>-->
+<!--                <li class="pagination__item"><a href="#"></a></li>-->
+
+            <!-- TODO: почему не работает ? -->
+            <?= LinkPager::widget(['pagination' => $pages]); ?>
             </ul>
         </div>
     </section>
@@ -64,6 +85,7 @@ Yii::$app->formatter->language = 'ru-RU';
 //                            ->checkBoxList(ArrayHelper::map(
 //                                $categories, 'id', 'name')); ?>
 
+                        <!-- TODO: как сделать ? -->
                         <legend>Дополнительно</legend>
 <!--                            --><?//= html::activeCheckboxList(); ?>
                         <input class="visually-hidden checkbox__input" id="16" type="checkbox" name="" value="">
@@ -80,20 +102,22 @@ Yii::$app->formatter->language = 'ru-RU';
     <!--                    </select>-->
 
 
+                <!-- TODO: нашел решение в нете но не пойму как оно работает -->
                         <?= html::activeDropDownList($taskFilter, 'period', [
                                 'all' => 'За все время',
                                 'day' => 'За день',
                                 'week' => 'За неделю',
                                 'month' => 'За менсяц'
                             ], [
-                                'class' => 'multiple-select input'
+                                'class' => 'multiple-select input',
+                                'id' => '8'
                             ]);
                         ?>
 
                     <label class="search-task__name" for="9">Поиск по названию</label>
+                        <!-- TODO: так правильно? -->
                         <?= Html::input('search', 'nameSearch_q', '', ['class' => 'input-middle input', 'id' => '9']) ?>
-
-                    <?= Html::submitButton('Искать', ['class' => 'button']); ?>
+                        <?= Html::submitButton('Искать', ['class' => 'button']); ?>
                 <?php ActiveForm::end(); ?>
 
             </form>
