@@ -8,12 +8,31 @@ use yii\db\Expression;
 
 class TaskFilter extends Model
 {
-    public $categories = [];
-    public $myCity = null;
-    public $withoutExecutor = null;
-    public $remoteWork = null;
-    public $period = 'all';
-    public $search = null;
+    /** @var array */
+    public $categories;
+
+    public $withoutExecutor;
+    public $remoteWork;
+    public $period;
+    public $title;
+
+    const TIME_PERIOD_ALL = 'all';
+    const TIME_PERIOD_DAY = 'day';
+    const TIME_PERIOD_WEEK = 'week';
+    const TIME_PERIOD_MONTH = 'month';
+
+    const TIME_PERIODS = [
+        self::TIME_PERIOD_DAY => 1,
+        self::TIME_PERIOD_WEEK => 7,
+        self::TIME_PERIOD_MONTH => 30
+    ];
+
+    const TIME_PERIODS_TITLES = [
+        self::TIME_PERIOD_ALL => 'За все время',
+        self::TIME_PERIOD_DAY => 'За день',
+        self::TIME_PERIOD_WEEK => 'За неделю',
+        self::TIME_PERIOD_MONTH => 'За месяц'
+    ];
 
     public function applyFilters(ActiveQuery &$tasks): void
     {
@@ -21,41 +40,26 @@ class TaskFilter extends Model
             $tasks->andWhere(['category_id' => $this->categories]);
         }
 
-        if ($this->myCity) {
-            $tasks->andWhere(['city_id' => $this->myCity]);
-        }
-
-        // TODO: ???
         if ($this->withoutExecutor) {
-            $tasks->andWhere(['city_id' => $this->withoutExecutor]);
+            $tasks->andWhere(['executor_id' => NULL]);
         }
 
-        if ($this->remoteWork) {
-            $tasks->andWhere(['executor_id' => $this->remoteWork]);
+        // @TODO: implement
+        /*
+        if (!$this->remoteWork) {
+            $tasks->andWhere(['city_id' => 'user.city_id']);
+        }
+        */
+
+        if ($this->period) {
+            $tasks->andWhere(['> created', new Expression(
+                sprintf( ('CURRENT_TIMESTAMP() - INTERVAL %d DAY'),
+                    self::TIME_PERIODS[$this->period]) )
+            ]);
         }
 
-        // TODO: ???
-        switch ($this->period) {
-            case 'day':
-                $tasks->andWhere(['>', 'created', new Expression(
-                        'CURRENT_TIMESTAMP() - INTERVAL 1 DAY')]);
-                break;
-
-            case 'week':
-                $tasks->andWhere(['>', 'created', new Expression(
-                    'CURRENT_TIMESTAMP() - INTERVAL 7 DAY')]);
-                break;
-
-            case 'month':
-                $tasks->andWhere(['>', 'created', new Expression(
-                    'CURRENT_TIMESTAMP() - INTERVAL 30 DAY')]);
-                break;
-        }
-
-        // TODO: ???
-        if ($this->search) {
-            $tasks->andWhere("MATCH(task.description, task.title) 
-                AGAINST ('$this->search')");
+        if ($this->title) {
+            $tasks->andWhere(['LIKE', 'title', $this->title]);
         }
     }
 
@@ -66,7 +70,7 @@ class TaskFilter extends Model
             'myCity'            => 'Мой город',
             'withoutExecutor'   => 'Без исполнителя',
             'remoteWork'        => 'Удаленная работа',
-            'period'            => 'Дата',
+            'period'            => 'Период',
             'search'            => 'Поиск по названию',
         ];
     }
@@ -75,10 +79,11 @@ class TaskFilter extends Model
     {
         return [
             [['categories', 'myCity', 'withoutExecutor', 'remoteWork', 'date',
-                'find'], 'safe'],
+                'title'], 'safe'],
 
             [['myCity', 'withoutExecutor', 'remoteWork'], 'boolean'],
-            [['find'], 'string']
+            [['title'], 'filter', 'filter' => 'htmlspecialchars'],
+            [['title'], 'string']
         ];
     }
 }
