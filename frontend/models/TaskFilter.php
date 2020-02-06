@@ -28,7 +28,6 @@ class TaskFilter extends Model
     ];
 
     const TIME_PERIODS_TITLES = [
-        self::TIME_PERIOD_ALL => 'За все время',
         self::TIME_PERIOD_DAY => 'За день',
         self::TIME_PERIOD_WEEK => 'За неделю',
         self::TIME_PERIOD_MONTH => 'За месяц'

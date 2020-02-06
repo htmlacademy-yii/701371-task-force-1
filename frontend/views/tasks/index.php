@@ -151,7 +151,12 @@ HTML;
                             'labelOptions' => ['class' => 'search-task__name']
                         ])->dropDownList(
                             TaskFilter::TIME_PERIODS_TITLES,
-                            ['class' => 'multiple-select input']); ?>
+                            [
+                                'class' => 'multiple-select input',
+                                'options' => [TaskFilter::TIME_PERIOD_WEEK => ['Selected' => true]]
+                            ]
+                        );
+                    ?>
 
                     <?= Html::activeLabel($taskFilter, 'search',
                             ['class' => 'search-task__name', 'for' => 12]) ?>
