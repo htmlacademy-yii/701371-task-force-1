@@ -42,13 +42,7 @@ Yii::$app->formatter->language = 'ru-RU';
                         <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
                         <p class="new-task__place"><?= $task->address; ?></p>
 
-                        <?php
-                            $currentDate = new DateTime();
-                            $createDate = new DateTime($task->created);
-
-                            $interval = $currentDate->diff($createDate);
-                            echo (int)$interval->d . ' / ' . $interval->h;
-                        ?>
+                        <?= $task->getPublishedTimeDiff(); ?>
 
                     </div>
                 <?php endforeach; ?>
