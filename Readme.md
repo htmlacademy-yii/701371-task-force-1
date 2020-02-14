@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Александр Гинц](https://up.htmlacademy.ru/yii/1/user/701371).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Ходаковский](https://htmlacademy.ru/profile/id1232355).
 
 ---
 
