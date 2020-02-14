@@ -85,7 +85,7 @@ CREATE TABLE users (
 	password CHAR(64) NOT NULL,
 	address TEXT NOT NULL,
 	born DATETIME NOT NULL DEFAULT NOW(),
-    create DATETIME NOT NULL DEFAULT NOW(),
+	created DATETIME NOT NULL DEFAULT NOW(),
 	about TEXT NOT NULL,
 	visit DATETIME NOT NULL DEFAULT NOW(),
 	quest_completed INT(4) NOT NULL,
@@ -181,7 +181,10 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 # )
 # ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1622d05a8f4fb5885c79480975fd27323d576abd
 -- **
 
 CREATE INDEX index_category ON category(id);
@@ -196,7 +199,10 @@ ALTER TABLE feedback ADD FOREIGN KEY (status_id) REFERENCES feedback_status(id);
 ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE task_file ADD FOREIGN KEY (task_id) REFERENCES task(id);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1622d05a8f4fb5885c79480975fd27323d576abd
 -- **
 
 ALTER TABLE message ADD FOREIGN KEY (sender_id) REFERENCES users(id);

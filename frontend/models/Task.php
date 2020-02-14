@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use DateTime;
 
 /**
  * This is the model class for table "task".
@@ -38,6 +39,17 @@ class Task extends ActiveRecord
         return 'task';
     }
 
+<<<<<<< HEAD
+=======
+    public function getPublishedTimeDiff(): string
+    {
+        $currentDate = new DateTime();
+        $createDate = new DateTime($this->created);
+        $interval = $currentDate->diff($createDate);
+        return (int)$interval->d . ' / ' . $interval->h;
+    }
+
+>>>>>>> 1622d05a8f4fb5885c79480975fd27323d576abd
     /**
      * {@inheritdoc}
      */
