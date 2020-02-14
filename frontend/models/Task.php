@@ -39,8 +39,6 @@ class Task extends ActiveRecord
         return 'task';
     }
 
-<<<<<<< HEAD
-=======
     public function getPublishedTimeDiff(): string
     {
         $currentDate = new DateTime();
@@ -49,7 +47,6 @@ class Task extends ActiveRecord
         return (int)$interval->d . ' / ' . $interval->h;
     }
 
->>>>>>> 1622d05a8f4fb5885c79480975fd27323d576abd
     /**
      * {@inheritdoc}
      */
