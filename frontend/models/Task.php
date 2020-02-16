@@ -44,7 +44,7 @@ class Task extends ActiveRecord
         $currentDate = new DateTime();
         $createDate = new DateTime($this->created);
         $interval = $currentDate->diff($createDate);
-        return (int)$interval->d . ' / ' . $interval->h;
+        return (int)$interval->d . ' дней и ' . $interval->h . ' часа';
     }
 
     /**
