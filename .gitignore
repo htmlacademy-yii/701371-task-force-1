@@ -125,7 +125,6 @@ requirements.php
 Vagrantfile
 yii
 yii.bat
-queries.sql
 .gitattributes
 .bowerrc
 .editorconfig
