@@ -33,7 +33,7 @@ class TaskFilter extends Model
         self::TIME_PERIOD_MONTH => 'За месяц'
     ];
 
-    public function applyFilters(ActiveQuery &$tasks): void
+    public function applyFilters(ActiveQuery $tasks): void
     {
         if ($this->categories) {
             $tasks->andWhere(['category_id' => $this->categories]);
