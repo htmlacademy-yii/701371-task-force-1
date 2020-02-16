@@ -68,9 +68,9 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE reviews (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	description TEXT NOT NULL,
-	raiting TINYINT(1) NOT NULL,
+	raiting FLOAT(1) NOT NULL,
 
-	ststus_id INT,
+	status_id INT,
 	account_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -200,6 +200,7 @@ ALTER TABLE task_file ADD FOREIGN KEY (task_id) REFERENCES task(id);
 ALTER TABLE message ADD FOREIGN KEY (sender_id) REFERENCES users(id);
 ALTER TABLE message ADD FOREIGN KEY (reciever_id) REFERENCES users(id);
 ALTER TABLE users ADD FOREIGN KEY (city_id) REFERENCES city(id);
+ALTER TABLE users ADD FOREIGN KEY (raiting_id) REFERENCES reviews(id);
 ALTER TABLE users ADD FOREIGN KEY (contacts_id) REFERENCES users_contacts(id);
 ALTER TABLE users ADD FOREIGN KEY (avatar_id) REFERENCES users_avatar(id);
 ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES users_roles(id);
