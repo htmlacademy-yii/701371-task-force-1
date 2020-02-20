@@ -24,6 +24,7 @@ CREATE TABLE task (
 	-- image_id INT,
 	city_id INT,
 	executor_id INT,
+	owner_id INT,
 	status_id INT,
 	category_id INT
 	-- rating_id INT,
@@ -69,6 +70,8 @@ CREATE TABLE reviews (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	description TEXT NOT NULL,
 	raiting FLOAT(1) NOT NULL,
+    created DATETIME NOT NULL DEFAULT NOW(),
+    price FLOAT(8) NOT NULL,
 
 	status_id INT,
 	account_id INT
@@ -187,12 +190,14 @@ CREATE INDEX index_category ON category(id);
 
 ALTER TABLE task ADD FOREIGN KEY (category_id) REFERENCES category(id);
 ALTER TABLE task ADD FOREIGN KEY (executor_id) REFERENCES users(id);
+ALTER TABLE task ADD FOREIGN KEY (owner_id) REFERENCES users(id);
+ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE reviews ADD FOREIGN KEY (account_id) REFERENCES users(id);
+ALTER TABLE reviews ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE feedback ADD FOREIGN KEY (task_id) REFERENCES task(id);
 ALTER TABLE task ADD FOREIGN KEY (city_id) REFERENCES city(id);
 ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES users(id);
 ALTER TABLE feedback ADD FOREIGN KEY (status_id) REFERENCES feedback_status(id);
-ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE task_file ADD FOREIGN KEY (task_id) REFERENCES task(id);
 
 -- **

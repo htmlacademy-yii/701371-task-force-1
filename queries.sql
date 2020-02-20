@@ -1158,11 +1158,16 @@ INSERT INTO users_avatar (image_path) VALUES
     ('man-glasses.jpg'),
     ('man-hat.jpg');
 
-INSERT INTO users (email, name, password, created, avatar_id) VALUES
+INSERT INTO users (
+    email,
+    name,
+    password,
+    created,
+    avatar_id) VALUES
     ('kbuttress0@1und1.de', 'Karrie Buttress', 'JcfoKBYAB4k', '2019-08-10', 1),
     ('baymer1@hp.com', 'Bob Aymer', 'ZEE54kg', '2018-12-21', 1),
     ('zboulding2@macromedia.com', 'Zilvia Boulding', 'VJyMV1Zat', '2019-07-25', 1),
-    ('emollon3@bloglovin.com', 'Emalee Mollon', 'XUIeJ693h', '2018-11-13', 1),
+    ('emollon3@bloglovin.com', 'Emalee Mollon', 'XUIeJ693h', '2018-11-13', 3),
     ('mmulberry4@cmu.edu', 'Maria Mulberry', 'oWspnl', '2019-07-20', 1),
     ('lby5@mozilla.com', 'Levey By', 'GdtcUU', '2019-02-12', 2),
     ('beates6@last.fm', 'Baron Eates', 'UQw6VeA', '2019-05-03', 1),
@@ -1198,7 +1203,7 @@ INSERT INTO task (
     price,
     latitude,
     longitude,
-    executor_id,
+    owner_id,
     status_id
 ) VALUES
 ('2019-03-09', '2', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', '6587', '6.9641667', '158.2083333', 4, 1),
@@ -1213,7 +1218,7 @@ INSERT INTO task (
     Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.
     Fusce consequat. Nulla nisl. Nunc nisl.', '2019-11-10', 'benchmark plug-and-play infomediaries', '80 Cambridge Street', '838', '20.5800358', '-75.2435307', 9, 1),
 
-('2019-09-07', '3', 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', '2019-12-15', 'integrate cross-platform e-business', '1 Stone Corner Junction', '7484', '14.9326574', '-91.6941845', 10, 1),
+('2019-09-07', '3', 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', '2019-12-15', 'integrate cross-platform e-business', '1 Stone Corner Junction', '7484', '14.9326574', '-91.6941845', 6, 1),
 ('2018-11-01', '7', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', '2019-11-24', 'enable dot-com niches', '12 Stephen Terrace', '5725', '40.163127', '116.638868', 12, 1),
 ('2019-09-13', '5', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', '2019-11-19', 'transform web-enabled relationships', '6213 Lake View Drive', '4414', '44.3794871', '20.2638941', 14, 1),
 ('2019-04-01', '8', 'Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.
@@ -1245,7 +1250,15 @@ INSERT INTO task_file (image_path, task_id) VALUES
     ('myPassportPic.jpeg', 9),
     ('myPassportPicture.jpeg', 10);
 
-INSERT INTO reviews (description, raiting, status_id, account_id) VALUES
-    ('desc', 4.25, 2, 6);
+INSERT INTO reviews (description, raiting, price, status_id, account_id)
+VALUES
+    ('desc', 4.25, 1500, 1, 6),
+    ('bad executor', 1, 2500, 1, 6),
+    ('normal executor!', 3, 3500, 1, 6),
+    ('exelent executor!', 5, 4500, 1, 6),
+    ('there is no cow level', 4, 1500, 1, 1),
+    ('Im can do it', 2, 500, 2, 1),
+    ('Take all tasks', 3, 3000, 3, 3),
+    ('like hard-work', 5, 4500, 1, 4);
 
 

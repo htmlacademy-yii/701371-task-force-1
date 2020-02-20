@@ -44,7 +44,10 @@ phpunit.phar
 
 #my general rules
 /backend/
-/console/
+
+/console/config
+/console/controllers
+
 /environments/
 /vagrant/
 /vendor/

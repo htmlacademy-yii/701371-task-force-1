@@ -65,14 +65,29 @@ class TasksController extends Controller
         $task = Task::findOne($id);
         $taskFile = TaskFile::findAll(['task_id' => $id]);
 
-        $idUser = $task->executor->id;
+        $idUser = $task->owner->id;
         $users = Users::findOne($idUser);
-        $review = Reviews::find()
+
+        $customerOrders = Task::find()
+            ->where(['owner_id' => $idUser])
+            ->count();
+        $customerReviews = Reviews::find()
             ->where(['account_id' => $idUser])
-            ->one();
+            ->count();
+        $customerRaiting = Reviews::find()
+            ->where(['account_id' => $idUser])
+            ->average('raiting');
+
+        $reviews = Reviews::findAll(['status_id' => 1]);
 
         return $this->render('view',
-            compact('task', 'taskFile', 'users', 'review')
+            compact('task',
+                'taskFile',
+                'users',
+                'customerOrders',
+                'customerReviews',
+                'customerRaiting',
+                'reviews')
         );
     }
 }

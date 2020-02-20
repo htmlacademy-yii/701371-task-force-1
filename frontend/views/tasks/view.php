@@ -12,8 +12,11 @@ use yii\widgets\LinkPager;
 
 /**
  * @var Task[] $task
+ * @var Task[] $customerOrders
+ * @var Task[] $customerReviews
  * @var TaskFile[] $taskFile
- * @var Review[] $review
+ * @var Review[] $customerRaiting
+ * @var Review[] $reviews
  * @var Users[] $users
  */
 
@@ -77,56 +80,48 @@ Yii::$app->formatter->language = 'ru-RU';
             <div class="content-view__feedback">
                 <h2>Отклики <span>(2)</span></h2>
                 <div class="content-view__feedback-wrapper">
-                    <div class="content-view__feedback-card">
-                        <div class="feedback-card__top">
-                            <a href="#"><img src="./img/man-glasses.jpg" width="55" height="55"></a>
-                            <div class="feedback-card__top--name">
-                                <p><a href="#" class="link-regular">Астахов Павел</a></p>
-                                <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-                               <b>4.25</b>
+                    <?php foreach ($reviews as $review): ?>
+                        <div class="content-view__feedback-card">
+                            <div class="feedback-card__top">
+                                <a href="#"><img src="./img/<?= $review->account->avatar->image_path; ?>" width="55" height="55"></a>
+                                <div class="feedback-card__top--name">
+                                    <p><a href="#" class="link-regular"><?= $review->account->name; ?></a></p>
+
+                                    <!-- TODO: disturb DRY!!! -->
+                                    <?php
+                                    $starsMax = 5;
+                                    $starsFill = floor($review->raiting);
+                                    $starsEmpty = $starsMax - $starsFill;
+                                    ?>
+
+                                    <?php for ($i = 0; $i < $starsFill; $i++): ?>
+                                        <span></span>
+                                    <?php endfor; ?>
+
+                                    <?php for ($j = 0; $j < $starsEmpty; $j++): ?>
+                                        <span class="star-disabled"></span>
+                                    <?php endfor; ?>
+
+                                    <b><?= $review->raiting; ?></b>
+
+                                </div>
+                                <span class="new-task__time"><?= $review->getPublishedTimeDiff(); ?> назад</span>
                             </div>
-                            <span class="new-task__time">25 минут назад</span>
-                        </div>
-                        <div class="feedback-card__content">
-                            <p>
-                                Могу сделать всё в лучшем виде. У меня есть необходимый опыт и инструменты.
-                            </p>
-                            <span>1500 ₽</span>
-                        </div>
-                        <div class="feedback-card__actions">
-                            <button class="button__small-color response-button button"
-                                    type="button">Откликнуться</button>
-                            <button class="button__small-color refusal-button button"
-                                    type="button">Отказаться</button>
-                            <button class="button__chat button"
-                                    type="button"></button>
-                        </div>
-                    </div>
-                    <div class="content-view__feedback-card">
-                        <div class="feedback-card__top">
-                            <a href="#"><img src="./img/man-blond.jpg" width="55" height="55"></a>
-                            <div class="feedback-card__top--name">
-                                <p class="link-name"><a href="#" class="link-regular">Богатырев Дмитрий</a></p>
-                                <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-                                <b>4.25</b>
+                            <div class="feedback-card__content">
+                                <p><?= $review->description; ?></p>
+                                <span><?= $review->price; ?></span>
+
                             </div>
-                            <span class="new-task__time">25 минут назад</span>
+                            <div class="feedback-card__actions">
+                                <button class="button__small-color response-button button"
+                                        type="button">Откликнуться</button>
+                                <button class="button__small-color refusal-button button"
+                                        type="button">Отказаться</button>
+                                <button class="button__chat button"
+                                        type="button"></button>
+                            </div>
                         </div>
-                        <div class="feedback-card__content">
-                            <p>
-                                Примусь за выполнение задания в течение часа, сделаю быстро и качественно.
-                            </p>
-                            <span>1500 ₽</span>
-                        </div>
-                        <div class="feedback-card__actions">
-                            <button class="button__small-color response-button button"
-                                    type="button">Откликнуться</button>
-                            <button class="button__small-color refusal-button button"
-                                    type="button">Отказаться</button>
-                            <button class="button__chat button"
-                                    type="button"></button>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
@@ -137,11 +132,12 @@ Yii::$app->formatter->language = 'ru-RU';
                     <div class="profile-mini__top">
                         <img src="./img/<?= $users->avatar->image_path; ?>" width="62" height="62" alt="Аватар заказчика">
                         <div class="profile-mini__name five-stars__rate">
-                            <p><?= $task->executor->name; ?></p>
+                            <p><?= $task->owner->name; ?></p>
 
+                            <!-- TODO: disturb DRY!!! -->
                             <?php
                                 $starsMax = 5;
-                                $starsFill = floor($review->raiting);
+                                $starsFill = floor($customerRaiting);
                                 $starsEmpty = $starsMax - $starsFill;
                             ?>
 
@@ -153,10 +149,13 @@ Yii::$app->formatter->language = 'ru-RU';
                                 <span class="star-disabled"></span>
                             <?php endfor; ?>
 
-                            <b><?= $review->raiting; ?></b>
+                            <b><?= round($customerRaiting, 2); ?></b>
                         </div>
                     </div>
-                    <p class="info-customer"><span>15 отзывов</span><span class="last-">28 заказов</span></p>
+                    <p class="info-customer">
+                        <span><?= $customerReviews; ?> отзывов</span>
+                        <span class="last-"><?= $customerOrders; ?> заказов</span>
+                    </p>
                     <a href="#" class="link-regular">Смотреть профиль</a>
                 </div>
             </div>
