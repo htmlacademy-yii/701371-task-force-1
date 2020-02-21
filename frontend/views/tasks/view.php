@@ -34,7 +34,7 @@ Yii::$app->formatter->language = 'ru-RU';
                             <h1><?= $task->title; ?></h1>
                             <span>Размещено в категории
                                 <a href="#" class="link-regular"><?= $task->category->name; ?></a>
-                                <?= $task->getPublishedTimeDiff(); ?> назад</span>
+                                <?= $task->getPublishedTimeDiff($task->created); ?> назад</span>
                         </div>
                         <b class="new-task__price new-task__price--clean content-view-price"><?= $task->price; ?><b> ₽</b></b>
                         <div class="new-task__icon new-task__icon--<?= $task->category->css_class; ?> content-view-icon"></div>
@@ -105,7 +105,7 @@ Yii::$app->formatter->language = 'ru-RU';
                                     <b><?= $review->raiting; ?></b>
 
                                 </div>
-                                <span class="new-task__time"><?= $review->getPublishedTimeDiff(); ?> назад</span>
+                                <span class="new-task__time"><?= $review->getPublishedTimeDiff($review->created); ?> назад</span>
                             </div>
                             <div class="feedback-card__content">
                                 <p><?= $review->description; ?></p>

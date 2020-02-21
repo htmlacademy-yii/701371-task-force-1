@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use DateTime;
+use frontend\behaviors\DateTimeBehavior;
 use Yii;
 
 /**
@@ -86,17 +87,15 @@ class Reviews extends \yii\db\ActiveRecord
         return $this->hasMany(Users::className(), ['raiting_id' => 'id']);
     }
 
+
     // NOTE: my functions -----------------------------------------------------
 
-    // TODO: disturb DRY!!!
-    public function getPublishedTimeDiff(): string
+    public function behaviors()
     {
-        $currentDate = new DateTime();
-        $createDate = new DateTime($this->created);
-        $interval = $currentDate->diff($createDate);
-
-        return ((int)$interval->d < 1)
-            ? $interval->h . ' часа'
-            : (int)$interval->d . ' дней и ' . $interval->h . ' часа';
+        return [
+            [
+                'class' => DateTimeBehavior::class,
+            ],
+        ];
     }
 }

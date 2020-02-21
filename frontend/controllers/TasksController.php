@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use DateTime;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -79,6 +80,10 @@ class TasksController extends Controller
             ->average('raiting');
 
         $reviews = Reviews::findAll(['status_id' => 1]);
+
+        //$test = new Task;
+        //echo $test->getPublishedTimeDiff($task->created);
+        //die();
 
         return $this->render('view',
             compact('task',

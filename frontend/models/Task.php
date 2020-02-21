@@ -3,6 +3,9 @@
 namespace frontend\models;
 
 use DateTime;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
+use frontend\behaviors\DateTimeBehavior;
 use Yii;
 
 /**
@@ -141,17 +144,25 @@ class Task extends \yii\db\ActiveRecord
         return $this->hasMany(TaskFile::className(), ['task_id' => 'id']);
     }
 
+
     // NOTE: my functions -----------------------------------------------------
 
-    // TODO: disturb DRY!!!
-    public function getPublishedTimeDiff(): string
-    {
-        $currentDate = new DateTime();
-        $createDate = new DateTime($this->created);
-        $interval = $currentDate->diff($createDate);
+    //public function behaviors()
+    //{
+    //    return [
+    //        [
+    //            'class' => DateTimeBehavior::className(),
+    //            'attributeName' => 'created',
+    //        ],
+    //    ];
+    //}
 
-        return ((int)$interval->d < 1)
-            ? $interval->h . ' часа'
-            : (int)$interval->d . ' дней и ' . $interval->h . ' часа';
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => DateTimeBehavior::class,
+            ],
+        ];
     }
 }
