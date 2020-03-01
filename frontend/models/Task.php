@@ -147,21 +147,12 @@ class Task extends \yii\db\ActiveRecord
 
     // NOTE: my functions -----------------------------------------------------
 
-    //public function behaviors()
-    //{
-    //    return [
-    //        [
-    //            'class' => DateTimeBehavior::className(),
-    //            'attributeName' => 'created',
-    //        ],
-    //    ];
-    //}
-
     public function behaviors()
     {
         return [
             [
                 'class' => DateTimeBehavior::class,
+                //'attributeName' => 'created',
             ],
         ];
     }

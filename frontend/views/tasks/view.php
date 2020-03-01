@@ -4,6 +4,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use frontend\components\RaitingWidget;
 //use frontend\models\TaskFilter;
 //use frontend\models\Reviews;
 
@@ -17,7 +18,6 @@ use yii\widgets\LinkPager;
  * @var TaskFile[] $taskFile
  * @var Review[] $customerRaiting
  * @var Review[] $reviews
- * @var Users[] $users
  */
 
 $this->title = 'Главная страница';
@@ -85,23 +85,9 @@ Yii::$app->formatter->language = 'ru-RU';
                             <div class="feedback-card__top">
                                 <a href="#"><img src="./img/<?= $review->account->avatar->image_path; ?>" width="55" height="55"></a>
                                 <div class="feedback-card__top--name">
+
                                     <p><a href="#" class="link-regular"><?= $review->account->name; ?></a></p>
-
-                                    <!-- TODO: disturb DRY!!! -->
-                                    <?php
-                                    $starsMax = 5;
-                                    $starsFill = floor($review->raiting);
-                                    $starsEmpty = $starsMax - $starsFill;
-                                    ?>
-
-                                    <?php for ($i = 0; $i < $starsFill; $i++): ?>
-                                        <span></span>
-                                    <?php endfor; ?>
-
-                                    <?php for ($j = 0; $j < $starsEmpty; $j++): ?>
-                                        <span class="star-disabled"></span>
-                                    <?php endfor; ?>
-
+                                    <?php echo RaitingWidget::widget(['currentRaiting' => $review->raiting]); ?>
                                     <b><?= $review->raiting; ?></b>
 
                                 </div>
@@ -130,26 +116,13 @@ Yii::$app->formatter->language = 'ru-RU';
                 <div class="profile-mini__wrapper">
                     <h3>Заказчик</h3>
                     <div class="profile-mini__top">
-                        <img src="./img/<?= $users->avatar->image_path; ?>" width="62" height="62" alt="Аватар заказчика">
+                        <img src="./img/<?= $task->owner->avatar->image_path; ?>" width="62" height="62" alt="Аватар заказчика">
                         <div class="profile-mini__name five-stars__rate">
+
                             <p><?= $task->owner->name; ?></p>
-
-                            <!-- TODO: disturb DRY!!! -->
-                            <?php
-                                $starsMax = 5;
-                                $starsFill = floor($customerRaiting);
-                                $starsEmpty = $starsMax - $starsFill;
-                            ?>
-
-                            <?php for ($i = 0; $i < $starsFill; $i++): ?>
-                                <span></span>
-                            <?php endfor; ?>
-
-                            <?php for ($j = 0; $j < $starsEmpty; $j++): ?>
-                                <span class="star-disabled"></span>
-                            <?php endfor; ?>
-
+                            <?php echo RaitingWidget::widget(['currentRaiting' => $customerRaiting]); ?>
                             <b><?= round($customerRaiting, 2); ?></b>
+
                         </div>
                     </div>
                     <p class="info-customer">

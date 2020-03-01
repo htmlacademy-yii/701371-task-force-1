@@ -8,7 +8,6 @@ use yii\data\Pagination;
 
 use frontend\models\Task;
 use frontend\models\TaskFile;
-use frontend\models\Users;
 use frontend\models\Reviews;
 use frontend\models\Category;
 use frontend\models\TaskFilter;
@@ -57,17 +56,12 @@ class TasksController extends Controller
     }
 
     // NOTE: ...index.php?r=tasks/view&id=2
-    public function actionView($id = null): string
+    public function actionView($id = 2): string
     {
-        if (empty($id)) {
-            $id = 2;
-        }
-
         $task = Task::findOne($id);
         $taskFile = TaskFile::findAll(['task_id' => $id]);
 
         $idUser = $task->owner->id;
-        $users = Users::findOne($idUser);
 
         $customerOrders = Task::find()
             ->where(['owner_id' => $idUser])
@@ -79,16 +73,11 @@ class TasksController extends Controller
             ->where(['account_id' => $idUser])
             ->average('raiting');
 
-        $reviews = Reviews::findAll(['status_id' => 1]);
-
-        //$test = new Task;
-        //echo $test->getPublishedTimeDiff($task->created);
-        //die();
+        $reviews = Reviews::findAll(['status_id' => Reviews::STATUS_NEW]);
 
         return $this->render('view',
             compact('task',
                 'taskFile',
-                'users',
                 'customerOrders',
                 'customerReviews',
                 'customerRaiting',

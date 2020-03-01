@@ -90,6 +90,8 @@ class Reviews extends \yii\db\ActiveRecord
 
     // NOTE: my functions -----------------------------------------------------
 
+    const STATUS_NEW = 1;
+
     public function behaviors()
     {
         return [
