@@ -5,6 +5,7 @@ use DateTime;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
+use yii\web\HttpException;
 
 use frontend\models\Task;
 use frontend\models\TaskFile;
@@ -56,8 +57,12 @@ class TasksController extends Controller
     }
 
     // NOTE: ...index.php?r=tasks/view&id=2
-    public function actionView($id = 2): string
+    public function actionView($id): string
     {
+        if (empty($id)) {
+            throw new HttpException(404 ,'id пользователя не задано');
+        }
+
         $task = Task::findOne($id);
         $taskFile = TaskFile::findAll(['task_id' => $id]);
 
