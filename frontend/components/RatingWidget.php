@@ -4,7 +4,7 @@ namespace frontend\components;
 
 use yii\base\Widget;
 
-class RaitingWidget extends Widget
+class RatingWidget extends Widget
 {
     public $currentRaiting;
 
@@ -14,12 +14,10 @@ class RaitingWidget extends Widget
         $starsFill = floor($this->currentRaiting);
         $starsEmpty = $starsMax - $starsFill;
 
-        for ($i = 0; $i < $starsFill; $i++) {
-            echo "<span></span>";
-        }
-
-        for ($j = 0; $j < $starsEmpty; $j++) {
-            echo "<span class='star-disabled'></span>";
-        }
+        return $this->render('rating', [
+            'starsFill' => $starsFill,
+            'starsEmpty' => $starsEmpty
+        ]);
     }
 }
+
