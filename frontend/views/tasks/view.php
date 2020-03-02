@@ -4,7 +4,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use frontend\components\RaitingWidget;
+use frontend\components\RatingWidget;
 //use frontend\models\TaskFilter;
 //use frontend\models\Reviews;
 
@@ -87,7 +87,7 @@ Yii::$app->formatter->language = 'ru-RU';
                                 <div class="feedback-card__top--name">
 
                                     <p><a href="#" class="link-regular"><?= $review->account->name; ?></a></p>
-                                    <?php echo RaitingWidget::widget(['currentRaiting' => $review->raiting]); ?>
+                                    <?php echo RatingWidget::widget(['currentRaiting' => $review->raiting]); ?>
                                     <b><?= $review->raiting; ?></b>
 
                                 </div>
@@ -120,7 +120,7 @@ Yii::$app->formatter->language = 'ru-RU';
                         <div class="profile-mini__name five-stars__rate">
 
                             <p><?= $task->owner->name; ?></p>
-                            <?php echo RaitingWidget::widget(['currentRaiting' => $customerRaiting]); ?>
+                            <?php echo RatingWidget::widget(['currentRaiting' => $customerRaiting]); ?>
                             <b><?= round($customerRaiting, 2); ?></b>
 
                         </div>
