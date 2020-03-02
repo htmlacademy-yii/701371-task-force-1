@@ -1,4 +1,7 @@
 <?php
+/** @var TYPE_NAME $starsFill */
+/** @var TYPE_NAME $starsEmpty */
+
 for ($i = 0; $i < $starsFill; $i++) {
     echo "<span></span>";
 }
@@ -6,5 +9,4 @@ for ($i = 0; $i < $starsFill; $i++) {
 for ($j = 0; $j < $starsEmpty; $j++) {
     echo "<span class='star-disabled'></span>";
 }
-?>
-<h1>TEST</h1>
+
