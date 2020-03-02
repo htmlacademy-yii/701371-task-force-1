@@ -3,6 +3,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use frontend\models\TaskFilter;
 
 // NOTE: for pagination
@@ -28,12 +29,14 @@ Yii::$app->formatter->language = 'ru-RU';
                 <?php foreach ($tasks as $task): ?>
                     <div class="new-task__card">
                         <div class="new-task__title">
-                            <a href="#" class="link-regular">
+
+                            <a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular">
                                 <h2><?= $task->title; ?></h2>
                             </a>
-                            <a  class="new-task__type link-regular" href="#">
+                            <a class="new-task__type link-regular" href="#">
                                 <p><?= $task->category->name; ?></p>
                             </a>
+
                         </div>
                         <div class="new-task__icon new-task__icon--<?= $task->category->css_class; ?>"></div>
                         <p class="new-task_description">
@@ -42,7 +45,7 @@ Yii::$app->formatter->language = 'ru-RU';
                         <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
                         <p class="new-task__place"><?= $task->address; ?></p>
 
-                        <?= $task->getPublishedTimeDiff(); ?>
+                        <?= $task->getPublishedTimeDiff($task->created); ?>
 
                     </div>
                 <?php endforeach; ?>
