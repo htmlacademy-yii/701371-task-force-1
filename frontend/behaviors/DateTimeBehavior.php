@@ -24,9 +24,12 @@ class DateTimeBehavior extends Behavior
         $currentDate = new DateTime();
         $createDate = new DateTime($date);
         $interval = $currentDate->diff($createDate);
-        return ((int)$interval->d < 1)
+
+        $elapsedTime = ((int)$interval->d < 1)
             ? $interval->h . ' часа'
             : (int)$interval->d . ' дней и ' . $interval->h . ' часа';
+
+        return $elapsedTime;
     }
 
 }
