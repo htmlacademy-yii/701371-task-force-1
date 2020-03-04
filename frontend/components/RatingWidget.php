@@ -14,9 +14,6 @@ class RatingWidget extends Widget
         $starsFill = floor($this->currentRaiting);
         $starsEmpty = $starsMax - $starsFill;
 
-        return $this->render('rating', [
-            'starsFill' => $starsFill,
-            'starsEmpty' => $starsEmpty
-        ]);
+        return $this->render('rating', compact('starsFill', 'starsEmpty'));
     }
 }
