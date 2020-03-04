@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use frontend\components\RatingWidget;
+use frontend\components\ElapsedTimeWidget;
 //use frontend\models\TaskFilter;
 //use frontend\models\Reviews;
 
@@ -15,7 +16,6 @@ use yii\widgets\LinkPager;
  * @var Task[] $task
  * @var Task[] $customerOrders
  * @var Task[] $customerReviews
- * @var TaskFile[] $taskFile
  * @var Review[] $customerRaiting
  * @var Review[] $reviews
  */
@@ -34,7 +34,7 @@ Yii::$app->formatter->language = 'ru-RU';
                             <h1><?= $task->title; ?></h1>
                             <span>Размещено в категории
                                 <a href="#" class="link-regular"><?= $task->category->name; ?></a>
-                                <?= $task->getPublishedTimeDiff($task->created); ?> назад</span>
+                                <?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?> назад
                         </div>
                         <b class="new-task__price new-task__price--clean content-view-price"><?= $task->price; ?><b> ₽</b></b>
                         <div class="new-task__icon new-task__icon--<?= $task->category->css_class; ?> content-view-icon"></div>
@@ -48,7 +48,7 @@ Yii::$app->formatter->language = 'ru-RU';
                     <div class="content-view__attach">
                         <h3 class="content-view__h3">Вложения</h3>
 
-                            <?php foreach ($taskFile as $files): ?>
+                            <?php foreach ($task->taskFiles as $files): ?>
                                 <a href="./files/<?= $task->id; ?>/<?= $files->image_path; ?>" download><?= $files->image_path; ?></a>
                             <?php endforeach; ?>
 
@@ -91,7 +91,7 @@ Yii::$app->formatter->language = 'ru-RU';
                                     <b><?= $review->raiting; ?></b>
 
                                 </div>
-                                <span class="new-task__time"><?= $review->getPublishedTimeDiff($review->created); ?> назад</span>
+                                <span class="new-task__time"><?= ElapsedTimeWidget::widget(['currentTime' => $review->created]); ?> назад</span>
                             </div>
                             <div class="feedback-card__content">
                                 <p><?= $review->description; ?></p>

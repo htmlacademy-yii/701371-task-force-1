@@ -3,9 +3,6 @@
 namespace frontend\models;
 
 use DateTime;
-use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
-use frontend\behaviors\DateTimeBehavior;
 use Yii;
 
 /**
@@ -147,13 +144,4 @@ class Task extends \yii\db\ActiveRecord
 
     // NOTE: my functions -----------------------------------------------------
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => DateTimeBehavior::class,
-                //'attributeName' => 'created',
-            ],
-        ];
-    }
 }

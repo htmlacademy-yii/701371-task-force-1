@@ -57,14 +57,18 @@ class TasksController extends Controller
     }
 
     // NOTE: ...index.php?r=tasks/view&id=2
-    public function actionView($id): string
+    public function actionView(int $id): string
     {
         if (empty($id)) {
             throw new HttpException(404 ,'id пользователя не задано');
         }
 
-        $task = Task::findOne($id);
-        $taskFile = TaskFile::findAll(['task_id' => $id]);
+        //$task = Task::findOne($id);
+        //$taskFile = TaskFile::findAll(['task_id' => $id]);
+        $task = Task::find()
+            ->where(['id' => $id])
+            ->with(['taskFiles', 'owner'])
+            ->one();
 
         $idUser = $task->owner->id;
 
@@ -82,7 +86,7 @@ class TasksController extends Controller
 
         return $this->render('view',
             compact('task',
-                'taskFile',
+                //'taskFile',
                 'customerOrders',
                 'customerReviews',
                 'customerRaiting',
