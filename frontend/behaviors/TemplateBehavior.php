@@ -6,19 +6,8 @@ namespace frontend\behaviors;
 use DateTime;
 use yii\base\Behavior;
 
-class DateTimeBehavior extends Behavior
+class TemplateBehavior extends Behavior
 {
-    //public $attributeName;
-    //
-    //public function init()
-    //{
-    //    $property = $this->attributeName;
-    //
-    //    if ($this->{$property} && !$this->{$property} instanceOf DateTime) {
-    //        $this->{$property} = new DateTime($this->{$property});
-    //    }
-    //}
-
     public function getPublishedTimeDiff($date)
     {
         $currentDate = new DateTime();
