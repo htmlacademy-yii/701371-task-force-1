@@ -52,7 +52,7 @@ phpunit.phar
 /vagrant/
 /vendor/
 
-#common -> files
+#common
 /common/config/.gitignore
 /common/config/bootstrap.php
 /common/config/codeception-local.php
@@ -69,10 +69,11 @@ phpunit.phar
 /common/widgets/
 /common/codeception.yml
 
-#frontend -> files
+#frontend
 /frontend/config/
 /frontend/runtime
 /frontend/tests/
+/frontend/behaviors/
 
 /frontend/models/ContactForm.php
 /frontend/models/PasswordResetRequestForm.php
