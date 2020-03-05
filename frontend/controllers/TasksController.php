@@ -72,15 +72,20 @@ class TasksController extends Controller
 
         $idUser = $task->owner->id;
 
-        $customerOrders = Task::find()
-            ->where(['owner_id' => $idUser])
-            ->count();
+        //$customerOrders = Task::find()
+        //    ->where(['owner_id' => $idUser])
+        //    ->count();
+        $customerOrders = $task->owner->tasks;
+
         $customerReviews = Reviews::find()
             ->where(['account_id' => $idUser])
             ->count();
         $customerRaiting = Reviews::find()
             ->where(['account_id' => $idUser])
             ->average('raiting');
+
+        //$customerReviews = $task->owner->reviews;
+        //$customerRaiting = $task->owner->averageRating;
 
         $reviews = Reviews::findAll(['status_id' => Reviews::STATUS_NEW]);
 

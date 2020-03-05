@@ -259,4 +259,15 @@ class Users extends ActiveRecord
         return $this->hasMany(UsersImage::className(),
             ['account_id' => 'id']);
     }
+
+    // NOTE: my functions -----------------------------------------------------
+
+    public function getAverageRating(): ActiveQuery
+    {
+        if (!$this->reviews) {
+            return 0;
+        }
+
+        return array_sum(array_column($this->reviews, 'raiting')) / count($this->reviews);
+    }
 }

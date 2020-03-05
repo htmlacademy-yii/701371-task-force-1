@@ -1,5 +1,6 @@
 <?php
 
+use frontend\components\ElapsedTimeWidget;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -45,7 +46,7 @@ Yii::$app->formatter->language = 'ru-RU';
                         <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
                         <p class="new-task__place"><?= $task->address; ?></p>
 
-                        <?= $task->getPublishedTimeDiff($task->created); ?>
+                        <?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?>
 
                     </div>
                 <?php endforeach; ?>

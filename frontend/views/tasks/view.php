@@ -127,7 +127,7 @@ Yii::$app->formatter->language = 'ru-RU';
                     </div>
                     <p class="info-customer">
                         <span><?= $customerReviews; ?> отзывов</span>
-                        <span class="last-"><?= $customerOrders; ?> заказов</span>
+                        <span class="last-"><?= count($customerOrders); ?> заказов</span>
                     </p>
                     <a href="#" class="link-regular">Смотреть профиль</a>
                 </div>
