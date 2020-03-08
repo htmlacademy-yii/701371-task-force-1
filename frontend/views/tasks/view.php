@@ -17,7 +17,7 @@ use yii\widgets\LinkPager;
  * @var Task[] $customerOrders
  * @var Task[] $customerReviews
  * @var Review[] $customerRaiting
- * @var Review[] $reviews
+ * @var TaskRespond[] $responds
  */
 
 $this->title = 'Главная страница';
@@ -78,24 +78,24 @@ Yii::$app->formatter->language = 'ru-RU';
                 </div>
             </div>
             <div class="content-view__feedback">
-                <h2>Отклики <span>(2)</span></h2>
+                <h2>Отклики <span><?= count($responds) ?></span></h2>
                 <div class="content-view__feedback-wrapper">
-                    <?php foreach ($reviews as $review): ?>
+                    <?php foreach ($responds as $respond): ?>
                         <div class="content-view__feedback-card">
                             <div class="feedback-card__top">
-                                <a href="#"><img src="./img/<?= $review->account->avatar->image_path; ?>" width="55" height="55"></a>
+                                <a href="#"><img src="./img/<?= $respond->user->avatar->image_path; ?>" width="55" height="55"></a>
                                 <div class="feedback-card__top--name">
 
-                                    <p><a href="#" class="link-regular"><?= $review->account->name; ?></a></p>
-                                    <?php echo RatingWidget::widget(['currentRaiting' => $review->raiting]); ?>
-                                    <b><?= $review->raiting; ?></b>
+                                    <p><a href="#" class="link-regular"><?= $respond->user->name; ?></a></p>
+                                    <?php echo RatingWidget::widget(['currentRaiting' => $respond->user->averageRating]); ?>
+                                    <b><?= $respond->user->averageRating; ?></b>
 
                                 </div>
-                                <span class="new-task__time"><?= ElapsedTimeWidget::widget(['currentTime' => $review->created]); ?> назад</span>
+                                <span class="new-task__time"><?= ElapsedTimeWidget::widget(['currentTime' => $respond->datetime]); ?> назад</span>
                             </div>
                             <div class="feedback-card__content">
-                                <p><?= $review->description; ?></p>
-                                <span><?= $review->price; ?></span>
+                                <p><?= $respond->comment; ?></p>
+                                <span><?= $respond->price; ?></span>
 
                             </div>
                             <div class="feedback-card__actions">
@@ -120,14 +120,14 @@ Yii::$app->formatter->language = 'ru-RU';
                         <div class="profile-mini__name five-stars__rate">
 
                             <p><?= $task->owner->name; ?></p>
-                            <?php echo RatingWidget::widget(['currentRaiting' => $customerRaiting]); ?>
-                            <b><?= round($customerRaiting, 2); ?></b>
+                            <?php echo RatingWidget::widget(['currentRaiting' => $task->owner->averageRating]); ?>
+                            <b><?= round($task->owner->averageRating, 2); ?></b>
 
                         </div>
                     </div>
                     <p class="info-customer">
-                        <span><?= $customerReviews; ?> отзывов</span>
-                        <span class="last-"><?= count($customerOrders); ?> заказов</span>
+                        <span><?= count($task->owner->reviews); ?> отзывов</span>
+                        <span class="last-"><?= count($task->owner->tasks); ?> заказов</span>
                     </p>
                     <a href="#" class="link-regular">Смотреть профиль</a>
                 </div>

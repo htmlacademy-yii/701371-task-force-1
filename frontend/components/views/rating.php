@@ -1,6 +1,6 @@
 <?php
-/** @var TYPE_NAME $starsFill */
-/** @var TYPE_NAME $starsEmpty */
+/** @var int $starsFill */
+/** @var int $starsEmpty */
 ?>
 
 <?php for ($i = 0; $i < $starsFill; $i++): ?>

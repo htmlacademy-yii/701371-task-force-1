@@ -1218,7 +1218,7 @@ INSERT INTO task (
     Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.
     Fusce consequat. Nulla nisl. Nunc nisl.', '2019-11-10', 'benchmark plug-and-play infomediaries', '80 Cambridge Street', '838', '20.5800358', '-75.2435307', 9, 1),
 
-('2019-09-07', '3', 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', '2019-12-15', 'integrate cross-platform e-business', '1 Stone Corner Junction', '7484', '14.9326574', '-91.6941845', 6, 1),
+('2019-09-07', '3', 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', '2019-12-15', 'integrate cross-platform e-business', '1 Stone Corner Junction', '7484', '14.9326574', '-91.6941845', 7, 1),
 ('2018-11-01', '7', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', '2019-11-24', 'enable dot-com niches', '12 Stephen Terrace', '5725', '40.163127', '116.638868', 12, 1),
 ('2019-09-13', '5', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', '2019-11-19', 'transform web-enabled relationships', '6213 Lake View Drive', '4414', '44.3794871', '20.2638941', 14, 1),
 ('2019-04-01', '8', 'Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.
@@ -1249,6 +1249,11 @@ INSERT INTO task_file (image_path, task_id) VALUES
     ('myPassportImage.jpeg', 8),
     ('myPassportPic.jpeg', 9),
     ('myPassportPicture.jpeg', 10);
+
+INSERT INTO task_respond (comment, price, user_id, task_id)
+VALUES
+    ('Могу сделать все в лучшем виде', 1500, 1, 2),
+    ('Примусь за выполнение в течении часа', 1500, 3, 3);
 
 INSERT INTO reviews (description, raiting, price, status_id, account_id)
 VALUES

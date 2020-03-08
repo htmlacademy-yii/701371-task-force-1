@@ -179,7 +179,8 @@ class Users extends ActiveRecord
      */
     public function getTasks(): ActiveQuery
     {
-        return $this->hasMany(Task::className(), ['executor_id' => 'id']);
+        //return $this->hasMany(Task::className(), ['executor_id' => 'id']);
+        return $this->hasMany(Task::className(), ['owner_id' => 'id']);
     }
 
     /**
@@ -262,12 +263,24 @@ class Users extends ActiveRecord
 
     // NOTE: my functions -----------------------------------------------------
 
-    public function getAverageRating(): ActiveQuery
+    public function getAverageRating(): float
     {
+        // NOTE: если в текущей модели нету ни одного отзыва (массив пуст), то...
         if (!$this->reviews) {
             return 0;
         }
 
+        /*
+         * NOTE:
+         * array_column - формирует массив значений массива по колючу, который
+         * я передал, т.е. в итоге вернет массив состоящий из значения рейтинга
+         * для каждой записи
+         * */
         return array_sum(array_column($this->reviews, 'raiting')) / count($this->reviews);
+    }
+
+    public function getRespond(): ActiveQuery
+    {
+        return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
     }
 }

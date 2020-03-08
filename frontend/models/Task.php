@@ -144,4 +144,18 @@ class Task extends \yii\db\ActiveRecord
 
     // NOTE: my functions -----------------------------------------------------
 
+    public function getReviews()
+    {
+        return $this->hasOne(Reviews::class(), ['status_id' => 'city_id']);
+    }
+
+    public function getRespond()
+    {
+        return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
+    }
+
+    //public function getRespond()
+    //{
+    //    return $this->hasMany(TaskRespond::class(), ['id' => 'task_id']);
+    //}
 }

@@ -33,6 +33,18 @@ CREATE TABLE task (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
+CREATE TABLE task_respond (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    comment TEXT NOT NULL,
+    price FLOAT(8) NOT NULL,
+    datetime DATETIME NOT NULL DEFAULT NOW(),
+
+    user_id INT,
+    task_id INT,
+    status_id INT
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
 CREATE TABLE task_file (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	image_path VARCHAR(45) NOT NULL,
@@ -192,6 +204,9 @@ ALTER TABLE task ADD FOREIGN KEY (category_id) REFERENCES category(id);
 ALTER TABLE task ADD FOREIGN KEY (executor_id) REFERENCES users(id);
 ALTER TABLE task ADD FOREIGN KEY (owner_id) REFERENCES users(id);
 ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
+ALTER TABLE task_respond ADD FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE task_respond ADD FOREIGN KEY (task_id) REFERENCES task(id);
+ALTER TABLE task_respond ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE reviews ADD FOREIGN KEY (account_id) REFERENCES users(id);
 ALTER TABLE reviews ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE feedback ADD FOREIGN KEY (task_id) REFERENCES task(id);
