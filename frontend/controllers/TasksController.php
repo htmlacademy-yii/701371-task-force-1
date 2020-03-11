@@ -63,56 +63,15 @@ class TasksController extends Controller
     {
         $task = Task::find()
             ->where(['id' => $id])
-            ->with(['taskFiles', 'owner', 'respond'])
+            ->with(['taskFiles', 'owner', 'responds'])
             ->one();
 
         if ($task === null) {
             throw new NotFoundHttpException('Такого задания не найдено');
         }
 
-        $responds = TaskRespond::find()->where(['task_id' => $id])->all();
-
-        // NOTE: for debug
-        //foreach ($responds as $respond) {
-        //    echo $respond->user->name . '<br>';
-        //    echo $respond->user->avatar->image_path . '<br>';
-        //    echo $respond->user->averageRating . '<br>';
-        //}
-        // die();
-
-        // FIXME: my mentor version
-        //$customerOrders = $task->owner->tasks;
-        //$customerReviews = $task->owner->reviews;
-        //echo count($customerReviews); die();
-        //$customerRaiting = $task->owner->averageRating;
-
-        // FIXME: old version
-        //$task = Task::findOne($id);
-        //$taskFile = TaskFile::findAll(['task_id' => $id]);
-
-        //$idUser = $task->owner->id;
-
-        //$customerOrders = Task::find()
-        //    ->where(['owner_id' => $idUser])
-        //    ->count();
-
-        //$customerOrders = $task->owner->tasks;
-        //
-        //$customerReviews = Reviews::find()
-        //    ->where(['account_id' => $idUser])
-        //    ->count();
-        //$customerRaiting = Reviews::find()
-        //    ->where(['account_id' => $idUser])
-        //    ->average('raiting');
-
-        //$customerReviews = $task->owner->reviews;
-        //$customerRaiting = $task->owner->averageRating;
-
-        // FIXME: thinking about it
-        //$reviews = Reviews::findAll(['status_id' => Reviews::STATUS_NEW]);
-
         return $this->render('view',
-            compact('task', 'responds')
+            compact('task')
         );
     }
 }
