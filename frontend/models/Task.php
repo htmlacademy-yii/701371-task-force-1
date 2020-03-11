@@ -30,6 +30,7 @@ use Yii;
  * @property City $city
  * @property TaskStatus $status
  * @property TaskFile[] $taskFiles
+ * @property TaskRespond[] $responds
  */
 class Task extends \yii\db\ActiveRecord
 {
@@ -144,18 +145,19 @@ class Task extends \yii\db\ActiveRecord
 
     // NOTE: my functions -----------------------------------------------------
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getReviews()
     {
         return $this->hasOne(Reviews::class(), ['status_id' => 'city_id']);
     }
 
-    public function getRespond()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResponds()
     {
         return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
     }
-
-    //public function getRespond()
-    //{
-    //    return $this->hasMany(TaskRespond::class(), ['id' => 'task_id']);
-    //}
 }
