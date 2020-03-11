@@ -56,17 +56,18 @@ Yii::$app->formatter->language = 'ru-RU';
             <ul class="new-task__pagination-list">
 
                 <?= LinkPager::widget(['pagination' => $pagesPagination,
-                    'options' => ['class' => 'new-task__pagination-list'],
-                    'activePageCssClass'  => 'pagination__item--current',
+                    //TODO: basic layout doesn't work?
+                    //'options' => ['class' => 'new-task__pagination-list'],
+                    //'activePageCssClass'  => 'pagination__item--current',
 
-                    'nextPageLabel'    => '-',
-                    'nextPageCssClass' => 'pagination__item',
+                    //'nextPageLabel'    => '-',
+                    //'nextPageCssClass' => 'pagination__item',
 
-                    'pageCssClass'      => 'pagination__item',
-                    'firstPageCssClass' => 'pagination__item--current',
+                    //'pageCssClass'      => 'pagination__item',
+                    //'firstPageCssClass' => 'pagination__item--current',
 
-                    'prevPageLabel'    => '-',
-                    'prevPageCssClass' => 'pagination__item',
+                    //'prevPageLabel'    => '-',
+                    //'prevPageCssClass' => 'pagination__item',
                 ]); ?>
 
             </ul>
