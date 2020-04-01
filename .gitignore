@@ -44,15 +44,12 @@ phpunit.phar
 
 #my general rules
 /backend/
-
-/console/config
-/console/controllers
-
+/console/
 /environments/
 /vagrant/
 /vendor/
 
-#common
+#common -> files
 /common/config/.gitignore
 /common/config/bootstrap.php
 /common/config/codeception-local.php
@@ -69,11 +66,10 @@ phpunit.phar
 /common/widgets/
 /common/codeception.yml
 
-#frontend
+#frontend -> files
 /frontend/config/
 /frontend/runtime
 /frontend/tests/
-/frontend/behaviors/
 
 /frontend/models/ContactForm.php
 /frontend/models/PasswordResetRequestForm.php
@@ -129,6 +125,7 @@ requirements.php
 Vagrantfile
 yii
 yii.bat
+queries.sql
 .gitattributes
 .bowerrc
 .editorconfig
