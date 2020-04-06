@@ -1240,7 +1240,6 @@ INSERT INTO task_file (image_path, task_id) VALUES
     ('ру название с пробелами.docx', 2),
 
     ('brands.docx', 3),
-
     ('my_pic.jpeg', 4),
     ('documentation.docx', 4),
 
