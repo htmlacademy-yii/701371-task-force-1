@@ -24,11 +24,24 @@ CREATE TABLE task (
 	-- image_id INT,
 	city_id INT,
 	executor_id INT,
+	owner_id INT,
 	status_id INT,
 	category_id INT
 	-- rating_id INT,
 	-- reviews_id INT,
 	-- feedback_id INT
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE task_respond (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    comment TEXT NOT NULL,
+    price FLOAT(8) NOT NULL,
+    datetime DATETIME NOT NULL DEFAULT NOW(),
+
+    user_id INT,
+    task_id INT,
+    status_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -68,9 +81,11 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE reviews (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	description TEXT NOT NULL,
-	raiting TINYINT(1) NOT NULL,
+	raiting FLOAT(1) NOT NULL,
+    created DATETIME NOT NULL DEFAULT NOW(),
+    price FLOAT(8) NOT NULL,
 
-	ststus_id INT,
+	status_id INT,
 	account_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -85,7 +100,7 @@ CREATE TABLE users (
 	password CHAR(64) NOT NULL,
 	address TEXT NOT NULL,
 	born DATETIME NOT NULL DEFAULT NOW(),
-	created DATETIME NOT NULL DEFAULT NOW(),
+    created DATETIME NOT NULL DEFAULT NOW(),
 	about TEXT NOT NULL,
 	visit DATETIME NOT NULL DEFAULT NOW(),
 	quest_completed INT(4) NOT NULL,
@@ -181,33 +196,31 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 # )
 # ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1622d05a8f4fb5885c79480975fd27323d576abd
 -- **
 
 CREATE INDEX index_category ON category(id);
 
 ALTER TABLE task ADD FOREIGN KEY (category_id) REFERENCES category(id);
 ALTER TABLE task ADD FOREIGN KEY (executor_id) REFERENCES users(id);
+ALTER TABLE task ADD FOREIGN KEY (owner_id) REFERENCES users(id);
+ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
+ALTER TABLE task_respond ADD FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE task_respond ADD FOREIGN KEY (task_id) REFERENCES task(id);
+ALTER TABLE task_respond ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE reviews ADD FOREIGN KEY (account_id) REFERENCES users(id);
+ALTER TABLE reviews ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE feedback ADD FOREIGN KEY (task_id) REFERENCES task(id);
 ALTER TABLE task ADD FOREIGN KEY (city_id) REFERENCES city(id);
 ALTER TABLE feedback ADD FOREIGN KEY (account_id) REFERENCES users(id);
 ALTER TABLE feedback ADD FOREIGN KEY (status_id) REFERENCES feedback_status(id);
-ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE task_file ADD FOREIGN KEY (task_id) REFERENCES task(id);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1622d05a8f4fb5885c79480975fd27323d576abd
 -- **
 
 ALTER TABLE message ADD FOREIGN KEY (sender_id) REFERENCES users(id);
 ALTER TABLE message ADD FOREIGN KEY (reciever_id) REFERENCES users(id);
 ALTER TABLE users ADD FOREIGN KEY (city_id) REFERENCES city(id);
+ALTER TABLE users ADD FOREIGN KEY (raiting_id) REFERENCES reviews(id);
 ALTER TABLE users ADD FOREIGN KEY (contacts_id) REFERENCES users_contacts(id);
 ALTER TABLE users ADD FOREIGN KEY (avatar_id) REFERENCES users_avatar(id);
 ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES users_roles(id);
