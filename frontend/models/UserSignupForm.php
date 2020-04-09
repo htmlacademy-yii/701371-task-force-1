@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 
 class UserSignupForm extends Model
@@ -27,22 +28,15 @@ class UserSignupForm extends Model
         $user->email = $this->email;
         $user->name = $this->name;
         $user->password = Yii::$app->security->generatePasswordHash($this->password);
-    }
 
-    // TODO: think about it
-    //protected function sendEmail($user)
-    //{
-    //    return Yii::$app
-    //        ->mailer
-    //        ->compose(
-    //            ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-    //            ['user' => $user]
-    //        )
-    //        ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-    //        ->setTo($this->email)
-    //        ->setSubject('Account registration at ' . Yii::$app->name)
-    //        ->send();
-    //}
+        if ($user->save()) {
+            $profile = new Profile();
+            $profile->user_id = $user->id;
+            $profile->city_id = $this->city;
+            return $profile->save();
+        }
+        return false;
+    }
 
     public function rules()
     {
