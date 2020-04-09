@@ -29,13 +29,7 @@ class UserSignupForm extends Model
         $user->name = $this->name;
         $user->password = Yii::$app->security->generatePasswordHash($this->password);
 
-        if ($user->save()) {
-            $profile = new Profile();
-            $profile->user_id = $user->id;
-            $profile->city_id = $this->city;
-            return $profile->save();
-        }
-        return false;
+        $user->save();
     }
 
     public function rules()
