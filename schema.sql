@@ -91,29 +91,29 @@ CREATE TABLE reviews (
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 
--- NOTE: users -----------------------------------------------------------------
+-- NOTE: signup -----------------------------------------------------------------
 
 CREATE TABLE users (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	email VARCHAR(64) NOT NULL,
-	name VARCHAR(64) NOT NULL,
-	password CHAR(64) NOT NULL,
-	address TEXT NOT NULL DEFAULT NULL,
-	born DATETIME NOT NULL DEFAULT NOW(),
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(64) NOT NULL,
+    name VARCHAR(64) NOT NULL,
+    password CHAR(64) NOT NULL,
+    address TEXT NOT NULL DEFAULT NULL,
+    born DATETIME NOT NULL DEFAULT NOW(),
     created DATETIME NOT NULL DEFAULT NOW(),
-	about TEXT NOT NULL DEFAULT NULL,
-	visit DATETIME NOT NULL DEFAULT NOW(),
-	quest_completed INT(4) NOT NULL DEFAULT NULL,
-	views_counter INT NOT NULL DEFAULT NULL,
-	hide_account TINYINT(1) NOT NULL DEFAULT NULL,
-	show_contacts_to_customer TINYINT(1) NOT NULL DEFAULT NULL,
+    about TEXT NOT NULL DEFAULT NULL,
+    visit DATETIME NOT NULL DEFAULT NOW(),
+    quest_completed INT(4) NOT NULL DEFAULT 0,
+    views_counter INT NOT NULL DEFAULT 0,
+    hide_account TINYINT(1) NOT NULL DEFAULT 0,
+    show_contacts_to_customer TINYINT(1) NOT NULL DEFAULT 0,
 
-	avatar_id INT,
-	role_id INT,
-	raiting_id INT,
-	city_id INT,
-	contacts_id INT,
-	notification_id INT
+    avatar_id INT,
+    role_id INT,
+    raiting_id INT,
+    city_id INT,
+    contacts_id INT,
+    notification_id INT
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 

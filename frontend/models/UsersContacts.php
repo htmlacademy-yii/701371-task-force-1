@@ -14,7 +14,7 @@ use yii\db\ActiveQuery;
  * @property string $skype
  * @property string $messanger
  *
- * @property Users[] $users
+ * @property Users[] $signup
  */
 class UsersContacts extends ActiveRecord
 {
