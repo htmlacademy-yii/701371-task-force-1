@@ -33,26 +33,9 @@ class SignupController extends Controller
         if (Yii::$app->request->getIsPost()) {
             $signupForm->load(Yii::$app->request->post());
 
-            if ($signupForm->validate()) {
-                $user = new Users();
-                $user->name = $signupForm->name;
-
-                if (Users::find()->where(['email' => $signupForm->email])->exists()) {
-                    throw new NotFoundHttpException(
-                        'Такой eMail уже зарегистрирован'
-                    );
-                }
-
-                $user->email =$signupForm->email;
-                $user->password =
-                    Yii::$app
-                        ->security
-                        ->generatePasswordHash($signupForm->password);
-
-                if ($user->save()) {
-                    Yii::$app->user->login($user);
-                    return $this->goHome();
-                }
+            if ($signupForm->validate() && ($user = $signupForm->createUser())) {
+                Yii::$app->user->login($user);
+                return $this->goHome();
             }
         }
 

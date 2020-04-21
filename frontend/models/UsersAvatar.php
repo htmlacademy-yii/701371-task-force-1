@@ -12,7 +12,7 @@ use yii\db\ActiveQuery;
  * @property int $id
  * @property string $image_path
  *
- * @property Users[] $signup
+ * @property Users[] $users
  */
 class UsersAvatar extends ActiveRecord
 {

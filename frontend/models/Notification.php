@@ -14,7 +14,7 @@ use yii\db\ActiveQuery;
  * @property int $task_actions
  * @property int $new_responds
  *
- * @property Users[] $signup
+ * @property Users[] $users
  */
 class Notification extends ActiveRecord
 {

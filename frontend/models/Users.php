@@ -63,13 +63,6 @@ class Users extends ActiveRecord implements IdentityInterface
             [['email',
                 'name',
                 'password',
-
-                //'address',
-                //'about',
-                //'quest_completed',
-                //'views_counter',
-                //'hide_account',
-                //'show_contacts_to_customer'
             ], 'required'
             ],
             [['address', 'about'], 'string'],
@@ -115,6 +108,7 @@ class Users extends ActiveRecord implements IdentityInterface
                 'targetClass' => Notification::className(),
                 'targetAttribute' => ['notification_id' => 'id']
             ],
+            [['email'], 'unique'],
         ];
     }
 

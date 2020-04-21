@@ -18,7 +18,7 @@ use Yii;
  *
  * @property Users $account
  * @property TaskStatus $status
- * @property Users[] $signup
+ * @property Users[] $users
  */
 class Reviews extends \yii\db\ActiveRecord
 {

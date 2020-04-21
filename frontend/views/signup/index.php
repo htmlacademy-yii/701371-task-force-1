@@ -30,7 +30,6 @@ $this->title = 'Регистрация аккаунта';
                 ->textInput([
                     'class'         => 'input textarea',
                     'placeholder'   => 'kumarm@mail.ru',
-                    'value'         => '',
                     'style'         => 'width: 360px',
                 ])
                 ->hint('Введите валидный адрес электронной почты', [
@@ -52,7 +51,6 @@ $this->title = 'Регистрация аккаунта';
                     ->textInput([
                         'class'         => 'input textarea',
                         'placeholder'   => 'Мамедов Кумар',
-                        'value'         => '',
                         'style'         => 'width: 360px',
                     ])
                     ->hint('Введите ваше имя и фамилию', [

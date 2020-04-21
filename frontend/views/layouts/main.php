@@ -172,9 +172,7 @@ AppAsset::register($this);
             </div>
 
 
-            <?php if (isset($this->blocks['womanSignup'])):?>
-                <?= $this->blocks['womanSignup']; ?>
-            <?php endif; ?>
+
             <?= WomanSignupWidget::widget(); ?>
         </div>
     </footer>

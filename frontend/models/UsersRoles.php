@@ -13,7 +13,7 @@ use yii\db\ActiveQuery;
  * @property string $title
  * @property string $key_code
  *
- * @property Users[] $signup
+ * @property Users[] $users
  */
 class UsersRoles extends ActiveRecord
 {

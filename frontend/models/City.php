@@ -15,7 +15,7 @@ use yii\db\ActiveQuery;
  * @property string $longitude
  *
  * @property Task[] $tasks
- * @property Users[] $signup
+ * @property Users[] $users
  */
 class City extends ActiveRecord
 {
