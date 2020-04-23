@@ -1,5 +1,6 @@
 <?php
 
+use frontend\components\WomanSignupWidget;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -169,6 +170,10 @@ AppAsset::register($this);
                          alt="Логотип HTML Academy">
                 </a>
             </div>
+
+            <?php if (isset($this->blocks['woman'])):?>
+                <?= $this->blocks['woman']; ?>
+            <?php endif; ?>
         </div>
     </footer>
 </div>

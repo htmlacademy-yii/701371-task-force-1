@@ -109,6 +109,8 @@ phpunit.phar
 /frontend/controllers/_TasksController.php
 /frontend/controllers/SiteController.php
 
+/frontend/behaviors
+
 /frontend/codeception.yml
 /frontend/Dockerfile
 

@@ -1305,7 +1305,9 @@ footer {
   margin-bottom: 12px;
   text-transform: uppercase; }
 
-.form-create span {
+.form-create span,
+.form-create__span,
+.form-create__span-error {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-size: 12px;

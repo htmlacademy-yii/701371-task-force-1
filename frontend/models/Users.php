@@ -5,9 +5,10 @@ namespace frontend\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use yii\web\IdentityInterface;
 
 /**
- * This is the model class for table "users".
+ * This is the model class for table "signup".
  *
  * @property int $id
  * @property string $email
@@ -43,7 +44,7 @@ use yii\db\ActiveQuery;
  * @property UsersFavorites[] $usersFavorites0
  * @property UsersImage[] $usersImages
  */
-class Users extends ActiveRecord
+class Users extends ActiveRecord implements IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -62,12 +63,7 @@ class Users extends ActiveRecord
             [['email',
                 'name',
                 'password',
-                'address',
-                'about',
-                'quest_completed',
-                'views_counter',
-                'hide_account',
-                'show_contacts_to_customer'], 'required'
+            ], 'required'
             ],
             [['address', 'about'], 'string'],
             [['born', 'visit'], 'safe'],
@@ -112,6 +108,7 @@ class Users extends ActiveRecord
                 'targetClass' => Notification::className(),
                 'targetAttribute' => ['notification_id' => 'id']
             ],
+            [['email'], 'unique'],
         ];
     }
 
@@ -279,8 +276,39 @@ class Users extends ActiveRecord
         return array_sum(array_column($this->reviews, 'raiting')) / count($this->reviews);
     }
 
+    /**/
+
+    // NOTE: for login
+
     public function getRespond(): ActiveQuery
     {
         return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
     }
+
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return null;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return null;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return null;
+    }
+
+
 }
