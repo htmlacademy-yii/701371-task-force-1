@@ -2281,6 +2281,26 @@ footer {
   background-repeat: no-repeat;
   background-color: #ff6b81; }
 
+/* NOTE: adding the missing styles for the landing category */
+.task-translation {
+  background-image: url("../img/translation.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1e90ff; }
+
+.task-beauty {
+  background-image: url("../img/beauty.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #2f3542;; }
+
+.task-neo {
+  background-image: url("../img/neo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ff7f50; }
+/**/
+
 .task-event {
   background-image: url("../img/balloons.png");
   background-position: center;
