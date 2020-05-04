@@ -75,7 +75,7 @@ phpunit.phar
 /frontend/models/PasswordResetRequestForm.php
 /frontend/models/ResendVerificationEmailForm.php
 /frontend/models/ResetPasswordForm.php
-/frontend/models/SignupForm.php
+/frontend/models/forms/SignupForm.php
 /frontend/models/VerifyEmailForm.php
 
 /frontend/web/assets
