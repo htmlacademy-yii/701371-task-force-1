@@ -56,3 +56,34 @@ if (starRating.length) {
     inputField.value = rating;
   });
 }
+
+// **
+
+// function showCart(cart) {
+//   $('#cart .modal-body').html(cart);
+//   $('#cart').modal();
+// }
+//
+// $('.add-to-cart').on('click', function (e) {
+//   //NOTE: canceling the default event
+//   e.preventDefault();
+//
+//   var id = $(this).data('id');
+//
+//   $.ajax({
+//     url: '/cart/add',
+//     type: 'GET',
+//     dataType: 'json',
+//     data: {id: id},
+//
+//     success: function (res) {
+//       if (!res) alert ('Error');
+//       console.log(res);
+//       showCart(res);
+//     },
+//     error: function (res) {
+//       console.log(res);
+//       showCart(res);
+//     }
+//   })
+// });
