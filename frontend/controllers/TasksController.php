@@ -3,22 +3,53 @@ namespace frontend\controllers;
 
 use DateTime;
 use frontend\models\TaskRespond;
-use Yii;
-use yii\web\Controller;
-use yii\data\Pagination;
-use yii\web\HttpException;
-
-use frontend\models\Task;
 use frontend\models\TaskFile;
 use frontend\models\Reviews;
+use yii\filters\AccessControl;
+use yii\web\HttpException;
+
+use Yii;
+
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+
+use yii\data\Pagination;
+
+use yii\helpers\ArrayHelper;
+
+use frontend\models\Task;
 use frontend\models\Category;
 use frontend\models\TaskFilter;
 
-use yii\helpers\ArrayHelper;
-use yii\web\NotFoundHttpException;
 
-class TasksController extends Controller
+class TasksController extends SecuredController
 {
+    //public function behaviors()
+    //{
+    //    return [
+    //        'access' => [
+    //            'class' => AccessControl::class,
+    //            'rules' => [
+    //                [
+    //                    'allow' => false,
+    //                    'actions' => ['index'],
+    //                    'roles' => ['?']
+    //                ]
+    //            ],
+    //
+    //            'denyCallback' => function($rule, $action) {
+    //                return Yii::$app->response->redirect(['landing']);
+    //            }
+    //
+    //            //'denyCallback' => function ($rule, $action) {
+    //            //    throw new NotFoundHttpException('У вас нет доступа к этой странице');
+    //            //}
+    //        ]
+    //    ];
+    //}
+
+    /**/
+
     public function actionIndex(): string
     {
         $taskFilter = new TaskFilter();
