@@ -54,8 +54,10 @@ AppAsset::register($this);
                         <p>Работа там, где ты!</p>
                     </div>
                     <div class="header__account--index">
-                        <a href="#" class="header__account-enter">
-                            <span>Вход</span></a>
+
+                        <a href="<?= Url::to(['site/login']); ?>"
+                           class="header__account-enter"><span>Вход</span></a>
+
                         или
                         <a href="<?= Url::to(['signup/index']); ?>"
                            class="header__account-registration">
@@ -203,21 +205,9 @@ AppAsset::register($this);
                     </div>
                 </div>
             </footer>
-            <section class="modal enter-form form-modal">
-                <h2>Вход на сайт</h2>
-                <form action="#" method="post">
-                    <p>
-                        <label class="form-modal-description" for="enter-email">Email</label>
-                        <input class="enter-form-email input input-middle" type="email" name="enter-email" id="enter-email">
-                    </p>
-                    <p>
-                        <label class="form-modal-description" for="enter-password">Пароль</label>
-                        <input class="enter-form-email input input-middle" type="password" name="enter-email" id="enter-password">
-                    </p>
-                    <button class="button" type="submit">Войти</button>
-                </form>
-                <button class="form-modal-close" type="button">Закрыть</button>
-            </section>
+
+            <?= $this->renderAjax('login', ['model' => $this->params['model']]); ?>
+
         </div>
         <div class="overlay"></div>
     <?php $this->endBody() ?>

@@ -31,6 +31,5 @@ $this->title = 'TaskForse - главная страница';
     <?php endforeach; ?>
 </div>
 <div class="landing-bottom-container">
-    <button type="button" class="button red-button">смотреть все задания</button>
-    <a href="<?= Url::to(['tasks/index']); ?>" class="link-regular">Button</a>
+    <a href="<?= Url::to(['tasks/index']); ?>" class="button red-button">смотреть все задания</a>
 </div>
