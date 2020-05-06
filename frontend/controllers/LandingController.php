@@ -60,7 +60,8 @@ class LandingController extends Controller
                 $user = $form->getUser();
                 Yii::$app->user->login($user);
 
-                return $this->goHome();
+                //return $this->goHome();
+                return $this->redirect(['tasks/index']);
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($form);
