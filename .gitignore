@@ -107,7 +107,6 @@ phpunit.phar
 /frontend/views/tasks/_index.php
 
 /frontend/controllers/_TasksController.php
-/frontend/controllers/SiteController.php
 
 /frontend/behaviors
 
