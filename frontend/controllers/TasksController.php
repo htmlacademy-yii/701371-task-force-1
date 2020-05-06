@@ -24,32 +24,6 @@ use frontend\models\TaskFilter;
 
 class TasksController extends SecuredController
 {
-    //public function behaviors()
-    //{
-    //    return [
-    //        'access' => [
-    //            'class' => AccessControl::class,
-    //            'rules' => [
-    //                [
-    //                    'allow' => false,
-    //                    'actions' => ['index'],
-    //                    'roles' => ['?']
-    //                ]
-    //            ],
-    //
-    //            'denyCallback' => function($rule, $action) {
-    //                return Yii::$app->response->redirect(['landing']);
-    //            }
-    //
-    //            //'denyCallback' => function ($rule, $action) {
-    //            //    throw new NotFoundHttpException('У вас нет доступа к этой странице');
-    //            //}
-    //        ]
-    //    ];
-    //}
-
-    /**/
-
     public function actionIndex(): string
     {
         $taskFilter = new TaskFilter();

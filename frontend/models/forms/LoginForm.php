@@ -17,7 +17,7 @@ class LoginForm extends Model
     public function attributeLabels(): array
     {
         return [
-            'email' => 'Почта',
+            'email' => 'Логин',
             'password' => 'Пароль',
         ];
     }
@@ -52,7 +52,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->userBuffer === null) {
-            $this->userBuffer = User::findOne(['email' => $this->email]);
+            $this->userBuffer = Users::findOne(['email' => $this->email]);
         }
 
         return $this->userBuffer;

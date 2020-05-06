@@ -1,22 +1,29 @@
 var openModalLinks = document.getElementsByClassName("open-modal");
 var closeModalLinks = document.getElementsByClassName("form-modal-close");
-var overlay = document.getElementsByClassName("overlay")[0];
+// var overlay = document.getElementsByClassName("overlay")[0];
 
 for (var i = 0; i < openModalLinks.length; i++) {
   var modalLink = openModalLinks[i];
 
   modalLink.addEventListener("click", function (event) {
+    event.preventDefault();
     var modalId = event.currentTarget.getAttribute("data-for");
-
     var modal = document.getElementById(modalId);
-    modal.setAttribute("style", "display: block");
-    overlay.setAttribute("style", "display: block");
 
+    // NOTE: fix styles
+    modal.setAttribute("style", "display: block; height: 400px;");
+
+    // NOTE: fix it
+    var overlay = document.getElementsByClassName("overlay")[0];
+    overlay.setAttribute("style", "display: block");
   });
 }
 
 function closeModal(event) {
   var modal = event.currentTarget.parentElement;
+
+  // NOTE: fix it
+  var overlay = document.getElementsByClassName("overlay")[0];
 
   modal.removeAttribute("style");
   overlay.removeAttribute("style");
@@ -28,7 +35,8 @@ for (var j = 0; j < closeModalLinks.length; j++) {
   closeModalLink.addEventListener("click", closeModal)
 }
 
-document.getElementById('close-modal').addEventListener("click", closeModal);
+// NOTE: breaks the code
+// document.getElementById('close-modal').addEventListener("click", closeModal);
 
 var starRating = document.getElementsByClassName("completion-form-star");
 
@@ -56,34 +64,3 @@ if (starRating.length) {
     inputField.value = rating;
   });
 }
-
-// **
-
-// function showCart(cart) {
-//   $('#cart .modal-body').html(cart);
-//   $('#cart').modal();
-// }
-//
-// $('.add-to-cart').on('click', function (e) {
-//   //NOTE: canceling the default event
-//   e.preventDefault();
-//
-//   var id = $(this).data('id');
-//
-//   $.ajax({
-//     url: '/cart/add',
-//     type: 'GET',
-//     dataType: 'json',
-//     data: {id: id},
-//
-//     success: function (res) {
-//       if (!res) alert ('Error');
-//       console.log(res);
-//       showCart(res);
-//     },
-//     error: function (res) {
-//       console.log(res);
-//       showCart(res);
-//     }
-//   })
-// });

@@ -8,6 +8,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use frontend\models\Task;
 use frontend\models\forms\LoginForm;
+use yii\widgets\ActiveForm;
+use yii\web\Response;
 
 class LandingController extends Controller
 {
@@ -42,7 +44,6 @@ class LandingController extends Controller
     // NOTE: ...index.php?r=landing
     public function actionIndex()
     {
-        //$this->getPublishedTest();
         $this->layout = 'landing';
 
         $form = new LoginForm();
@@ -52,6 +53,20 @@ class LandingController extends Controller
             ->orderBy(['created' => SORT_ASC])
             ->limit(4)
             ->all();
+
+        // TODO: is it right ?...
+        if (Yii::$app->request->getIsPost() && Yii::$app->request->isAjax) {
+            if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+                $user = $form->getUser();
+                Yii::$app->user->login($user);
+
+                return $this->goHome();
+            } else {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($form);
+            }
+        }
+
 
         return $this->render('index', compact('tasks'));
     }

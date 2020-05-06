@@ -56,7 +56,10 @@ AppAsset::register($this);
                     <div class="header__account--index">
 
                         <a href="<?= Url::to(['site/login']); ?>"
-                           class="header__account-enter"><span>Вход</span></a>
+                           class="
+                              header__account-enter
+                              open-modal"
+                           data-for="enter-form"><span>Вход</span></a>
 
                         или
                         <a href="<?= Url::to(['signup/index']); ?>"
