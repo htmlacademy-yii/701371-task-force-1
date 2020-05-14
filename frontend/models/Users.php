@@ -297,7 +297,8 @@ class Users extends ActiveRecord implements IdentityInterface
 
     public function getId()
     {
-        return $this->id;
+        //return $this->id;
+        return $this->getPrimaryKey();
     }
 
     public function getAuthKey()
@@ -310,5 +311,16 @@ class Users extends ActiveRecord implements IdentityInterface
         return null;
     }
 
+    // NOTE: for login
+
+    public static function findByUsername($username)
+    {
+        return static::findOne(['email' => $username]);
+    }
+
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
+    }
 
 }

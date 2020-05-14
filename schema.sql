@@ -117,6 +117,22 @@ CREATE TABLE users (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
+-- CREATE TABLE user (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     username VARCHAR,
+--     password_hash VARCHAR,
+--     password_reset_token VARCHAR,
+--     verification_token VARCHAR,
+--     email VARCHAR,
+--     auth_key VARCHAR,
+--
+--     status INT,
+--     created_at INT,
+--     updated_at INT,
+--     password CHAR
+-- )
+-- ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
 CREATE TABLE users_favorites (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 
