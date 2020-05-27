@@ -20,6 +20,9 @@ use yii\helpers\ArrayHelper;
 use frontend\models\Task;
 use frontend\models\Category;
 use frontend\models\TaskFilter;
+use frontend\models\Users;
+use frontend\models\forms\NewTaskForm;
+use yii\web\UploadedFile;
 
 
 class TasksController extends SecuredController
@@ -63,7 +66,7 @@ class TasksController extends SecuredController
         ]);
     }
 
-    // NOTE: ...index.php?r=tasks/view&id=2
+    // NOTE: ...index.php?r=tasks/view&id=getList2
     public function actionView(int $id): string
     {
         $task = Task::find()
@@ -78,5 +81,46 @@ class TasksController extends SecuredController
         return $this->render('view',
             compact('task')
         );
+    }
+
+    public function actionCreate()
+    {
+        $user = Yii::$app->user->identity;
+        if ($user->status != Users::ROLE_CLIENT) {
+            return $this->redirect(['tasks/index']);
+        }
+
+        $taskForm = new NewTaskForm();
+        $categories = Category::find()
+            ->select('name')
+            ->indexBy('id')
+            ->column();
+
+
+
+        if (Yii::$app->request->getIsPost()) {
+            //$taskForm->files = UploadedFile::getInstances($taskForm, 'files');
+            //$files = $taskForm->upload();
+
+            //var_dump($files);
+
+            $task = new Task();
+            $files = $taskForm->upload();
+
+            if (
+                $taskForm->load(Yii::$app->request->post())
+                && $taskForm->validate()
+                && $taskForm->createTask()
+            ) {
+                return $this->redirect(['tasks/index']);
+
+                //$task = new Task();
+                //$task->executor_id = $user->getId();
+
+
+            }
+        }
+
+        return $this->render('create', compact('taskForm', 'categories'));
     }
 }

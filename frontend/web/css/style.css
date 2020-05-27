@@ -1292,7 +1292,7 @@ footer {
           justify-content: space-between; }
 
 .create__task-form {
-  width: 520px;
+  /*width: 520px;*/
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
