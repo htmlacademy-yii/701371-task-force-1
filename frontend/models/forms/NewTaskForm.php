@@ -3,6 +3,7 @@
 namespace frontend\models\forms;
 
 use frontend\models\Task;
+use frontend\models\TaskFile;
 use yii\base\Model;
 
 class NewTaskForm extends Model
@@ -15,7 +16,9 @@ class NewTaskForm extends Model
     public $budget;
     public $term;
 
-    public function attributeLabels()
+    private $taskModel;
+
+    public function attributeLabels(): array
     {
         return [
             'name'          => 'Мне нужно',
@@ -28,51 +31,68 @@ class NewTaskForm extends Model
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'description', 'category'], 'required'],
             [['name', 'address'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['category', 'budget'], 'integer'],
-            [['files'], 'file', 'maxFiles' => 10],
-            [['term'], 'safe'],
+            [['term', 'files'], 'safe'],
+            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, gif, webp', 'maxFiles' => 10],
             [['term'], 'date', 'format' => 'php:Y-m-d'],
         ];
     }
 
+    /**
+     * @return Task
+     */
     public function createTask()
     {
-        $model = new Task();
-        $model->title = $this->name;
-        $model->description = $this->description;
-        $model->address = $this->address;
-        $model->latitude = 0;
-        $model->longitude = 0;
-        $model->price = $this->budget;
-        $model->deadline = $this->term;
+        $task = new Task();
+        $task->title = $this->name;
+        $task->description = $this->description;
+        $task->address = $this->address;
+        $task->latitude = 0;
+        $task->longitude = 0;
+        $task->price = $this->budget;
+        $task->deadline = $this->term;
+        //$task->validate();
 
-        //if (!$model->save()) {
-        //    if ($model->hasErrors('title')) {
-        //        $this->addError('title', 'такое задание уже существует');
-        //    }
-        //    return null;
-        //}
-        //
-        //return $model;
-        return $model->save();
+        if ($task->save()) {
+            $this->taskModel = $task;
+            return true;
+        } else {
+            return false;
+        }
     }
 
+    /**
+     * @param UploadedFile $files
+     * @return bool
+     */
     public function upload()
     {
-        if ($this->validate()) {
-            $this->imageFile->saveAs(
-                'uploads/'
-                . $this->imageFile->baseName
-                . '.'
-                . $this->imageFile->extension
-            );
+        if (!$this->files) {
+            return false;
+        }
 
+        foreach ($this->files as $file) {
+            $fileName = $file->baseName . '.' . $file->extension;
+
+            $file->saveAs('files/' . $fileName);
+            $this->writeFile($fileName);
+        }
+    }
+
+    public function writeFile($fileName)
+    {
+        $taskFile = new TaskFile;
+
+        $taskFile->image_path = $fileName;
+        $taskFile->task_id = $this->taskModel->id;
+
+        if (!$taskFile->save()) {
             return true;
         } else {
             return false;
