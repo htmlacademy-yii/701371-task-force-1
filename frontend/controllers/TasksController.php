@@ -83,6 +83,7 @@ class TasksController extends SecuredController
         );
     }
 
+    // NOTE: ...index.php?r=tasks/create
     public function actionCreate()
     {
         $user = Yii::$app->user->identity;
@@ -96,31 +97,25 @@ class TasksController extends SecuredController
             ->indexBy('id')
             ->column();
 
-
+        $errors = [];
 
         if (Yii::$app->request->getIsPost()) {
-            //$taskForm->files = UploadedFile::getInstances($taskForm, 'files');
-            //$files = $taskForm->upload();
-
-            //var_dump($files);
-
-            $task = new Task();
-            $files = $taskForm->upload();
-
             if (
                 $taskForm->load(Yii::$app->request->post())
                 && $taskForm->validate()
                 && $taskForm->createTask()
             ) {
+                $taskForm->files = UploadedFile::getInstances($taskForm, 'files');
+                $taskForm->upload();
                 return $this->redirect(['tasks/index']);
-
-                //$task = new Task();
-                //$task->executor_id = $user->getId();
-
-
+            } else {
+                $errors = $taskForm->getErrors();
             }
         }
 
-        return $this->render('create', compact('taskForm', 'categories'));
+        return $this->render('create', compact(
+            'taskForm',
+            'categories',
+            'errors'));
     }
 }
