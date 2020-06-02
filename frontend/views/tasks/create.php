@@ -2,6 +2,7 @@
 /**
  * @var $form ActiveForm
  * @var TYPE_NAME $taskForm
+ * @var TYPE_NAME $categories
  */
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
