@@ -48,10 +48,6 @@ use yii\web\IdentityInterface;
 class Users extends ActiveRecord implements IdentityInterface
 {
     const ROLE_CLIENT = 0;
-    const ROLE_EXECUTOR = 1;
-    const RATING = 2;
-    const ORDERS = 3;
-    const VIEWS = 4;
 
     /**
      * {@inheritdoc}
@@ -67,11 +63,7 @@ class Users extends ActiveRecord implements IdentityInterface
     public function rules(): array
     {
         return [
-            [['email',
-                'name',
-                'password',
-            ], 'required'
-            ],
+            [['email', 'name', 'password'], 'required'],
             [['address', 'about'], 'string'],
             [['born', 'visit'], 'safe'],
             [['quest_completed',

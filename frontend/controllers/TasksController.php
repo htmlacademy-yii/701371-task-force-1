@@ -27,6 +27,26 @@ use yii\web\UploadedFile;
 
 class TasksController extends SecuredController
 {
+    // TODO: make user roles linked to the users_roles table
+    //public function behaviors()
+    //{
+    //    return [
+    //        'createAccess' => [
+    //            'class' => AccessControl::class,
+    //            'only' => ['create'],
+    //            'rules' => [
+    //                [
+    //                    'allow' => true,
+    //                    'roles' => ['@'],
+    //                    'matchCallback' => function ($rule, $action) {
+    //                        return Yii::$app->response->redirect(['tasks/index']);
+    //                    }
+    //                ]
+    //            ],
+    //        ]
+    //    ];
+    //}
+
     public function actionIndex(): string
     {
         $taskFilter = new TaskFilter();
@@ -86,6 +106,7 @@ class TasksController extends SecuredController
     // NOTE: ...index.php?r=tasks/create
     public function actionCreate()
     {
+        // TODO: look up for TODO
         $user = Yii::$app->user->identity;
         if ($user->status != Users::ROLE_CLIENT) {
             return $this->redirect(['tasks/index']);
@@ -97,8 +118,6 @@ class TasksController extends SecuredController
             ->indexBy('id')
             ->column();
 
-        $errors = [];
-
         if (Yii::$app->request->getIsPost()) {
             if (
                 $taskForm->load(Yii::$app->request->post())
@@ -108,14 +127,11 @@ class TasksController extends SecuredController
                 $taskForm->files = UploadedFile::getInstances($taskForm, 'files');
                 $taskForm->upload();
                 return $this->redirect(['tasks/index']);
-            } else {
-                $errors = $taskForm->getErrors();
             }
         }
 
         return $this->render('create', compact(
             'taskForm',
-            'categories',
-            'errors'));
+            'categories'));
     }
 }

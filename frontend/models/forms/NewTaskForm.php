@@ -57,14 +57,20 @@ class NewTaskForm extends Model
         $task->longitude = 0;
         $task->price = $this->budget;
         $task->deadline = $this->term;
+        $task->category_id = $this->category;
+
+        // FIXME: fix it when the task requires it
+        $task->executor_id = 1;
+        $task->owner_id = 1;
+        $task->status_id = 1;
         //$task->validate();
 
-        if ($task->save()) {
-            $this->taskModel = $task;
-            return true;
-        } else {
+        if (!$task->save()) {
             return false;
         }
+
+        $this->taskModel = $task;
+        return true;
     }
 
     /**
@@ -92,10 +98,6 @@ class NewTaskForm extends Model
         $taskFile->image_path = $fileName;
         $taskFile->task_id = $this->taskModel->id;
 
-        if (!$taskFile->save()) {
-            return true;
-        } else {
-            return false;
-        }
+        $taskFile->save();
     }
 }
