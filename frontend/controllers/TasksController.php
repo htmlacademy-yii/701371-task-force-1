@@ -20,10 +20,33 @@ use yii\helpers\ArrayHelper;
 use frontend\models\Task;
 use frontend\models\Category;
 use frontend\models\TaskFilter;
+use frontend\models\Users;
+use frontend\models\forms\NewTaskForm;
+use yii\web\UploadedFile;
 
 
 class TasksController extends SecuredController
 {
+    // TODO: make user roles linked to the users_roles table
+    //public function behaviors()
+    //{
+    //    return [
+    //        'createAccess' => [
+    //            'class' => AccessControl::class,
+    //            'only' => ['create'],
+    //            'rules' => [
+    //                [
+    //                    'allow' => true,
+    //                    'roles' => ['@'],
+    //                    'matchCallback' => function ($rule, $action) {
+    //                        return Yii::$app->response->redirect(['tasks/index']);
+    //                    }
+    //                ]
+    //            ],
+    //        ]
+    //    ];
+    //}
+
     public function actionIndex(): string
     {
         $taskFilter = new TaskFilter();
@@ -63,7 +86,7 @@ class TasksController extends SecuredController
         ]);
     }
 
-    // NOTE: ...index.php?r=tasks/view&id=2
+    // NOTE: ...index.php?r=tasks/view&id=getList2
     public function actionView(int $id): string
     {
         $task = Task::find()
@@ -78,5 +101,37 @@ class TasksController extends SecuredController
         return $this->render('view',
             compact('task')
         );
+    }
+
+    // NOTE: ...index.php?r=tasks/create
+    public function actionCreate()
+    {
+        // TODO: look up for TODO
+        $user = Yii::$app->user->identity;
+        if ($user->status != Users::ROLE_CLIENT) {
+            return $this->redirect(['tasks/index']);
+        }
+
+        $taskForm = new NewTaskForm();
+        $categories = Category::find()
+            ->select('name')
+            ->indexBy('id')
+            ->column();
+
+        if (Yii::$app->request->getIsPost()) {
+            if (
+                $taskForm->load(Yii::$app->request->post())
+                && $taskForm->validate()
+                && $taskForm->createTask()
+            ) {
+                $taskForm->files = UploadedFile::getInstances($taskForm, 'files');
+                $taskForm->upload();
+                return $this->redirect(['tasks/index']);
+            }
+        }
+
+        return $this->render('create', compact(
+            'taskForm',
+            'categories'));
     }
 }

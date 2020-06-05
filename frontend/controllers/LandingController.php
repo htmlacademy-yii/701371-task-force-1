@@ -34,7 +34,7 @@ class LandingController extends Controller
                 'denyCallback' => function($rule, $action) {
                     return Yii::$app->response->redirect(['tasks']);
                 }
-                
+
                 //'denyCallback' => function ($rule, $action) {
                 //    $this->goHome();
                 //},
