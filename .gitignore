@@ -75,10 +75,9 @@ phpunit.phar
 /frontend/models/PasswordResetRequestForm.php
 /frontend/models/ResendVerificationEmailForm.php
 /frontend/models/ResetPasswordForm.php
-/frontend/models/SignupForm.php
+/frontend/models/forms/SignupForm.php
 /frontend/models/VerifyEmailForm.php
 
-/frontend/web/assets
 /frontend/web/favicon.ico
 /frontend/web/index-test.php
 /frontend/web/index.php
@@ -107,7 +106,6 @@ phpunit.phar
 /frontend/views/tasks/_index.php
 
 /frontend/controllers/_TasksController.php
-/frontend/controllers/SiteController.php
 
 /frontend/behaviors
 
@@ -131,3 +129,9 @@ queries.sql
 .gitattributes
 .bowerrc
 .editorconfig
+
+#TODO: what is it ?
+/fonts
+/css
+task_force.sql
+index.php
