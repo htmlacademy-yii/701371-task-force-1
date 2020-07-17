@@ -2,23 +2,54 @@
 namespace frontend\controllers;
 
 use DateTime;
+use frontend\models\City;
 use frontend\models\TaskRespond;
-use Yii;
-use yii\web\Controller;
-use yii\data\Pagination;
-use yii\web\HttpException;
-
-use frontend\models\Task;
 use frontend\models\TaskFile;
 use frontend\models\Reviews;
-use frontend\models\Category;
-use frontend\models\TaskFilter;
+use yii\filters\AccessControl;
+use yii\web\HttpException;
 
-use yii\helpers\ArrayHelper;
+use Yii;
+
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class TasksController extends Controller
+use yii\data\Pagination;
+
+use yii\helpers\ArrayHelper;
+
+use frontend\models\Task;
+use frontend\models\Category;
+use frontend\models\TaskFilter;
+use frontend\models\Users;
+use frontend\models\forms\NewTaskForm;
+use yii\web\UploadedFile;
+use frontend\models\forms\ResponseForm;
+use yii\helpers\Url;
+
+
+class TasksController extends SecuredController
 {
+    // TODO: make user roles linked to the users_roles table
+    //public function behaviors()
+    //{
+    //    return [
+    //        'createAccess' => [
+    //            'class' => AccessControl::class,
+    //            'only' => ['create'],
+    //            'rules' => [
+    //                [
+    //                    'allow' => true,
+    //                    'roles' => ['@'],
+    //                    'matchCallback' => function ($rule, $action) {
+    //                        return Yii::$app->response->redirect(['tasks/index']);
+    //                    }
+    //                ]
+    //            ],
+    //        ]
+    //    ];
+    //}
+
     public function actionIndex(): string
     {
         $taskFilter = new TaskFilter();
@@ -58,7 +89,7 @@ class TasksController extends Controller
         ]);
     }
 
-    // NOTE: ...index.php?r=tasks/view&id=2
+    // NOTE: ...index.php?r=tasks/view&id=getList2
     public function actionView(int $id): string
     {
         $task = Task::find()
@@ -66,12 +97,148 @@ class TasksController extends Controller
             ->with(['taskFiles', 'owner', 'responds'])
             ->one();
 
+        $user = Users::find()
+            ->where(['id' => Yii::$app->user->identity->getId()])
+            ->one();
+
+        $responseForm = new ResponseForm();
+
         if ($task === null) {
             throw new NotFoundHttpException('Такого задания не найдено');
         }
 
         return $this->render('view',
-            compact('task')
+            compact(
+                'task',
+                'user',
+                'responseForm'
+            )
         );
+    }
+
+    // NOTE: ...index.php?r=tasks/create
+    public function actionCreate()
+    {
+        // TODO: look up for TODO
+        $user = Yii::$app->user->identity;
+//        if ($user->status != Users::ROLE_CLIENT) {
+//            return $this->redirect(['tasks/index']);
+//        }
+
+        $taskForm = new NewTaskForm();
+        $categories = Category::find()
+            ->select('name')
+            ->indexBy('id')
+            ->column();
+
+        $cities = City::find()
+            ->select('title')
+            ->indexBy('id')
+            ->column();
+
+        if (Yii::$app->request->getIsPost()) {
+            if (
+                $taskForm->load(Yii::$app->request->post())
+                && $taskForm->validate()
+                && $taskForm->createTask()
+            ) {
+
+                $taskForm->files = UploadedFile::getInstances($taskForm, 'files');
+                $taskForm->upload();
+                return $this->redirect(['tasks/index']);
+            }
+        }
+
+        return $this->render('create', compact(
+            'taskForm',
+            'categories',
+            'cities'));
+    }
+
+    public function actionRefuse($respondId)
+    {
+        $taskRespond = TaskRespond::findOne($respondId);
+
+        if (!$taskRespond) {
+            throw new NotFoundHttpException("Задания с id {$respondId} не существует");
+        }
+
+        if (
+            $taskRespond->status_id == $taskRespond->isNew()
+            || $taskRespond->status_id == $taskRespond->isApproved()
+        ) {
+            $taskRespond->status_id = TaskRespond::STATUS_REFUSED;
+            $taskRespond->save();
+
+            return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
+        }
+    }
+
+    /**
+     * @param $respondId
+     * @return \yii\web\Response|null
+     * @throws NotFoundHttpException
+     */
+    public function actionApproved($respondId)
+    {
+        $taskRespond = TaskRespond::findOne($respondId);
+
+        if (!$taskRespond) {
+            throw new NotFoundHttpException("Задания с id {$respondId} не существует");
+        }
+
+        if ($taskRespond->status_id == $taskRespond->isNew()) {
+            $taskRespond->status_id = TaskRespond::STATUS_APPROVED;
+            $taskRespond->save();
+
+            // TODO: remember for events after chapter 8
+            $task = $taskRespond->task;
+            $task->executor_id = $taskRespond->user_id;
+            $task->status_id = Task::STATUS_WORK;
+            $task->save();
+
+            return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
+        }
+    }
+
+    public function actionResponse()
+    {
+        $response = new ResponseForm();
+
+        if (Yii::$app->request->getIsPost()) {
+            if (
+                $response->load(Yii::$app->request->post())
+                && $response->validate()
+                && $response->createResponse()
+            ) {
+                return $this->redirect(['tasks/index']);
+            }
+        }
+    }
+
+    public function actionCancel()
+    {
+        $task = Task::findOne(Yii::$app->request->post('taskId'));
+
+        if ($task->isWork()) {
+            $task->status_id = Task::STATUS_CANCEL;
+            $task->save();
+            return $this->redirect(Url::to(['tasks/view', 'id' => $task->id]));
+        } else {
+            throw new NotFoundHttpException('Задание не находиться в роботе');
+        }
+    }
+
+    public function actionComplete($taskId)
+    {
+        $task = Task::findOne($taskId);
+
+        if ($task->isWork()) {
+            $task->status_id = Task::STATUS_COMPLETED;
+            $task->save();
+            return $this->redirect(Url::to(['tasks/view', 'id' => $taskId]));
+        } else {
+            throw new NotFoundHttpException('Не возможно завершить, провалено');
+        }
     }
 }
