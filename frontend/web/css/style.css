@@ -616,7 +616,9 @@ footer {
   .input-danger + input + span {
     color: #FF116E; }
 
+/* NOTE: fix width */
 .input-middle {
+  width: 260px;
   padding-top: 14px;
   padding-bottom: 14px;
   padding-right: 16px;
@@ -733,7 +735,8 @@ footer {
   cursor: pointer; }
 
 .button:hover {
-  background-color: #598bff; }
+  background-color: #598bff;
+  text-decoration: none; }
 
 .button:active {
   background-color: #274bdb; }
@@ -774,7 +777,8 @@ footer {
   padding: 20px; }
 
 .response-button {
-  background-color: #ffaa00; }
+  background-color: #ffaa00;
+  text-decoration: none;}
 
 .refusal-button {
   background-color: #ff3d71; }
@@ -2280,6 +2284,26 @@ footer {
   background-position: center;
   background-repeat: no-repeat;
   background-color: #ff6b81; }
+
+/* NOTE: adding the missing styles for the landing category */
+.task-translation {
+  background-image: url("../img/translation.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1e90ff; }
+
+.task-beauty {
+  background-image: url("../img/beauty.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #2f3542;; }
+
+.task-neo {
+  background-image: url("../img/neo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ff7f50; }
+/**/
 
 .task-event {
   background-image: url("../img/balloons.png");

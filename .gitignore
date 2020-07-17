@@ -78,6 +78,7 @@ phpunit.phar
 /frontend/models/forms/SignupForm.php
 /frontend/models/VerifyEmailForm.php
 
+/frontend/web/assets
 /frontend/web/favicon.ico
 /frontend/web/index-test.php
 /frontend/web/index.php

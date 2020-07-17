@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\components;
+namespace frontend\widgets;
 
 use yii\base\Widget;
 
