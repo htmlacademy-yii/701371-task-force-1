@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace app\components;
+namespace TaskForce\components;
 use app\components\exception\TaskException;
 
 class Task

@@ -1,14 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace app\components;
+namespace TaskForce\components;
+use \frontend\models\Task;
+use frontend\models\Users;
+use frontend\models\UsersRoles;
 
 class RespondAction extends Action
 {
 	public static function rightsVerification(Task $task, int $userId): bool
 	{
-		return $task->getCurrentStatus() === Task::STATUS_NEW
-			&& $task->getIdExecutor() === $userId;
+	    $user = Users::findOne($userId);
+	    if (!$user) {
+	        return false;
+        }
+
+		return $task->isNew() && $user->role->key_code != UsersRoles::CUSTOMER_KEY_CODE;
 	}
 
 	public static function getTitle(): string
