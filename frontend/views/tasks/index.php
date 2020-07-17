@@ -1,6 +1,6 @@
 <?php
 
-use frontend\components\ElapsedTimeWidget;
+use frontend\widgets\ElapsedTimeWidget;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;

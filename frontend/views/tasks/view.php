@@ -4,20 +4,29 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use frontend\components\RatingWidget;
-use frontend\components\ElapsedTimeWidget;
-//use frontend\models\TaskFilter;
-//use frontend\models\Reviews;
+use frontend\widgets\RatingWidget;
+use frontend\widgets\ElapsedTimeWidget;
+use frontend\models\Users;
+use frontend\helpers\TaskPermissionHelper;
+use frontend\models\Task;
+use frontend\models\TaskRespond;
+use yii\helpers\Url;
+use frontend\widgets\TaskActionsButtonsWidget;
+
+// NOTE: to connect a view to another view
+use yii\web\View;
 
 // NOTE: for pagination
 use yii\widgets\LinkPager;
 
 /**
- * @var Task[] $task
  * @var Task[] $customerOrders
  * @var Task[] $customerReviews
  * @var Review[] $customerRaiting
  * @var TaskRespond[] $responds
+ * @var Users $user
+ * @var Task $task
+ * @var View $this
  */
 
 $this->title = 'Главная страница';
@@ -68,19 +77,47 @@ Yii::$app->formatter->language = 'ru-RU';
                         </div>
                     </div>
                 </div>
-                <div class="content-view__action-buttons">
-                        <button class=" button button__big-color response-button"
-                                type="button">Откликнуться</button>
-                        <button class="button button__big-color refusal-button"
-                                type="button">Отказаться</button>
-                        <button class="button button__big-color connection-button"
-                                type="button">Написать сообщение</button>
-                </div>
+
+                <!-- NOTE: buttons for displaying actions for the task author -->
+                <?= TaskActionsButtonsWidget::widget(['task' => $task]); ?>
             </div>
-            <div class="content-view__feedback">
+
+            <?php
+            /*
+             * NOTE:
+             * 1st condition - if there are responses
+             *
+             * 2nd condition-task author + if the current user matches
+             * the task author id
+             *
+             * 3rd condition - for all other users, this block is not
+             * shown (enabling - showing your own response to the author)
+             * */
+
+            if (
+              $task->responds
+              && $user->isCustomer()
+              && $user->id == $task->owner_id
+              || in_array(Yii::$app->user->identity->getId(), array_column($task->responds, 'user_id'))
+            ): ?>
+
+                <div class="content-view__feedback">
                 <h2>Отклики <span><?= count($task->responds) ?></span></h2>
                 <div class="content-view__feedback-wrapper">
+
                     <?php foreach ($task->responds as $respond): ?>
+                        <!--
+                        NOTE:
+                        if the current user is a performer and he is NOT the
+                        author of the current task, then skip it
+                        -->
+                        <?php if (
+                            !$user->isCustomer()
+                            && $respond->user_id != Yii::$app->user->identity->getId()
+                        ): ?>
+                            <?php continue; ?>
+                        <?php endif; ?>
+
                         <div class="content-view__feedback-card">
                             <div class="feedback-card__top">
                                 <a href="#"><img src="./img/<?= $respond->user->avatar->image_path; ?>" width="55" height="55"></a>
@@ -98,18 +135,40 @@ Yii::$app->formatter->language = 'ru-RU';
                                 <span><?= $respond->price; ?></span>
 
                             </div>
-                            <div class="feedback-card__actions">
-                                <button class="button__small-color response-button button"
-                                        type="button">Откликнуться</button>
-                                <button class="button__small-color refusal-button button"
-                                        type="button">Отказаться</button>
-                                <button class="button__chat button"
-                                        type="button"></button>
-                            </div>
+
+                            <?php if ($task->responds
+                                && $user->isCustomer()
+                                && $task->status_id != $task->isWork()
+                            ): ?>
+                                <?php if ($respond->isNew() || $respond->isApproved()): ?>
+                                    <div class="feedback-card__actions">
+                                        <a href="<?= Url::to([
+                                            'tasks/approved',
+                                            'respondId' => $respond->id
+                                        ]); ?>"
+                                            class="button__small-color response-button button">
+                                            Подтвердить
+                                        </a>
+
+                                        <a href="<?= Url::to([
+                                            'tasks/refuse',
+                                            'respondId' => $respond->id
+                                        ]); ?>"
+                                            class="button__small-color refusal-button button">
+                                            Отказать
+                                        </a>
+
+                                        <button class="button__chat button"
+                                            type="button"></button>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
+            <?php endif; ?>
+
         </section>
         <section class="connect-desk">
             <div class="connect-desk__profile-mini">
@@ -158,4 +217,10 @@ Yii::$app->formatter->language = 'ru-RU';
             </div>
         </section>
     </div>
+
+    <?= $this->render('//layouts/response', compact(
+      'responseForm',
+      'task')); ?>
+
+    <?= $this->render('//layouts/cancel', ['taskId' => $task->id]); ?>
 </main>

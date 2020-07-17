@@ -1,11 +1,13 @@
 <?php
 
-use frontend\components\WomanSignupWidget;
+use frontend\widgets\WomanSignupWidget;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
+use frontend\widgets\MyNavWidget;
 use common\widgets\Alert;
 
 AppAsset::register($this);
@@ -28,7 +30,7 @@ AppAsset::register($this);
     <header class="page-header">
         <div class="main-container page-header__container">
             <div class="page-header__logo">
-                <a href="index.html">
+                <a href="<?=Url::home(); ?>">
                     <svg class="page-header__logo-image" id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1634 646.35">
                         <title>taskforce_logo2-01</title>
                         <g>
@@ -58,13 +60,13 @@ AppAsset::register($this);
             <div class="header__nav">
                 <ul class="header-nav__list site-list">
                     <li class="site-list__item">
-                        <a href="#">Задания</a>
+                        <a href="<?= Url::to(['tasks/index']); ?>">Задания</a>
                     </li>
                     <li class="site-list__item">
                         <a href="#">Исполнители</a>
                     </li>
                     <li class="site-list__item">
-                        <a href="#">Создать задание</a>
+                        <a href="<?= Url::to(['tasks/create']); ?>">Создать задание</a>
                     </li>
                     <li class="site-list__item site-list__item--active">
                         <a>Мой профиль</a>
@@ -103,21 +105,23 @@ AppAsset::register($this);
                          alt="Аватар пользователя">
                 </a>
                 <span class="header__account-name">
-                 Василий
+                    <?= (Yii::$app->user->isGuest) ? 'Гость' : Yii::$app->user->identity->name; ?>
              </span>
             </div>
             <div class="account__pop-up">
-                <ul class="account__pop-up-list">
-                    <li>
-                        <a href="#">Мои задания</a>
-                    </li>
-                    <li>
-                        <a href="#">Настройки</a>
-                    </li>
-                    <li>
-                        <a href="#">Выход</a>
-                    </li>
-                </ul>
+                <?php
+                    echo MyNavWidget::widget([
+                        'options' => ['class' => 'account__pop-up-list'],
+                        'items' => [
+                            ['label' => 'Мои задания', 'url' => ['/tasks/index']],
+                            //['label' => 'Настройки', 'url' => ['/site/about']],
+                            [
+                                'label' => Yii::$app->user->isGuest ? 'Вход' : 'Выход',
+                                'url' => Yii::$app->user->isGuest  ? ['/site/login'] : ['/site/logout'],
+                            ],
+                        ],
+                    ]);
+                ?>
             </div>
         </div>
     </header>
