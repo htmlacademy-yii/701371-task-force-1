@@ -17,6 +17,8 @@ use yii\db\ActiveQuery;
  */
 class UsersRoles extends ActiveRecord
 {
+    const CUSTOMER_KEY_CODE = 'customer';
+
     /**
      * {@inheritdoc}
      */

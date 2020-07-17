@@ -34,6 +34,15 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
+    // NOTE: откликнуться
+    const STATUS_RESPOND = 1;
+
+    const STATUS_CANCEL = 2;
+    const STATUS_COMPLETED = 3;
+    const STATUS_FAIL = 4;
+    const STATUS_WORK = 5;
+    const STATUS_NEW = 6;
+
     /**
      * {@inheritdoc}
      */
@@ -49,8 +58,8 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'description', 'address', 'latitude', 'longitude', 'price', 'deadline'], 'required'],
-            [['description', 'latitude', 'longitude'], 'string'],
-            [['price'], 'number'],
+            [['description'], 'string'],
+            [['price', 'latitude', 'longitude'], 'number'],
             [['deadline', 'created'], 'safe'],
             [['city_id', 'executor_id', 'owner_id', 'status_id', 'category_id'], 'integer'],
             [['title'], 'string', 'max' => 64],
@@ -159,5 +168,52 @@ class Task extends \yii\db\ActiveRecord
     public function getResponds()
     {
         return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
+    }
+
+    /**/
+
+    /**
+     * @return bool
+     */
+    public function isRespond()
+    {
+        return $this->status_id == self::STATUS_RESPOND;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCancel()
+    {
+        return $this->status_id == self::STATUS_CANCEL;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCompleted()
+    {
+        return $this->status_id == self::STATUS_COMPLETED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFail()
+    {
+        return $this->status_id == self::STATUS_FAIL;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWork()
+    {
+        return $this->status_id == self::STATUS_WORK;
+    }
+
+    public function isNew()
+    {
+        return $this->status_id == self::STATUS_NEW;
     }
 }

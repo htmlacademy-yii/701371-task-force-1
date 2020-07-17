@@ -43,9 +43,13 @@ use yii\web\IdentityInterface;
  * @property UsersFavorites[] $usersFavorites
  * @property UsersFavorites[] $usersFavorites0
  * @property UsersImage[] $usersImages
+ *
+ * @property UserRoles $roles
  */
 class Users extends ActiveRecord implements IdentityInterface
 {
+    const ROLE_CLIENT = 0;
+
     /**
      * {@inheritdoc}
      */
@@ -60,11 +64,7 @@ class Users extends ActiveRecord implements IdentityInterface
     public function rules(): array
     {
         return [
-            [['email',
-                'name',
-                'password',
-            ], 'required'
-            ],
+            [['email', 'name', 'password'], 'required'],
             [['address', 'about'], 'string'],
             [['born', 'visit'], 'safe'],
             [['quest_completed',
@@ -297,7 +297,8 @@ class Users extends ActiveRecord implements IdentityInterface
 
     public function getId()
     {
-        return $this->id;
+        //return $this->id;
+        return $this->getPrimaryKey();
     }
 
     public function getAuthKey()
@@ -310,5 +311,27 @@ class Users extends ActiveRecord implements IdentityInterface
         return null;
     }
 
+    // NOTE: for login
+    public static function findByUsername($username)
+    {
+        return static::findOne(['email' => $username]);
+    }
 
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+
+    // NOTE: for roles
+    public function isCustomer()
+    {
+        // NOTE: if there are no roles
+        if (!$this->role) {
+            return false;
+        }
+
+        // return: true || false
+        return $this->role->key_code === UsersRoles::CUSTOMER_KEY_CODE;
+    }
 }
