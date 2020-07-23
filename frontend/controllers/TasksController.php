@@ -7,6 +7,7 @@ use frontend\models\TaskRespond;
 use frontend\models\TaskFile;
 use frontend\models\Reviews;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 
 use Yii;
@@ -119,12 +120,6 @@ class TasksController extends SecuredController
     // NOTE: ...index.php?r=tasks/create
     public function actionCreate()
     {
-        // TODO: look up for TODO
-        $user = Yii::$app->user->identity;
-//        if ($user->status != Users::ROLE_CLIENT) {
-//            return $this->redirect(['tasks/index']);
-//        }
-
         $taskForm = new NewTaskForm();
         $categories = Category::find()
             ->select('name')
@@ -136,6 +131,7 @@ class TasksController extends SecuredController
             ->indexBy('id')
             ->column();
 
+        // TODO: What is it verbs ?!
         if (Yii::$app->request->getIsPost()) {
             if (
                 $taskForm->load(Yii::$app->request->post())
@@ -160,7 +156,7 @@ class TasksController extends SecuredController
         $taskRespond = TaskRespond::findOne($respondId);
 
         if (!$taskRespond) {
-            throw new NotFoundHttpException("Задания с id {$respondId} не существует");
+            throw new BadRequestHttpException("Запрашиваемого задания не существует");
         }
 
         if (
@@ -178,13 +174,14 @@ class TasksController extends SecuredController
      * @param $respondId
      * @return \yii\web\Response|null
      * @throws NotFoundHttpException
+     * @throws BadRequestHttpException
      */
     public function actionApproved($respondId)
     {
         $taskRespond = TaskRespond::findOne($respondId);
 
         if (!$taskRespond) {
-            throw new NotFoundHttpException("Задания с id {$respondId} не существует");
+            throw new BadRequestHttpException("Запрашиваемого отклика не существует");
         }
 
         if ($taskRespond->status_id == $taskRespond->isNew()) {
@@ -225,7 +222,7 @@ class TasksController extends SecuredController
             $task->save();
             return $this->redirect(Url::to(['tasks/view', 'id' => $task->id]));
         } else {
-            throw new NotFoundHttpException('Задание не находиться в роботе');
+            throw new BadRequestHttpException('Задание не находиться в работе');
         }
     }
 
@@ -238,7 +235,7 @@ class TasksController extends SecuredController
             $task->save();
             return $this->redirect(Url::to(['tasks/view', 'id' => $taskId]));
         } else {
-            throw new NotFoundHttpException('Не возможно завершить, провалено');
+            throw new BadRequestHttpException('Не возможно завершить, провалено');
         }
     }
 }

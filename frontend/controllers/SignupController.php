@@ -28,9 +28,6 @@ class SignupController extends Controller
                     ]
                 ],
 
-                //'denyCallback' => function($rule, $action) {
-                //    $this->goHome();
-                //}
                 'denyCallback' => function($rule, $action) {
                     return Yii::$app->response->redirect(['tasks']);
                 }
@@ -61,6 +58,7 @@ class SignupController extends Controller
 
             if ($signupForm->validate() && ($user = $signupForm->createUser())) {
                 Yii::$app->user->login($user);
+
                 return $this->goHome();
             }
         }
@@ -71,3 +69,5 @@ class SignupController extends Controller
         ));
     }
 }
+
+// 15.19

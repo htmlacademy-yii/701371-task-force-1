@@ -37,7 +37,7 @@ class SignupForm extends Model
 
             [['name'], 'string', 'min' => 2],
             [['name'], 'trim'],
-            [['email'], 'string', 'min' => 3],
+            [['email'], 'string', 'min' => 5],
             [['password'], 'string', 'min' => 8]
         ];
     }
@@ -56,6 +56,7 @@ class SignupForm extends Model
             if ($user->hasErrors('email')) {
                 $this->addError('email', 'email занят');
             }
+
             return null;
         }
 

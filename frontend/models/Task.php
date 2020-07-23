@@ -175,7 +175,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isRespond()
+    public function isResponded()
     {
         return $this->status_id == self::STATUS_RESPOND;
     }
@@ -183,7 +183,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isCancel()
+    public function isCanceled()
     {
         return $this->status_id == self::STATUS_CANCEL;
     }
@@ -199,7 +199,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isFail()
+    public function isFailed()
     {
         return $this->status_id == self::STATUS_FAIL;
     }

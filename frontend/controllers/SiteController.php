@@ -28,7 +28,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'login'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -36,24 +36,16 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'login'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    //[
-                    //    'allow' => true,
-                    //    'actions' => ['index'],
-                    //    'roles' => ['?']
-                    //],
                 ],
-                //'denyCallback' => function($rule, $action) {
-                //    return Yii::$app->response->redirect(['tasks']);
-                //}
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['get', 'post'],
+                    'logout', 'signup', 'login' => ['get', 'post'],
                 ],
             ],
         ];
@@ -82,8 +74,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        // TODO: defaultRoute is don't work, why ? Help me...
         return $this->redirect(['tasks/index']);
-        //return $this->render('index');
     }
 
     /**
@@ -93,10 +85,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();

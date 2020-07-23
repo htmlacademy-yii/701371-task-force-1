@@ -2287,7 +2287,7 @@ footer {
 
 /* NOTE: adding the missing styles for the landing category */
 .task-translation {
-  background-image: url("../img/translation.png");
+  background-image: url("../img/translate.png");
   background-position: center;
   background-repeat: no-repeat;
   background-color: #1e90ff; }

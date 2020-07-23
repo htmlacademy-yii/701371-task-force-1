@@ -48,7 +48,7 @@ use yii\web\IdentityInterface;
  */
 class Users extends ActiveRecord implements IdentityInterface
 {
-    const ROLE_CLIENT = 0;
+    const ROLE_CLIENT = 1;
 
     /**
      * {@inheritdoc}
@@ -297,7 +297,6 @@ class Users extends ActiveRecord implements IdentityInterface
 
     public function getId()
     {
-        //return $this->id;
         return $this->getPrimaryKey();
     }
 

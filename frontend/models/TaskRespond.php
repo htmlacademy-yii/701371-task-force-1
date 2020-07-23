@@ -87,15 +87,6 @@ class TaskRespond extends \yii\db\ActiveRecord
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-//    public function getStatus()
-//    {
-//        return $this->hasOne(TaskStatus::className(), ['id' => 'status_id']);
-//    }
-
-
     // NOTE: my functions -----------------------------------------------------
 
     /**
