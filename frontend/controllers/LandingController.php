@@ -3,13 +3,13 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use frontend\models\Task;
 use frontend\models\forms\LoginForm;
+use yii\filters\AccessControl;
 use yii\widgets\ActiveForm;
+use yii\web\Controller;
 use yii\web\Response;
+use Yii;
 
 class LandingController extends Controller
 {

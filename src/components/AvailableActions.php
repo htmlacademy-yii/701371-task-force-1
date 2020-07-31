@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace TaskForce\components;
 
-/*1*/
-
+use frontend\models\Task;
 use frontend\models\forms\ResponseForm;
 use yii\web\User;
-use frontend\models\Task;
 
 class AvailableActions
 {
@@ -16,7 +14,7 @@ class AvailableActions
 	const ACTION_COMPLETE = 'completed';
 	const ACTION_FAIL = 'fail';
 	const ACTIONS = [
-	    CancelAction::class,
+        CancelAction::class,
         CompleteAction::class,
         FailAction::class,
         RespondAction::class,

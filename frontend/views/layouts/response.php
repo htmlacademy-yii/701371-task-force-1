@@ -4,10 +4,10 @@
  * @var $model LoginForm
  */
 
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-use yii\helpers\Html;
 use frontend\models\forms\ResponseForm;
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /** @var ResponseForm $responseForm */
 ?>
@@ -30,27 +30,25 @@ use frontend\models\forms\ResponseForm;
 
             <?= $form->field($responseForm, 'price',
                 [
-                    'labelOptions'  => ['style' => 'color: black;'],
-                    'options'       => ['class' => 'create__task-form form-create'],
+                    'labelOptions' => ['style' => 'color: black;'],
+                    'options' => ['class' => 'create__task-form form-create'],
                 ])
                 ->textInput([
-                    'tabindex'    => 1,
-                    //'name'        => 'response-payment',
-                    'class'       => 'response-form-payment input input-middle input-money',
+                    'tabindex' => 1,
+                    'class' => 'response-form-payment input input-middle input-money',
                     'placeholder' => 'Укажите цену в ₽',
                 ]); ?>
 
             <?= $form->field($responseForm, 'comment',
                 [
-                    'labelOptions'  => ['style' => 'color: black;'],
-                    'options'       => ['class' => 'create__task-form form-create'],
+                    'labelOptions' => ['style' => 'color: black;'],
+                    'options' => ['class' => 'create__task-form form-create'],
                 ])
                 ->textArea([
-                    'tabindex'      => 2,
-                    //'name'          => 'response-comment',
-                    'class'         => 'input textarea',
-                    'placeholder'   => 'Разместите ваш комментарий здесь',
-                    'rows'          => 4,
+                    'tabindex' => 2,
+                    'class' => 'input textarea',
+                    'placeholder' => 'Разместите ваш комментарий здесь',
+                    'rows' => 4,
                 ]); ?>
 
           <?= Html::submitButton('Опубликовать', ['class' => 'button modal-button']); ?>

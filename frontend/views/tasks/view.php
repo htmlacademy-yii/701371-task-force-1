@@ -1,20 +1,17 @@
-
 <?php
-
-use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
-use frontend\widgets\RatingWidget;
-use frontend\widgets\ElapsedTimeWidget;
-use frontend\models\Users;
 use frontend\helpers\TaskPermissionHelper;
+use frontend\helpers\TaskRespondPermissionHelper;
 use frontend\models\Task;
 use frontend\models\TaskRespond;
-use yii\helpers\Url;
+use frontend\models\Users;
+use frontend\widgets\ElapsedTimeWidget;
+use frontend\widgets\RatingWidget;
 use frontend\widgets\TaskActionsButtonsWidget;
-
-// NOTE: to connect a view to another view
+use yii\helpers\Url;
 use yii\web\View;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 // NOTE: for pagination
 use yii\widgets\LinkPager;
@@ -94,12 +91,15 @@ Yii::$app->formatter->language = 'ru-RU';
              * shown (enabling - showing your own response to the author)
              * */
 
-            if (
-              $task->responds
-              && $user->isCustomer()
-              && $user->id == $task->owner_id
-              || in_array(Yii::$app->user->identity->getId(), array_column($task->responds, 'user_id'))
-            ): ?>
+//            if (
+//              $task->responds
+//              && $user->isCustomer()
+//              && $user->id == $task->owner_id
+//              || in_array(Yii::$app->user->identity->getId(), array_column($task->responds, 'user_id'))
+//            ):
+
+                // TODO: is right?
+                if (!TaskPermissionHelper::canViewResponseButtons($task, $user)): ?>
 
                 <div class="content-view__feedback">
                 <h2>Отклики <span><?= count($task->responds) ?></span></h2>
@@ -136,10 +136,13 @@ Yii::$app->formatter->language = 'ru-RU';
 
                             </div>
 
-                            <?php if ($task->responds
-                                && $user->isCustomer()
-                                && $task->status_id != $task->isWork()
-                            ): ?>
+                          <!-- TODO: is rigth ? -->
+                            <?php
+//                                if ($task->responds
+//                                && $user->isCustomer()
+//                                && $task->status_id != $task->isWork()
+//                            ): ?>
+                            <?php if (TaskRespondPermissionHelper::canViewAllResponds($task, $user)): ?>
                                 <?php if ($respond->isNew() || $respond->isApproved()): ?>
                                     <div class="feedback-card__actions">
                                         <a href="<?= Url::to([

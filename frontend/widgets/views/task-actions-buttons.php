@@ -1,10 +1,10 @@
 <?php
 
-use yii\helpers\Url;
 use frontend\models\Task;
-use TaskForce\components\RespondAction;
 use TaskForce\components\CancelAction;
 use TaskForce\components\CompleteAction;
+use TaskForce\components\RespondAction;
+use yii\helpers\Url;
 
 /**
  * @var array $actions

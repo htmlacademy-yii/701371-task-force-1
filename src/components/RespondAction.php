@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 namespace TaskForce\components;
-use \frontend\models\Task;
-use frontend\models\Users;
+
+use frontend\models\{Task, Users};
 use frontend\models\UsersRoles;
 
 class RespondAction extends Action
@@ -15,7 +15,7 @@ class RespondAction extends Action
 	        return false;
         }
 
-		return $task->isNew() && $user->role->key_code != UsersRoles::CUSTOMER_KEY_CODE;
+		return $task->isNew() && !$user->role->isCustomer();
 	}
 
 	public static function getTitle(): string

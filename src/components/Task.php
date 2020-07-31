@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace TaskForce\components;
+
 use app\components\exception\TaskException;
 
 class Task

@@ -3,8 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
 
 /**

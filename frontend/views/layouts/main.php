@@ -1,14 +1,16 @@
 <?php
 
+use common\widgets\Alert;
+
 use frontend\widgets\WomanSignupWidget;
+use frontend\assets\AppAsset;
+use frontend\widgets\MyNavWidget;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use frontend\widgets\MyNavWidget;
-use common\widgets\Alert;
+
 
 AppAsset::register($this);
 ?>
@@ -30,7 +32,7 @@ AppAsset::register($this);
     <header class="page-header">
         <div class="main-container page-header__container">
             <div class="page-header__logo">
-                <a href="<?=Url::home(); ?>">
+                <a href="<?= Url::home(); ?>">
                     <svg class="page-header__logo-image" id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1634 646.35">
                         <title>taskforce_logo2-01</title>
                         <g>
@@ -114,7 +116,6 @@ AppAsset::register($this);
                         'options' => ['class' => 'account__pop-up-list'],
                         'items' => [
                             ['label' => 'Мои задания', 'url' => ['/tasks/index']],
-                            //['label' => 'Настройки', 'url' => ['/site/about']],
                             [
                                 'label' => Yii::$app->user->isGuest ? 'Вход' : 'Выход',
                                 'url' => Yii::$app->user->isGuest  ? ['/site/login'] : ['/site/logout'],

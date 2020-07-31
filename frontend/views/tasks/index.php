@@ -1,11 +1,11 @@
 <?php
 
+use frontend\models\TaskFilter;
 use frontend\widgets\ElapsedTimeWidget;
-use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use frontend\models\TaskFilter;
+use yii\widgets\ActiveForm;
 
 // NOTE: for pagination
 use yii\widgets\LinkPager;
