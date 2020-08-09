@@ -616,7 +616,9 @@ footer {
   .input-danger + input + span {
     color: #FF116E; }
 
+/* NOTE: fix width */
 .input-middle {
+  width: 260px;
   padding-top: 14px;
   padding-bottom: 14px;
   padding-right: 16px;
@@ -1303,13 +1305,22 @@ footer {
 .form-create label {
   margin-top: 29px;
   margin-bottom: 12px;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+}
 
-.form-create span {
+.form-create label {
+  text-transform: uppercase;
+}
+
+.form-create span,
+.form-create__span,
+.form-create__span-error {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-size: 12px;
   color: #8a8a8d; }
+
+/**/
 
 .create__file {
   display: -webkit-box;
@@ -1328,7 +1339,18 @@ footer {
   background-repeat: no-repeat;
   background-position: center;
   margin-top: 10px;
-  border-radius: 6px; }
+  border-radius: 6px;
+
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: #8a8a8d;
+}
+
+.create__file-fix {
+  /*height: 110px;*/
+}
+
   .create__file:hover {
     background-color: #f0f0f0; }
 
@@ -1337,6 +1359,8 @@ footer {
 
 .create__file:hover span {
   font-size: 0; }
+
+/**/
 
 .create__price-time {
   display: -webkit-box;
@@ -1418,7 +1442,9 @@ footer {
 
 .warning-item--error {
   background-color: #ff7675;
-  color: #ffffff; }
+  color: #ffffff;
+
+  visibility: hidden; }
 
 .create__task button {
   margin-left: 20px;
@@ -2278,6 +2304,26 @@ footer {
   background-position: center;
   background-repeat: no-repeat;
   background-color: #ff6b81; }
+
+/* NOTE: adding the missing styles for the landing category */
+.task-translation {
+  background-image: url("../img/translation.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1e90ff; }
+
+.task-beauty {
+  background-image: url("../img/beauty.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #2f3542;; }
+
+.task-neo {
+  background-image: url("../img/neo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ff7f50; }
+/**/
 
 .task-event {
   background-image: url("../img/balloons.png");
