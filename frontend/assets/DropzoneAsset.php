@@ -17,7 +17,6 @@ class DropzoneAsset extends AssetBundle
         //'js/drop.js',
     ];
 
-    // загрузит первым, а потом дропзон
     public $depends = [
         'frontend\assets\AppAsset',
     ];

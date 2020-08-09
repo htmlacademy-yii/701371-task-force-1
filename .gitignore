@@ -129,3 +129,10 @@ queries.sql
 .gitattributes
 .bowerrc
 .editorconfig
+
+#TODO: what is it?
+/fonts
+/css
+/js
+task_force.sql
+index.php

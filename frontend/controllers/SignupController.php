@@ -3,13 +3,13 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use frontend\models\forms\SignupForm;
 use frontend\models\City;
 use frontend\models\Users;
+use frontend\models\forms\SignupForm;
+use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -28,9 +28,6 @@ class SignupController extends Controller
                     ]
                 ],
 
-                //'denyCallback' => function($rule, $action) {
-                //    $this->goHome();
-                //}
                 'denyCallback' => function($rule, $action) {
                     return Yii::$app->response->redirect(['tasks']);
                 }
@@ -61,6 +58,7 @@ class SignupController extends Controller
 
             if ($signupForm->validate() && ($user = $signupForm->createUser())) {
                 Yii::$app->user->login($user);
+
                 return $this->goHome();
             }
         }
@@ -71,3 +69,5 @@ class SignupController extends Controller
         ));
     }
 }
+
+// 15.19

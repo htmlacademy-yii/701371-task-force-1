@@ -1,6 +1,6 @@
 <?php
 
-use frontend\components\ElapsedTimeWidget;
+use frontend\widgets\ElapsedTimeWidget;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
@@ -25,11 +25,15 @@ $this->title = 'TaskForse - главная страница';
                     <p><a href="#" class="link-regular"><?= $task->category->name; ?></a></p>
                     <p><?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?> назад</p>
                 </div>
-                <span>700 <b>₽</b></span>
+                <span><?= $task->price; ?> <b>₽</b></span>
             </div>
         </div>
     <?php endforeach; ?>
 </div>
 <div class="landing-bottom-container">
-    <a href="<?= Url::to(['tasks/index']); ?>" class="button red-button">смотреть все задания</a>
+<!--    <a href="--><?//= Url::to(['tasks/index']); ?><!--" class="button red-button">смотреть все задания</a>-->
+    <a href="<?= Url::to(['signup/index']); ?>"
+       class="button red-button">
+      смотреть все задания
+    </a>
 </div>

@@ -223,7 +223,6 @@ ALTER TABLE task ADD FOREIGN KEY (owner_id) REFERENCES users(id);
 ALTER TABLE task ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE task_respond ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE task_respond ADD FOREIGN KEY (task_id) REFERENCES task(id);
-ALTER TABLE task_respond ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE reviews ADD FOREIGN KEY (account_id) REFERENCES users(id);
 ALTER TABLE reviews ADD FOREIGN KEY (status_id) REFERENCES task_status(id);
 ALTER TABLE feedback ADD FOREIGN KEY (task_id) REFERENCES task(id);

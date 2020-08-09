@@ -3,8 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
 
 /**
@@ -22,7 +21,6 @@ use yii\web\IdentityInterface;
  * @property int $views_counter
  * @property int $hide_account
  * @property int $show_contacts_to_customer
- * @property int $status
  * @property int|null $avatar_id
  * @property int|null $role_id
  * @property int|null $raiting_id
@@ -44,10 +42,12 @@ use yii\web\IdentityInterface;
  * @property UsersFavorites[] $usersFavorites
  * @property UsersFavorites[] $usersFavorites0
  * @property UsersImage[] $usersImages
+ *
+ * @property UserRoles $roles
  */
 class Users extends ActiveRecord implements IdentityInterface
 {
-    const ROLE_CLIENT = 0;
+    const ROLE_CLIENT = 1;
 
     /**
      * {@inheritdoc}
@@ -70,7 +70,6 @@ class Users extends ActiveRecord implements IdentityInterface
                 'views_counter',
                 'hide_account',
                 'show_contacts_to_customer',
-                'status',
                 'avatar_id',
                 'role_id',
                 'raiting_id',
@@ -130,7 +129,6 @@ class Users extends ActiveRecord implements IdentityInterface
             'views_counter' => 'Views Counter',
             'hide_account' => 'Hide Account',
             'show_contacts_to_customer' => 'Show Contacts To Customer',
-            'status' => 'Status',
             'avatar_id' => 'Avatar ID',
             'role_id' => 'Role ID',
             'raiting_id' => 'Raiting ID',
@@ -298,7 +296,6 @@ class Users extends ActiveRecord implements IdentityInterface
 
     public function getId()
     {
-        //return $this->id;
         return $this->getPrimaryKey();
     }
 
@@ -313,7 +310,6 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     // NOTE: for login
-
     public static function findByUsername($username)
     {
         return static::findOne(['email' => $username]);
@@ -324,4 +320,16 @@ class Users extends ActiveRecord implements IdentityInterface
         return Yii::$app->security->validatePassword($password, $this->password);
     }
 
+
+    // NOTE: for roles
+    public function isCustomer()
+    {
+        // NOTE: if there are no roles
+        if (!$this->role) {
+            return false;
+        }
+
+        // return: true || false
+        return $this->role->key_code === UsersRoles::CUSTOMER_KEY_CODE;
+    }
 }

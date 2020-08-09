@@ -3,9 +3,9 @@
  * @var $form ActiveForm
  * @var $model LoginForm
  */
-use yii\widgets\ActiveForm;
-use yii\helpers\Html;
 
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 ?>
 
 <section class="modal enter-form form-modal" id="enter-form">
@@ -13,20 +13,20 @@ use yii\helpers\Html;
 
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
-            'enableClientValidation'  => true,
-            'enableAjaxValidation'    => true,
-            'validateOnSubmit'        => true,
+            'enableClientValidation' => true,
+            'enableAjaxValidation' => true,
+            'validateOnSubmit' => true,
             'options' => [
                 'method' => 'post',
             ],
             'fieldConfig' => [
-                'template'      => '{label}<br>{input}<br>{error}',
-                'labelOptions'  => ['class' => 'form-modal-description'],
+                'template' => '{label}<br>{input}<br>{error}',
+                'labelOptions' => ['class' => 'form-modal-description'],
             ],
         ]); ?>
             <?= $form->field($model, 'email')
                 ->input('email', [
-                    'class'     => 'enter-form-email input input-middle',
+                    'class' => 'enter-form-email input input-middle',
                     'autofocus' => true
                 ]); ?>
 

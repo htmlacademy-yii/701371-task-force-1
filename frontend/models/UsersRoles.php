@@ -3,8 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 /**
  * This is the model class for table "users_roles".
@@ -17,6 +16,8 @@ use yii\db\ActiveQuery;
  */
 class UsersRoles extends ActiveRecord
 {
+    const CUSTOMER_KEY_CODE = 'customer';
+
     /**
      * {@inheritdoc}
      */
@@ -55,5 +56,10 @@ class UsersRoles extends ActiveRecord
     public function getUsers(): ActiveQuery
     {
         return $this->hasMany(Users::className(), ['role_id' => 'id']);
+    }
+
+    public function isCustomer()
+    {
+        return $this->key_code == self::CUSTOMER_KEY_CODE;
     }
 }

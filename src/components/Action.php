@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace app\components;
+namespace TaskForce\components;
+use \frontend\models\Task;
 
 abstract class Action
 {

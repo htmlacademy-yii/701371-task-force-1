@@ -2,7 +2,6 @@
 /**
  * @var $form ActiveForm
  * @var TYPE_NAME $taskForm
- * @var TYPE_NAME $categories
  */
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
@@ -100,16 +99,17 @@ TaskErrorAsset::register($this);
 
                     <!-- ** -->
 
-                    <?= $form->field($taskForm, 'address', [
+                    <?= $form->field($taskForm, 'address',
+                        [
                             'labelOptions'  => ['style' => 'color: black;'],
                             'options'       => ['class' => 'create__task-form form-create'],
                         ])
-                        ->input('search', [
-                            'tabindex' => 5,
-                            'class' => 'input-navigation input-middle input',
-                            'placeholder' => 'Санкт-Петербург, Калининский район',
+                        ->dropDownList($cities, [
+                            'tabindex'      => 5,
+                            'class'         => 'multiple-select input multiple-select-big',
+                            'placeholder'   => 'Разместите ваш текст',
                         ])
-                        ->hint('Укажите адрес исполнения, если задание требует присутствия', [
+                        ->hint('Санкт-Петербург, Калининский район', [
                             'class' => 'form-create__span',
                         ]); ?>
 
@@ -141,7 +141,7 @@ TaskErrorAsset::register($this);
                             ])
                             ->hint('Укажите крайний срок исполнения', [
                                 'class' => 'form-create__span',
-                            ]);; ?>
+                            ]); ?>
 
                         <!-- NOTE: style is for fixed errors -->
                         <div class="create__warnings" style="position: absolute; margin: 0 0 0 650px; top: 288px">

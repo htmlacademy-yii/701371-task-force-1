@@ -21,6 +21,15 @@ use Yii;
  */
 class TaskRespond extends \yii\db\ActiveRecord
 {
+    // NOTE: noviy
+    const STATUS_NEW = 1;
+
+    // NOTE: prinytiy
+    const STATUS_APPROVED = 2;
+
+    // NOTE: otklonenniy
+    const STATUS_REFUSED = 3;
+
     /**
      * {@inheritdoc}
      */
@@ -52,12 +61,12 @@ class TaskRespond extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'comment' => 'Comment',
-            'price' => 'Price',
-            'datetime' => 'Datetime',
-            'user_id' => 'User ID',
-            'task_id' => 'Task ID',
+            'id'        => 'ID',
+            'comment'   => 'Comment',
+            'price'     => 'Price',
+            'datetime'  => 'Datetime',
+            'user_id'   => 'User ID',
+            'task_id'   => 'Task ID',
             'status_id' => 'Status ID',
         ];
     }
@@ -78,11 +87,29 @@ class TaskRespond extends \yii\db\ActiveRecord
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
+    // NOTE: my functions -----------------------------------------------------
+
     /**
-     * @return \yii\db\ActiveQuery
+     * @return bool
      */
-    public function getStatus()
+    public function isNew()
     {
-        return $this->hasOne(TaskStatus::className(), ['id' => 'status_id']);
+        return $this->status_id == self::STATUS_NEW;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApproved()
+    {
+        return $this->status_id == self::STATUS_APPROVED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRefused()
+    {
+        return $this->status_id == self::STATUS_REFUSED;
     }
 }

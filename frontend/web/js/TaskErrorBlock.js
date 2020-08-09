@@ -24,6 +24,7 @@ class TaskErrorBlock {
   // **
 
   beginClickEvent() {
+    this.errorBlock.style.visibility = 'hidden';
     this.button.onclick = () => { this.getVisibility(); };
   }
 }

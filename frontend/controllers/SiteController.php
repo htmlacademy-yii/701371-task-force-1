@@ -1,19 +1,19 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\LoginForm;
+use frontend\models\ContactForm;
+use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\ResetPasswordForm;
 use frontend\models\VerifyEmailForm;
-use Yii;
+use frontend\models\forms\SignupForm;
 use yii\base\InvalidArgumentException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\forms\SignupForm;
-use frontend\models\ContactForm;
+use Yii;
 
 /**
  * Site controller
@@ -28,7 +28,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'login'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -36,24 +36,18 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'login'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    //[
-                    //    'allow' => true,
-                    //    'actions' => ['index'],
-                    //    'roles' => ['?']
-                    //],
                 ],
-                //'denyCallback' => function($rule, $action) {
-                //    return Yii::$app->response->redirect(['tasks']);
-                //}
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['get', 'post'],
+                    'signup' => ['POST'],
+                    'login' => ['POST'],
+                    'logout' => ['GET'],
                 ],
             ],
         ];
@@ -82,8 +76,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        // TODO: defaultRoute is don't work, why ? Help me...
         return $this->redirect(['tasks/index']);
-        //return $this->render('index');
     }
 
     /**
@@ -93,10 +87,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();

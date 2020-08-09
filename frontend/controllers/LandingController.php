@@ -3,13 +3,13 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use frontend\models\Task;
 use frontend\models\forms\LoginForm;
+use yii\filters\AccessControl;
 use yii\widgets\ActiveForm;
+use yii\web\Controller;
 use yii\web\Response;
+use Yii;
 
 class LandingController extends Controller
 {
@@ -32,12 +32,9 @@ class LandingController extends Controller
                 ],
 
                 'denyCallback' => function($rule, $action) {
+                    // NOTE: equivalent $this->goHome();
                     return Yii::$app->response->redirect(['tasks']);
                 }
-
-                //'denyCallback' => function ($rule, $action) {
-                //    $this->goHome();
-                //},
             ]
         ];
     }
@@ -46,8 +43,9 @@ class LandingController extends Controller
     public function actionIndex()
     {
         $this->layout = 'landing';
-
         $form = new LoginForm();
+
+        // NOTE: for renderAjax in view->landing->index
         $this->view->params['model'] = $form;
 
         $tasks = Task::find()
@@ -55,13 +53,11 @@ class LandingController extends Controller
             ->limit(4)
             ->all();
 
-        // TODO: is it right ?...
+        // TODO: fix there - additional action login - 09:19
         if (Yii::$app->request->getIsPost() && Yii::$app->request->isAjax) {
             if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                 $user = $form->getUser();
                 Yii::$app->user->login($user);
-
-                //return $this->goHome();
                 return $this->redirect(['tasks/index']);
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;

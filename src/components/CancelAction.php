@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace app\components;
+namespace TaskForce\components;
+use \frontend\models\Task;
 
 class CancelAction extends Action
 {
 	public static function rightsVerification(Task $task, int $userId): bool
 	{
-		return $task->getCurrentStatus() === Task::STATUS_NEW
-			&& $task->getCurrentIdClient() === $userId;
+		return $task->isNew() && $task->owner_id === $userId;
 	}
 
 	public static function getTitle(): string

@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace app\components;
+namespace TaskForce\components;
 
 class CompleteAction extends Action
 {
-	public static function rightsVerification(Task $task, int $userId): bool
+	public static function rightsVerification(\frontend\models\Task $task, int $userId): bool
 	{
-		return $task->getCurrentStatus() === Task::STATUS_PROGRESS
-			&& $task->getCurrentIdClient() === $userId;
+		return $task->isWork() && $task->owner_id === $userId;
 	}
 
 	public static function getTitle(): string

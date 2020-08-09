@@ -735,7 +735,8 @@ footer {
   cursor: pointer; }
 
 .button:hover {
-  background-color: #598bff; }
+  background-color: #598bff;
+  text-decoration: none; }
 
 .button:active {
   background-color: #274bdb; }
@@ -776,7 +777,8 @@ footer {
   padding: 20px; }
 
 .response-button {
-  background-color: #ffaa00; }
+  background-color: #ffaa00;
+  text-decoration: none;}
 
 .refusal-button {
   background-color: #ff3d71; }
@@ -1305,12 +1307,7 @@ footer {
 .form-create label {
   margin-top: 29px;
   margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.form-create label {
-  text-transform: uppercase;
-}
+  text-transform: uppercase; }
 
 .form-create span,
 .form-create__span,
@@ -1319,8 +1316,6 @@ footer {
   font-weight: 300;
   font-size: 12px;
   color: #8a8a8d; }
-
-/**/
 
 .create__file {
   display: -webkit-box;
@@ -1339,18 +1334,7 @@ footer {
   background-repeat: no-repeat;
   background-position: center;
   margin-top: 10px;
-  border-radius: 6px;
-
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-size: 12px;
-  color: #8a8a8d;
-}
-
-.create__file-fix {
-  /*height: 110px;*/
-}
-
+  border-radius: 6px; }
   .create__file:hover {
     background-color: #f0f0f0; }
 
@@ -1359,8 +1343,6 @@ footer {
 
 .create__file:hover span {
   font-size: 0; }
-
-/**/
 
 .create__price-time {
   display: -webkit-box;
@@ -1442,9 +1424,7 @@ footer {
 
 .warning-item--error {
   background-color: #ff7675;
-  color: #ffffff;
-
-  visibility: hidden; }
+  color: #ffffff; }
 
 .create__task button {
   margin-left: 20px;
@@ -2307,7 +2287,7 @@ footer {
 
 /* NOTE: adding the missing styles for the landing category */
 .task-translation {
-  background-image: url("../img/translation.png");
+  background-image: url("../img/translate.png");
   background-position: center;
   background-repeat: no-repeat;
   background-color: #1e90ff; }
