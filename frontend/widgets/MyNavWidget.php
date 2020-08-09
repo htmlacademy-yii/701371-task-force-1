@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\components;
+namespace frontend\widgets;
 
 use yii\bootstrap\Nav;
 use yii\helpers\Html;
