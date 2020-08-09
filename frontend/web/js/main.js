@@ -9,7 +9,6 @@ for (var i = 0; i < openModalLinks.length; i++) {
     event.preventDefault();
     var modalId = event.currentTarget.getAttribute("data-for");
     var modal = document.getElementById(modalId);
-    //console.log(modal);
 
     // NOTE: fix styles
     modal.setAttribute("style", "display: block; height: 400px;");

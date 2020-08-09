@@ -107,6 +107,7 @@ CREATE TABLE users (
     views_counter INT NOT NULL DEFAULT 0,
     hide_account TINYINT(1) NOT NULL DEFAULT 0,
     show_contacts_to_customer TINYINT(1) NOT NULL DEFAULT 0,
+    --status INT NOT NULL DEFAULT 0,
 
     avatar_id INT,
     role_id INT,
