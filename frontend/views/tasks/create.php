@@ -2,16 +2,20 @@
 /**
  * @var $form ActiveForm
  * @var TYPE_NAME $taskForm
+ * @var TYPE_NAME $categories
+ * @var TYPE_NAME $cities
  */
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use frontend\assets\TaskErrorAsset;
+use frontend\assets\AutocompleteAsset;
 
 $this->title = 'Создать задание';
 Yii::$app->formatter->language = 'ru-RU';
 
 // NOTE: register specifically in this view
 TaskErrorAsset::register($this);
+AutocompleteAsset::register($this);
 ?>
 
 <main class="page-main">
@@ -108,10 +112,20 @@ TaskErrorAsset::register($this);
                             'tabindex'      => 5,
                             'class'         => 'multiple-select input multiple-select-big',
                             'placeholder'   => 'Разместите ваш текст',
-                        ])
+                        ]);
+                        /*
+                         * TODO: it is needed ?
                         ->hint('Санкт-Петербург, Калининский район', [
                             'class' => 'form-create__span',
-                        ]); ?>
+
+                            // TODO: is right ?
+                            'id' => 'autoComplete',
+                            'list' => 'autoComplete_list',
+                        ]);*/ ?>
+
+                        <!-- TODO: it is needed ? -->
+<!--                    <input type="text" id="autoComplete">-->
+<!--                    <datalist id="autoComplete_list"></datalist>-->
 
                     <!-- ** -->
 

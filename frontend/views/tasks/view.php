@@ -1,4 +1,6 @@
 <?php
+
+use frontend\assets\YandexMapAsset;
 use frontend\helpers\TaskPermissionHelper;
 use frontend\helpers\TaskRespondPermissionHelper;
 use frontend\models\Task;
@@ -28,6 +30,8 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Главная страница';
 Yii::$app->formatter->language = 'ru-RU';
+
+YandexMapAsset::register($this);
 ?>
 
 <main class="page-main">
@@ -62,15 +66,29 @@ Yii::$app->formatter->language = 'ru-RU';
                     <div class="content-view__location">
                         <h3 class="content-view__h3">Расположение</h3>
                         <div class="content-view__location-wrapper">
-                            <div class="content-view__map">
-                                <a href="#"><img src="./img/map.jpg" width="361" height="292"
+                            <div class="content-view__map"
+                                 style="width: 361px; height: 292px;">
+
+<!--                                --><?php //if ($task->latitude && $task->longitude): ?>
+<!--                                    --><?php //echo Html::hiddenInput('location-position',
+//                                        "$task->latitude $task->longitude"); ?>
+<!--                                --><?php //endif; ?>
+
+                              <a href="#"><img src="./img/map.jpg" width="361" height="292"
                                                  alt="Москва, Новый арбат, 23 к. 1"></a>
                             </div>
+
                             <div class="content-view__address">
-                                <span class="address__town">Москва</span><br>
-                                <span>Новый арбат, 23 к. 1</span>
-                                <p>Вход под арку, код домофона 1122</p>
+                                <span class="address__town">
+                                  <?= Html::encode($task->address ?? ''); ?>
+                                </span>
                             </div>
+
+<!--                            <div class="content-view__address">-->
+<!--                                <span class="address__town">Москва</span><br>-->
+<!--                                <span>Новый арбат, 23 к. 1</span>-->
+<!--                                <p>Вход под арку, код домофона 1122</p>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
