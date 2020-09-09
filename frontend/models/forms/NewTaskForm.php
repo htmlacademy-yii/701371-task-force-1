@@ -15,7 +15,7 @@ class NewTaskForm extends Model
     public $description;
     public $category;
     public $files;
-    public $address;
+    public $cityId;
     public $budget;
     public $term;
 
@@ -24,13 +24,13 @@ class NewTaskForm extends Model
     public function attributeLabels(): array
     {
         return [
-            'name'          => 'Мне нужно',
-            'description'   => 'Подробности задания',
-            'category'      => 'Категория',
-            'files'         => 'Файлы',
-            'address'       => 'Локация',
-            'budget'        => 'Бюджет',
-            'term'          => 'Срок исполнения',
+            'name' => 'Мне нужно',
+            'description' => 'Подробности задания',
+            'category' => 'Категория',
+            'files' => 'Файлы',
+            'cityId' => 'Локация',
+            'budget' => 'Бюджет',
+            'term' => 'Срок исполнения',
         ];
     }
 
@@ -38,9 +38,9 @@ class NewTaskForm extends Model
     {
         return [
             [['name', 'description', 'category'], 'required'],
-            [['name', 'address'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
             [['description'], 'string'],
-            [['category', 'budget'], 'integer'],
+            [['category', 'budget', 'cityId'], 'integer'],
             [['term', 'files'], 'safe'],
             [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, gif, webp', 'maxFiles' => 10],
             [['term'], 'date', 'format' => 'php:Y-m-d'],
@@ -53,9 +53,7 @@ class NewTaskForm extends Model
     public function createTask()
     {
         $task = new Task();
-        $city = City::find()
-            ->where(['id' => $this->address])
-            ->one();
+        $city = City::findOne($this->cityId);
 
         $coordinates = ArrayHelper::getValue(
             Yii::$app->geocoder->getCoordinates($city->title),
@@ -65,10 +63,12 @@ class NewTaskForm extends Model
         $task->title = $this->name;
         $task->description = $this->description;
 
-        // TODO: remember sansey about TQ
-        $task->address = $city->title;
-        $task->latitude = stristr($coordinates, ' ', true);;
-        $task->longitude = stristr($coordinates, ' ', false);;
+        // TODO: remember sensey about TQ
+        [$latitude, $longitude] = explode($coordinates);
+
+        $task->cityId = $city->title;
+        $task->latitude = $latitude;
+        $task->longitude = $longitude;
         $task->price = $this->budget;
         $task->deadline = $this->term;
         $task->category_id = $this->category;

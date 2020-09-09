@@ -1,10 +1,11 @@
 <?php
 /**
  * @var $form ActiveForm
- * @var TYPE_NAME $taskForm
- * @var TYPE_NAME $categories
- * @var TYPE_NAME $cities
+ * @var model $taskForm
+ * @var array $categories
+ * @var array $cities
  */
+
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use frontend\assets\TaskErrorAsset;
@@ -96,7 +97,7 @@ AutocompleteAsset::register($this);
                             'class' => 'create__file',
                             'id' => 'test',
                             'style'
-                        ])?>
+                        ]); ?>
 
                         <!-- FIXME: left it for later, now it is not required -->
                         <!-- <div id="myId" class="create__file"></div> -->
@@ -112,20 +113,7 @@ AutocompleteAsset::register($this);
                             'tabindex'      => 5,
                             'class'         => 'multiple-select input multiple-select-big',
                             'placeholder'   => 'Разместите ваш текст',
-                        ]);
-                        /*
-                         * TODO: it is needed ?
-                        ->hint('Санкт-Петербург, Калининский район', [
-                            'class' => 'form-create__span',
-
-                            // TODO: is right ?
-                            'id' => 'autoComplete',
-                            'list' => 'autoComplete_list',
-                        ]);*/ ?>
-
-                        <!-- TODO: it is needed ? -->
-<!--                    <input type="text" id="autoComplete">-->
-<!--                    <datalist id="autoComplete_list"></datalist>-->
+                        ]); ?>
 
                     <!-- ** -->
 
