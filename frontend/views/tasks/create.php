@@ -1,17 +1,22 @@
 <?php
 /**
  * @var $form ActiveForm
- * @var TYPE_NAME $taskForm
+ * @var model $taskForm
+ * @var array $categories
+ * @var array $cities
  */
+
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use frontend\assets\TaskErrorAsset;
+use frontend\assets\AutocompleteAsset;
 
 $this->title = 'Создать задание';
 Yii::$app->formatter->language = 'ru-RU';
 
 // NOTE: register specifically in this view
 TaskErrorAsset::register($this);
+AutocompleteAsset::register($this);
 ?>
 
 <main class="page-main">
@@ -92,7 +97,7 @@ TaskErrorAsset::register($this);
                             'class' => 'create__file',
                             'id' => 'test',
                             'style'
-                        ])?>
+                        ]); ?>
 
                         <!-- FIXME: left it for later, now it is not required -->
                         <!-- <div id="myId" class="create__file"></div> -->
@@ -108,9 +113,6 @@ TaskErrorAsset::register($this);
                             'tabindex'      => 5,
                             'class'         => 'multiple-select input multiple-select-big',
                             'placeholder'   => 'Разместите ваш текст',
-                        ])
-                        ->hint('Санкт-Петербург, Калининский район', [
-                            'class' => 'form-create__span',
                         ]); ?>
 
                     <!-- ** -->

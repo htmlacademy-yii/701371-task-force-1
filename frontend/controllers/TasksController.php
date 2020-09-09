@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use DateTime;
@@ -22,7 +23,6 @@ use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
-
 
 class TasksController extends SecuredController
 {
@@ -133,7 +133,6 @@ class TasksController extends SecuredController
                 && $taskForm->validate()
                 && $taskForm->createTask()
             ) {
-
                 $taskForm->files = UploadedFile::getInstances($taskForm, 'files');
                 $taskForm->upload();
                 return $this->redirect(['tasks/index']);

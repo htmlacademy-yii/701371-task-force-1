@@ -69,5 +69,3 @@ class SignupController extends Controller
         ));
     }
 }
-
-// 15.19
