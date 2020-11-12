@@ -13,6 +13,8 @@ use yii\db\ActiveQuery;
  * @property string $message
  * @property int|null $sender_id
  * @property int|null $reciever_id
+ * @property int|null $task_id
+ * @property string $published_at
  *
  * @property Users $sender
  * @property Users $reciever
@@ -35,9 +37,10 @@ class Message extends ActiveRecord
         return [
             [['message'], 'required'],
             [['message'], 'string'],
-            [['sender_id', 'reciever_id'], 'integer'],
+            [['sender_id', 'reciever_id', 'task_id'], 'integer'],
             [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['sender_id' => 'id']],
             [['reciever_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['reciever_id' => 'id']],
+            [['published_at'], 'safe'],
         ];
     }
 
@@ -51,6 +54,8 @@ class Message extends ActiveRecord
             'message' => 'Message',
             'sender_id' => 'Sender ID',
             'reciever_id' => 'Reciever ID',
+            'task_id' => 'Task ID',
+            'published_at' => 'Data Time',
         ];
     }
 

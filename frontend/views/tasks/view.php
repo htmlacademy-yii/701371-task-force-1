@@ -1,5 +1,6 @@
 <?php
 
+use frontend\assets\TasksAsset;
 use frontend\assets\YandexMapAsset;
 use frontend\helpers\TaskPermissionHelper;
 use frontend\helpers\TaskRespondPermissionHelper;
@@ -31,6 +32,7 @@ use yii\widgets\LinkPager;
 $this->title = 'Главная страница';
 Yii::$app->formatter->language = 'ru-RU';
 
+TasksAsset::register($this);
 YandexMapAsset::register($this);
 ?>
 
@@ -74,8 +76,14 @@ YandexMapAsset::register($this);
 //                                        "$task->latitude $task->longitude"); ?>
 <!--                                --><?php //endif; ?>
 
-                              <a href="#"><img src="./img/map.jpg" width="361" height="292"
-                                                 alt="Москва, Новый арбат, 23 к. 1"></a>
+                                <a href="#">
+                                    <?= Html::img('@web/img/map.jpg',
+                                        [
+                                            'alt' => 'Москва, Новый арбат, 23 к. 1',
+                                            'style' => 'width: 361px; height: 292px;'
+                                        ]
+                                    ) ?>
+                                </a>
                             </div>
 
                             <div class="content-view__address">
@@ -138,7 +146,13 @@ YandexMapAsset::register($this);
 
                         <div class="content-view__feedback-card">
                             <div class="feedback-card__top">
-                                <a href="#"><img src="./img/<?= $respond->user->avatar->image_path; ?>" width="55" height="55"></a>
+                                <a href="#">
+                                    <?= Html::img("@web/img/{$respond->user->avatar->image_path}",
+                                        [
+                                            'style' => 'width: 55px; height: 55px;'
+                                        ]
+                                    ) ?>
+                                </a>
                                 <div class="feedback-card__top--name">
 
                                     <p><a href="#" class="link-regular"><?= $respond->user->name; ?></a></p>
@@ -196,7 +210,12 @@ YandexMapAsset::register($this);
                 <div class="profile-mini__wrapper">
                     <h3>Заказчик</h3>
                     <div class="profile-mini__top">
-                        <img src="./img/<?= $task->owner->avatar->image_path; ?>" width="62" height="62" alt="Аватар заказчика">
+                        <?= Html::img("@web/img/{$task->owner->avatar->image_path}",
+                            [
+                                'alt' => 'Аватар заказчика',
+                                'style' => 'width: 62px; height: 62px;'
+                            ]
+                        ) ?>
                         <div class="profile-mini__name five-stars__rate">
 
                             <p><?= $task->owner->name; ?></p>
@@ -212,30 +231,34 @@ YandexMapAsset::register($this);
                     <a href="#" class="link-regular">Смотреть профиль</a>
                 </div>
             </div>
-            <div class="connect-desk__chat">
-                <h3>Переписка</h3>
-                <div class="chat__overflow">
-                    <div class="chat__message chat__message--out">
-                        <p class="chat__message-time">10.05.2019, 14:56</p>
-                        <p class="chat__message-text">Привет. Во сколько сможешь
-                            приступить к работе?</p>
-                    </div>
-                    <div class="chat__message chat__message--in">
-                        <p class="chat__message-time">10.05.2019, 14:57</p>
-                        <p class="chat__message-text">На задание
-                        выделены всего сутки, так что через час</p>
-                    </div>
-                    <div class="chat__message chat__message--out">
-                        <p class="chat__message-time">10.05.2019, 14:57</p>
-                        <p class="chat__message-text">Хорошо. Думаю, мы справимся</p>
-                    </div>
-                </div>
-                <p class="chat__your-message">Ваше сообщение</p>
-                <form class="chat__form">
-                    <textarea class="input textarea textarea-chat" rows="2" name="message-text" placeholder="Текст сообщения"></textarea>
-                    <button class="button chat__button" type="submit">Отправить</button>
-                </form>
+            <div id="chat-container">
+              <!-- добавьте сюда атрибут task с указанием в нем id текущего задания-->
+              <chat class="connect-desk__chat" task="<?= $task->id; ?>"></chat>
             </div>
+<!--            <div class="connect-desk__chat">-->
+<!--                <h3>Переписка</h3>-->
+<!--                <div class="chat__overflow">-->
+<!--                    <div class="chat__message chat__message--out">-->
+<!--                        <p class="chat__message-time">10.05.2019, 14:56</p>-->
+<!--                        <p class="chat__message-text">Привет. Во сколько сможешь-->
+<!--                            приступить к работе?</p>-->
+<!--                    </div>-->
+<!--                    <div class="chat__message chat__message--in">-->
+<!--                        <p class="chat__message-time">10.05.2019, 14:57</p>-->
+<!--                        <p class="chat__message-text">На задание-->
+<!--                        выделены всего сутки, так что через час</p>-->
+<!--                    </div>-->
+<!--                    <div class="chat__message chat__message--out">-->
+<!--                        <p class="chat__message-time">10.05.2019, 14:57</p>-->
+<!--                        <p class="chat__message-text">Хорошо. Думаю, мы справимся</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <p class="chat__your-message">Ваше сообщение</p>-->
+<!--                <form class="chat__form">-->
+<!--                    <textarea class="input textarea textarea-chat" rows="2" name="message-text" placeholder="Текст сообщения"></textarea>-->
+<!--                    <button class="button chat__button" type="submit">Отправить</button>-->
+<!--                </form>-->
+<!--            </div>-->
         </section>
     </div>
 
