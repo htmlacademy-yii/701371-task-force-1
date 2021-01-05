@@ -6,7 +6,7 @@ use frontend\widgets\WomanSignupWidget;
 use frontend\assets\AppAsset;
 use frontend\widgets\MyNavWidget;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
+
 use yii\bootstrap\NavBar;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;

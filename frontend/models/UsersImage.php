@@ -13,7 +13,7 @@ use yii\db\ActiveQuery;
  * @property string $image_path
  * @property int|null $account_id
  *
- * @property Users $account
+ * @property UsersImage[] $imagesList
  */
 class UsersImage extends ActiveRecord
 {
@@ -58,8 +58,8 @@ class UsersImage extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getAccount(): ActiveQuery
+    public function getImagesList(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'account_id']);
+        return $this->hasMany(Users::className(), ['id' => 'account_id']);
     }
 }
