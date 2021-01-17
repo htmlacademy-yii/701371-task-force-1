@@ -47,7 +47,10 @@ class SettingsController extends SecuredController
             ->where(['user_id' => Yii::$app->user->identity->getId()])
             ->all();
 
-        // NOTE: save settings form
+        /**
+         * @note
+         * save settings form
+         */
         if (Yii::$app->request->getIsPost()) {
             $settingsForm->load(Yii::$app->request->post());
             $files = UploadedFile::getInstances($settingsForm, 'files');
@@ -55,7 +58,10 @@ class SettingsController extends SecuredController
 
             if ($settingsForm->validate() && $settingsForm->save()) {
 
-                // NOTE: saving loading files of the current user
+                /**
+                 * @note
+                 * saving loading files of the current user
+                 */
                 foreach ($files as $file) {
                     $usersImage = new UsersImage();
 
@@ -69,19 +75,7 @@ class SettingsController extends SecuredController
                     $usersImage->save();
                 }
 
-                // NOTE: saving avatar of the current user
-                $currentAvatar = UsersAvatar::find()
-                    ->where(['account_id' => Yii::$app->user->identity->getId()])
-                    ->one();
-                $currentAvatar->delete();
-
-                $avatarModel = new UsersAvatar();
-                $fileName = $avatarUploadedFile->baseName . '.' . $avatarUploadedFile->extension;
-                $avatarUploadedFile->saveAs('files/' . $fileName);
-
-                $avatarModel->image_path = $fileName;
-                $avatarModel->account_id = Yii::$app->user->identity->getId();
-                $avatarModel->save();
+                $settingsForm->saveAvatar($avatarUploadedFile);
             }
         }
 

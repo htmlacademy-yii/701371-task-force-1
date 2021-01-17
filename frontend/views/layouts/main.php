@@ -115,7 +115,8 @@ AppAsset::register($this);
                     echo MyNavWidget::widget([
                         'options' => ['class' => 'account__pop-up-list'],
                         'items' => [
-                            ['label' => 'Мои задания', 'url' => ['/tasks/index']],
+                            ['label' => 'Мои задания', 'url' => ['/my-list/']],
+                            ['label' => 'Настройки', 'url' => ['/settings/']],
                             [
                                 'label' => Yii::$app->user->isGuest ? 'Вход' : 'Выход',
                                 'url' => Yii::$app->user->isGuest  ? ['/site/login'] : ['/site/logout'],

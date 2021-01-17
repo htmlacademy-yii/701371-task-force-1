@@ -12,23 +12,28 @@ use function GuzzleHttp\Promise\all;
  */
 class MyListController extends SecuredController
 {
-    public function actionIndex(int $category = Task::STATUS_NEW): string
+    /**
+     * @note
+     * to display the user's jobs
+     *
+     * @param int $status
+     * @return string
+     */
+    public function actionIndex(int $status = Task::STATUS_NEW): string
     {
         $user = \Yii::$app->user;
         $tasks = Task::find()
             ->where([
-                'AND',
+                'OR',
                 'executor_id' => $user->id,
                 'owner_id' => $user->id,
             ])
-            ->where(['status_id' => $category])
+            ->where(['status_id' => $status])
             ->all();
 
         /**
-         * TODO:
-         * 1. проверить вьюху, а именно стр 22 итп
-         * 2. проверить контроллер
-         * 3. помочь сделать активный маркер в зависимости от выбранного раздела
+         * @todo
+         * помочь сделать активный маркер в зависимости от выбранного раздела
          */
 
         return $this->render('index', compact(
