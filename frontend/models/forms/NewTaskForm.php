@@ -24,13 +24,13 @@ class NewTaskForm extends Model
     public function attributeLabels(): array
     {
         return [
-            'name'          => 'Мне нужно',
-            'description'   => 'Подробности задания',
-            'category'      => 'Категория',
-            'files'         => 'Файлы',
-            'address'       => 'Локация',
-            'budget'        => 'Бюджет',
-            'term'          => 'Срок исполнения',
+            'name' => 'Мне нужно',
+            'description' => 'Подробности задания',
+            'category' => 'Категория',
+            'files' => 'Файлы',
+            'address' => 'Локация',
+            'budget' => 'Бюджет',
+            'term' => 'Срок исполнения',
         ];
     }
 

@@ -1,14 +1,19 @@
 <?php
-/**
- * @var $form ActiveForm
- * @var TYPE_NAME $taskForm
- * @var TYPE_NAME $categories
- * @var TYPE_NAME $cities
- */
+
+use frontend\models\Category;
+use frontend\models\City;
+use frontend\models\forms\NewTaskForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use frontend\assets\TaskErrorAsset;
 use frontend\assets\AutocompleteAsset;
+
+/**
+ * @var ActiveForm $form
+ * @var NewTaskForm $taskForm
+ * @var Category $categories
+ * @var City $cities
+ */
 
 $this->title = 'Создать задание';
 Yii::$app->formatter->language = 'ru-RU';
