@@ -15,7 +15,7 @@ class NewTaskForm extends Model
     public $description;
     public $category;
     public $files;
-    public $cityId;
+    public $address;
     public $budget;
     public $term;
 
@@ -28,7 +28,7 @@ class NewTaskForm extends Model
             'description' => 'Подробности задания',
             'category' => 'Категория',
             'files' => 'Файлы',
-            'cityId' => 'Локация',
+            'address' => 'Локация',
             'budget' => 'Бюджет',
             'term' => 'Срок исполнения',
         ];
@@ -38,9 +38,9 @@ class NewTaskForm extends Model
     {
         return [
             [['name', 'description', 'category'], 'required'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'address'], 'string', 'max' => 255],
             [['description'], 'string'],
-            [['category', 'budget', 'cityId'], 'integer'],
+            [['category', 'budget'], 'integer'],
             [['term', 'files'], 'safe'],
             [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, gif, webp', 'maxFiles' => 10],
             [['term'], 'date', 'format' => 'php:Y-m-d'],
@@ -53,7 +53,9 @@ class NewTaskForm extends Model
     public function createTask()
     {
         $task = new Task();
-        $city = City::findOne($this->cityId);
+        $city = City::find()
+            ->where(['id' => $this->address])
+            ->one();
 
         $coordinates = ArrayHelper::getValue(
             Yii::$app->geocoder->getCoordinates($city->title),
@@ -63,12 +65,10 @@ class NewTaskForm extends Model
         $task->title = $this->name;
         $task->description = $this->description;
 
-        // TODO: remember sensey about TQ
-        [$latitude, $longitude] = explode($coordinates);
-
-        $task->cityId = $city->title;
-        $task->latitude = $latitude;
-        $task->longitude = $longitude;
+        // TODO: remember sansey about TQ
+        $task->address = $city->title;
+        $task->latitude = stristr($coordinates, ' ', true);;
+        $task->longitude = stristr($coordinates, ' ', false);;
         $task->price = $this->budget;
         $task->deadline = $this->term;
         $task->category_id = $this->category;

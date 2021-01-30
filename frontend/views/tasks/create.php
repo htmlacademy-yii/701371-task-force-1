@@ -1,15 +1,19 @@
 <?php
-/**
- * @var $form ActiveForm
- * @var model $taskForm
- * @var array $categories
- * @var array $cities
- */
 
+use frontend\models\Category;
+use frontend\models\City;
+use frontend\models\forms\NewTaskForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use frontend\assets\TaskErrorAsset;
 use frontend\assets\AutocompleteAsset;
+
+/**
+ * @var ActiveForm $form
+ * @var NewTaskForm $taskForm
+ * @var Category $categories
+ * @var City $cities
+ */
 
 $this->title = 'Создать задание';
 Yii::$app->formatter->language = 'ru-RU';
@@ -96,8 +100,7 @@ AutocompleteAsset::register($this);
                             'multiple' => true,
                             'class' => 'create__file',
                             'id' => 'test',
-                            'style'
-                        ]); ?>
+                        ])?>
 
                         <!-- FIXME: left it for later, now it is not required -->
                         <!-- <div id="myId" class="create__file"></div> -->

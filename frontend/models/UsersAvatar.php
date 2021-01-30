@@ -11,6 +11,7 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property string $image_path
+ * @property int|null $account_id
  *
  * @property Users[] $users
  */
@@ -32,6 +33,7 @@ class UsersAvatar extends ActiveRecord
         return [
             [['image_path'], 'required'],
             [['image_path'], 'string', 'max' => 45],
+            [['account_id'], 'integer'],
         ];
     }
 
@@ -42,7 +44,7 @@ class UsersAvatar extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'image_path' => 'Image Path',
+            'image_path' => 'account ID',
         ];
     }
 
@@ -51,6 +53,6 @@ class UsersAvatar extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['avatar_id' => 'id']);
+        return $this->hasOne(Users::className(), ['account_id' => 'id']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use app\models\UserNotification;
 use Yii;
 use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
@@ -23,6 +24,7 @@ use yii\web\IdentityInterface;
  * @property int $show_contacts_to_customer
  * @property int|null $avatar_id
  * @property int|null $role_id
+ * @property int|null $specialization_id
  * @property int|null $raiting_id
  * @property int|null $city_id
  * @property int|null $contacts_id
@@ -37,7 +39,8 @@ use yii\web\IdentityInterface;
  * @property UsersContacts $contacts
  * @property UsersAvatar $avatar
  * @property UsersRoles $role
- * @property Notification $notification
+ * @property UserSpecialization[] $specializationsList
+ * @property UserNotification[] $notificationsList
  * @property UsersCategory[] $usersCategories
  * @property UsersFavorites[] $usersFavorites
  * @property UsersFavorites[] $usersFavorites0
@@ -72,6 +75,7 @@ class Users extends ActiveRecord implements IdentityInterface
                 'show_contacts_to_customer',
                 'avatar_id',
                 'role_id',
+                'specialization_id',
                 'raiting_id',
                 'city_id',
                 'contacts_id',
@@ -100,6 +104,12 @@ class Users extends ActiveRecord implements IdentityInterface
                 'skipOnError' => true,
                 'targetClass' => UsersRoles::className(),
                 'targetAttribute' => ['role_id' => 'id']
+            ],
+            [['specialization_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => UserSpecialization::className(),
+                'targetAttribute' => ['specialization_id' => 'id']
             ],
             [['notification_id'],
                 'exist',
@@ -131,6 +141,7 @@ class Users extends ActiveRecord implements IdentityInterface
             'show_contacts_to_customer' => 'Show Contacts To Customer',
             'avatar_id' => 'Avatar ID',
             'role_id' => 'Role ID',
+            'specialization_id' => 'specialization ID',
             'raiting_id' => 'Raiting ID',
             'city_id' => 'City ID',
             'contacts_id' => 'Contacts ID',
@@ -201,7 +212,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getAvatar(): ActiveQuery
     {
-        return $this->hasOne(UsersAvatar::className(), ['id' => 'avatar_id']);
+        return $this->hasOne(UsersAvatar::className(), ['account_id' => 'id']);
     }
 
     /**
@@ -215,10 +226,18 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getNotification(): ActiveQuery
+    public function getSpecializationsList(): ActiveQuery
     {
-        return $this->hasOne(Notification::className(),
-            ['id' => 'notification_id']);
+//        return $this->hasMany(UserSpecialization::className(), ['id' => 'specialization_id']);
+        return $this->hasMany(UserSpecialization::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getNotificationsList(): ActiveQuery
+    {
+        return $this->hasMany(UserNotification::className(), ['user_id' => 'id'])->where(['active' => 1]);
     }
 
     /**
