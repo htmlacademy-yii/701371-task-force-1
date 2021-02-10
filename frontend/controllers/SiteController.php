@@ -1,19 +1,28 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\Auth;
 use common\models\LoginForm;
+use common\models\User;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
+use frontend\models\Users;
 use frontend\models\VerifyEmailForm;
 use frontend\models\forms\SignupForm;
+use yii\authclient\OAuth2;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use Yii;
+
+use TaskForce\components\AuthVKontakte;
+use yii\authclient\clients\VKontakte;
+use yii\authclient\AuthAction;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -66,7 +75,86 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+
+            /**
+             * @note
+             * for login from VK.com
+             * chapter 9.3 - socialization
+             *
+             * \Collection - look in the config/main - authClientCollection
+             */
+            'auth' => [
+                'class' => AuthAction::class,
+                //'class' => 'yii\authclient\Collection',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
         ];
+    }
+
+    public function onAuthSuccess(VKontakte $client)
+    {
+        if ($user = AuthVKontakte::onAuthSuccess($client)) {
+            Yii::$app->user->login($user);
+        }
+
+        return $this->goHome();
+    }
+
+    public function onAuthSuccess_(OAuth2 $client)
+    {
+        $attributes = $client->getUserAttributes();
+
+        /* @var $auth Auth */
+        $auth = Auth::find()->where([
+            'source' => $client->getId(),
+            'source_id' => $attributes['id'],
+        ])->one();
+
+        if (Yii::$app->user->isGuest) {
+            if ($auth) { // авторизация
+                $user = $auth->user;
+                Yii::$app->user->login($user);
+            } else { // регистрация
+                if (isset($attributes['email']) && Users::find()->where(['email' => $attributes['email']])->exists()) {
+                    Yii::$app->getSession()->setFlash('error', [
+                        Yii::t('app', "Пользователь с такой электронной почтой как в {client} уже существует, но с ним не связан. Для начала войдите на сайт использую электронную почту, для того, что бы связать её.", ['client' => $client->getTitle()]),
+                    ]);
+                } else {
+                    $user = new Users([
+                        'name' => $attributes['first_name'] . ' ' . $attributes['last_name'],
+                        'email' => $attributes['email'],
+                        'password' => Yii::$app->security->generateRandomString(6),
+                    ]);
+                    $user->generateAuthKey();
+                    $user->generatePasswordResetToken();
+                    $transaction = $user->getDb()->beginTransaction();
+                    if ($user->save()) {
+                        $auth = new Auth([
+                            'user_id' => $user->id,
+                            'source' => $client->getId(),
+                            'source_id' => (string)$attributes['id'],
+                        ]);
+                        if ($auth->save()) {
+                            $transaction->commit();
+                            Yii::$app->user->login($user);
+                        } else {
+                            print_r($auth->getErrors());
+                        }
+                    } else {
+                        print_r($user->getErrors());
+                    }
+                }
+            }
+        } else { // Пользователь уже зарегистрирован
+            if (!$auth) { // добавляем внешний сервис аутентификации
+                $auth = new Auth([
+                    'user_id' => Yii::$app->user->id,
+                    'source' => $client->getId(),
+                    'source_id' => $attributes['id'],
+                ]);
+                $auth->save();
+            }
+        }
     }
 
     /**
