@@ -8,6 +8,7 @@ use app\models\Auth;
 use frontend\models\Users;
 use Yii;
 use yii\authclient\OAuth2;
+use yii\web\NotFoundHttpException;
 
 
 class AuthVKontakte
@@ -31,19 +32,12 @@ class AuthVKontakte
         ])->one();
 
         if (Yii::$app->user->isGuest) {
-            if ($auth) {
-                /**
-                 * @note
-                 * authorization, if user already registered
-                 */
-                $user = $auth->user;
+            $user = $auth ? $auth->user : self::registryNewUser($client, $attributes);
+
+            if ($user) {
                 Yii::$app->user->login($user);
             } else {
-                /**
-                 * @note
-                 * registration, if the user has not been registered before
-                 */
-                self::registryNewUser($client, $attributes);
+                throw new NotFoundHttpException('Пользователь не найден');
             }
         } else {
             /**
@@ -76,24 +70,28 @@ class AuthVKontakte
                 'email' => $attributes['email'],
                 'password' => Yii::$app->security->generateRandomString(6),
             ]);
+            
             $user->generateAuthKey();
             $user->generatePasswordResetToken();
             $transaction = $user->getDb()->beginTransaction();
+
             if ($user->save()) {
                 $auth = new Auth([
                     'user_id' => $user->id,
                     'source' => $client->getId(),
                     'source_id' => (string)$attributes['id'],
                 ]);
+
                 if ($auth->save()) {
                     $transaction->commit();
-                    Yii::$app->user->login($user);
-                } else {
-                    print_r($auth->getErrors());
+
+                    return $user;
                 }
-            } else {
-                print_r($user->getErrors());
             }
+
+            $transaction->rollBack();
         }
+
+        return null;
     }
 }
