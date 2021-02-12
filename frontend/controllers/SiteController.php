@@ -85,19 +85,9 @@ class SiteController extends Controller
              */
             'auth' => [
                 'class' => AuthAction::class,
-                //'class' => 'yii\authclient\Collection',
                 'successCallback' => [$this, 'onAuthSuccess'],
             ],
         ];
-    }
-
-    public function onAuthSuccess(VKontakte $client)
-    {
-        if ($user = AuthVKontakte::onAuthSuccess($client)) {
-            Yii::$app->user->login($user);
-        }
-
-        return $this->goHome();
     }
 
     /**
@@ -286,5 +276,14 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function onAuthSuccess(VKontakte $client)
+    {
+        if ($user = AuthVKontakte::onAuthSuccess($client)) {
+            Yii::$app->user->login($user);
+        }
+
+        return $this->goHome();
     }
 }
