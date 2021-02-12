@@ -118,6 +118,7 @@ class Users extends ActiveRecord implements IdentityInterface
                 'targetAttribute' => ['notification_id' => 'id']
             ],
             [['email'], 'unique'],
+            [['auth_key', 'password_reset_token', 'status'], 'safe'],
         ];
     }
 
@@ -339,6 +340,7 @@ class Users extends ActiveRecord implements IdentityInterface
         return Yii::$app->security->validatePassword($password, $this->password);
     }
 
+    /**/
 
     // NOTE: for roles
     public function isCustomer()
@@ -350,5 +352,25 @@ class Users extends ActiveRecord implements IdentityInterface
 
         // return: true || false
         return $this->role->key_code === UsersRoles::CUSTOMER_KEY_CODE;
+    }
+
+    /**/
+
+    // NOTE: for vk auth, import methods from user.php model
+
+    /**
+     * Generates "remember me" authentication key
+     */
+    public function generateAuthKey()
+    {
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * Generates new password reset token
+     */
+    public function generatePasswordResetToken()
+    {
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 }

@@ -1,19 +1,28 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\Auth;
 use common\models\LoginForm;
+use common\models\User;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
+use frontend\models\Users;
 use frontend\models\VerifyEmailForm;
 use frontend\models\forms\SignupForm;
+use yii\authclient\OAuth2;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use Yii;
+
+use TaskForce\components\AuthVKontakte;
+use yii\authclient\clients\VKontakte;
+use yii\authclient\AuthAction;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -65,6 +74,18 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+
+            /**
+             * @note
+             * for login from VK.com
+             * chapter 9.3 - socialization
+             *
+             * \Collection - look in the config/main - authClientCollection
+             */
+            'auth' => [
+                'class' => AuthAction::class,
+                'successCallback' => [$this, 'onAuthSuccess'],
             ],
         ];
     }
@@ -255,5 +276,14 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function onAuthSuccess(VKontakte $client)
+    {
+        if ($user = AuthVKontakte::onAuthSuccess($client)) {
+            Yii::$app->user->login($user);
+        }
+
+        return $this->goHome();
     }
 }

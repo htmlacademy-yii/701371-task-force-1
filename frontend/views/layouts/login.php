@@ -34,7 +34,13 @@ use yii\widgets\ActiveForm;
                 ->passwordInput(['class' => 'enter-form-email input input-middle']); ?>
 
             <?= Html::submitButton('Войти', ['class' => 'button']) ?>
+
+            <?= yii\authclient\widgets\AuthChoice::widget([
+                'baseAuthUrl' => ['site/auth'],
+                'popupMode' => false,
+            ]) ?>
         <?php ActiveForm::end(); ?>
 
-    <button class="form-modal-close" type="button">Закрыть</button>
+
+  <button class="form-modal-close" type="button">Закрыть</button>
 </section>
