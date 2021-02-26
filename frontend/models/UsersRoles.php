@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\db\{ActiveRecord, ActiveQuery};
 
+
 /**
  * This is the model class for table "users_roles".
  *

@@ -12,12 +12,7 @@ use frontend\widgets\RatingWidget;
 use frontend\widgets\TaskActionsButtonsWidget;
 use yii\helpers\Url;
 use yii\web\View;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
-// NOTE: for pagination
-use yii\widgets\LinkPager;
 
 /**
  * @var Task[] $customerOrders
@@ -32,9 +27,13 @@ use yii\widgets\LinkPager;
 $this->title = 'Главная страница';
 Yii::$app->formatter->language = 'ru-RU';
 
+$users = new Users();
+
 TasksAsset::register($this);
 YandexMapAsset::register($this);
+
 ?>
+
 
 <main class="page-main">
     <div class="main-container page-container">
@@ -71,11 +70,6 @@ YandexMapAsset::register($this);
                             <div class="content-view__map"
                                  style="width: 361px; height: 292px;">
 
-<!--                                --><?php //if ($task->latitude && $task->longitude): ?>
-<!--                                    --><?php //echo Html::hiddenInput('location-position',
-//                                        "$task->latitude $task->longitude"); ?>
-<!--                                --><?php //endif; ?>
-
                                 <a href="#">
                                     <?= Html::img('@web/img/map.jpg',
                                         [
@@ -88,15 +82,11 @@ YandexMapAsset::register($this);
 
                             <div class="content-view__address">
                                 <span class="address__town">
-                                  <?= Html::encode($task->address ?? ''); ?>
+
+                                    <?= Html::encode($task->address ?? ''); ?>
+
                                 </span>
                             </div>
-
-<!--                            <div class="content-view__address">-->
-<!--                                <span class="address__town">Москва</span><br>-->
-<!--                                <span>Новый арбат, 23 к. 1</span>-->
-<!--                                <p>Вход под арку, код домофона 1122</p>-->
-<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -105,27 +95,7 @@ YandexMapAsset::register($this);
                 <?= TaskActionsButtonsWidget::widget(['task' => $task]); ?>
             </div>
 
-            <?php
-            /*
-             * NOTE:
-             * 1st condition - if there are responses
-             *
-             * 2nd condition-task author + if the current user matches
-             * the task author id
-             *
-             * 3rd condition - for all other users, this block is not
-             * shown (enabling - showing your own response to the author)
-             * */
-
-//            if (
-//              $task->responds
-//              && $user->isCustomer()
-//              && $user->id == $task->owner_id
-//              || in_array(Yii::$app->user->identity->getId(), array_column($task->responds, 'user_id'))
-//            ):
-
-                // TODO: is right?
-                if (!TaskPermissionHelper::canViewResponseButtons($task, $user)): ?>
+            <?php if (!TaskPermissionHelper::canViewResponseButtons($task, $user)): ?>
 
                 <div class="content-view__feedback">
                 <h2>Отклики <span><?= count($task->responds) ?></span></h2>
@@ -147,9 +117,10 @@ YandexMapAsset::register($this);
                         <div class="content-view__feedback-card">
                             <div class="feedback-card__top">
                                 <a href="#">
-                                    <?= Html::img("@web/img/{$respond->user->avatar->image_path}",
+                                    <?= Html::img("@web/img/{$respond->user->getUserAvatarPath()}",
                                         [
-                                            'style' => 'width: 55px; height: 55px;'
+                                            'alt' => 'Аватар заказчика',
+                                            'style' => 'width: 43px; height: 44px;'
                                         ]
                                     ) ?>
                                 </a>
@@ -168,12 +139,6 @@ YandexMapAsset::register($this);
 
                             </div>
 
-                          <!-- TODO: is rigth ? -->
-                            <?php
-//                                if ($task->responds
-//                                && $user->isCustomer()
-//                                && $task->status_id != $task->isWork()
-//                            ): ?>
                             <?php if (TaskRespondPermissionHelper::canViewAllResponds($task, $user)): ?>
                                 <?php if ($respond->isNew() || $respond->isApproved()): ?>
                                     <div class="feedback-card__actions">
@@ -198,6 +163,7 @@ YandexMapAsset::register($this);
                                     </div>
                                 <?php endif; ?>
                             <?php endif; ?>
+
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -219,7 +185,9 @@ YandexMapAsset::register($this);
                         <div class="profile-mini__name five-stars__rate">
 
                             <p><?= $task->owner->name; ?></p>
+
                             <?php echo RatingWidget::widget(['currentRaiting' => $task->owner->averageRating]); ?>
+
                             <b><?= round($task->owner->averageRating, 2); ?></b>
 
                         </div>
@@ -232,33 +200,8 @@ YandexMapAsset::register($this);
                 </div>
             </div>
             <div id="chat-container">
-              <!-- добавьте сюда атрибут task с указанием в нем id текущего задания-->
-              <chat class="connect-desk__chat" task="<?= $task->id; ?>"></chat>
+                <chat class="connect-desk__chat" task="<?= $task->id; ?>"></chat>
             </div>
-<!--            <div class="connect-desk__chat">-->
-<!--                <h3>Переписка</h3>-->
-<!--                <div class="chat__overflow">-->
-<!--                    <div class="chat__message chat__message--out">-->
-<!--                        <p class="chat__message-time">10.05.2019, 14:56</p>-->
-<!--                        <p class="chat__message-text">Привет. Во сколько сможешь-->
-<!--                            приступить к работе?</p>-->
-<!--                    </div>-->
-<!--                    <div class="chat__message chat__message--in">-->
-<!--                        <p class="chat__message-time">10.05.2019, 14:57</p>-->
-<!--                        <p class="chat__message-text">На задание-->
-<!--                        выделены всего сутки, так что через час</p>-->
-<!--                    </div>-->
-<!--                    <div class="chat__message chat__message--out">-->
-<!--                        <p class="chat__message-time">10.05.2019, 14:57</p>-->
-<!--                        <p class="chat__message-text">Хорошо. Думаю, мы справимся</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <p class="chat__your-message">Ваше сообщение</p>-->
-<!--                <form class="chat__form">-->
-<!--                    <textarea class="input textarea textarea-chat" rows="2" name="message-text" placeholder="Текст сообщения"></textarea>-->
-<!--                    <button class="button chat__button" type="submit">Отправить</button>-->
-<!--                </form>-->
-<!--            </div>-->
         </section>
     </div>
 

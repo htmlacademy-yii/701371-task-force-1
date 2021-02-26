@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 AppAsset::register($this);
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -220,4 +221,3 @@ AppAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
-

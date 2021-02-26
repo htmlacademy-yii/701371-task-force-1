@@ -2,8 +2,6 @@
 
 namespace frontend\models;
 
-use DateTime;
-use Yii;
 
 /**
  * This is the model class for table "task".
@@ -34,7 +32,7 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
-    // NOTE: откликнуться
+    /** @note otkliknutsa */
     const STATUS_RESPOND = 1;
 
     const STATUS_CANCEL = 2;
@@ -69,6 +67,7 @@ class Task extends \yii\db\ActiveRecord
             [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['owner_id' => 'id']],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['avatar_id'], 'safe'],
         ];
     }
 
@@ -152,7 +151,7 @@ class Task extends \yii\db\ActiveRecord
     }
 
 
-    // NOTE: my functions -----------------------------------------------------
+    /** @note my functions ------------------------------------------------- */
 
     /**
      * @return \yii\db\ActiveQuery

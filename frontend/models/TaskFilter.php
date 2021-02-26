@@ -6,6 +6,7 @@ use yii\base\Model;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 
+
 class TaskFilter extends Model
 {
     /** @var array */
@@ -14,6 +15,8 @@ class TaskFilter extends Model
     public $withoutExecutor;
     public $remoteWork;
     public $period;
+
+    /** @note for search */
     public $title;
 
     const TIME_PERIOD_ALL = 'all';
@@ -42,13 +45,6 @@ class TaskFilter extends Model
         if ($this->withoutExecutor) {
             $tasks->andWhere(['executor_id' => NULL]);
         }
-
-        // @TODO: implement
-        /*
-        if (!$this->remoteWork) {
-            $tasks->andWhere(['city_id' => 'user.city_id']);
-        }
-        */
 
         if ($this->period) {
             $tasks->andWhere(['> created', new Expression(

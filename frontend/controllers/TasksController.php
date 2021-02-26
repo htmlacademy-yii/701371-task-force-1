@@ -2,13 +2,10 @@
 
 namespace frontend\controllers;
 
-use DateTime;
 use frontend\models\Category;
 use frontend\models\City;
-use frontend\models\Reviews;
 use frontend\models\Task;
 use frontend\models\TaskRespond;
-use frontend\models\TaskFile;
 use frontend\models\TaskFilter;
 use frontend\models\Users;
 use frontend\models\forms\NewTaskForm;
@@ -17,35 +14,20 @@ use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
+
+/**
+ * @note
+ * class for working with task's
+ *
+ * Class TasksController
+ * @package frontend\controllers
+ */
 class TasksController extends SecuredController
 {
-    // TODO: make user roles linked to the users_roles table
-    //public function behaviors()
-    //{
-    //    return [
-    //        'createAccess' => [
-    //            'class' => AccessControl::class,
-    //            'only' => ['create'],
-    //            'rules' => [
-    //                [
-    //                    'allow' => true,
-    //                    'roles' => ['@'],
-    //                    'matchCallback' => function ($rule, $action) {
-    //                        return Yii::$app->response->redirect(['tasks/index']);
-    //                    }
-    //                ]
-    //            ],
-    //        ]
-    //    ];
-    //}
-
     public function actionIndex(): string
     {
         $taskFilter = new TaskFilter();
@@ -77,7 +59,7 @@ class TasksController extends SecuredController
         /**/
 
         return $this->render('index', [
-            'tasks'      => $tasks->all(),
+            'tasks' => $tasks->all(),
             'categories' => $categories,
             'taskFilter' => $taskFilter,
 
@@ -85,7 +67,16 @@ class TasksController extends SecuredController
         ]);
     }
 
-    // NOTE: ...index.php?r=tasks/view&id=getList2
+    /**
+     * @note
+     * for view task
+     *
+     * original way: ...index.php?r=tasks/view&id=getList2
+     *
+     * @param int $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionView(int $id): string
     {
         $task = Task::find()
@@ -112,7 +103,14 @@ class TasksController extends SecuredController
         );
     }
 
-    // NOTE: ...index.php?r=tasks/create
+    /**
+     * @note
+     * for create new task
+     *
+     * original way: ..index.php?r=tasks/create
+     *
+     * @return string|\yii\web\Response
+     */
     public function actionCreate()
     {
         $taskForm = new NewTaskForm();
@@ -126,7 +124,6 @@ class TasksController extends SecuredController
             ->indexBy('id')
             ->column();
 
-        // TODO: What is it verbs ?!
         if (Yii::$app->request->getIsPost()) {
             if (
                 $taskForm->load(Yii::$app->request->post())
@@ -182,7 +179,6 @@ class TasksController extends SecuredController
             $taskRespond->status_id = TaskRespond::STATUS_APPROVED;
             $taskRespond->save();
 
-            // TODO: remember for events after chapter 8
             $task = $taskRespond->task;
             $task->executor_id = $taskRespond->user_id;
             $task->status_id = Task::STATUS_WORK;

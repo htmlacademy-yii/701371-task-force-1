@@ -2,9 +2,9 @@
 
 namespace frontend\models;
 
-use Yii;
 
 /**
+ * @note
  * This is the model class for table "user_specialization".
  *
  * @property int $id

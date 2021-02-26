@@ -9,6 +9,7 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
+
 class NewTaskForm extends Model
 {
     public $name;
@@ -64,8 +65,6 @@ class NewTaskForm extends Model
 
         $task->title = $this->name;
         $task->description = $this->description;
-
-        // TODO: remember sansey about TQ
         $task->address = $city->title;
         $task->latitude = stristr($coordinates, ' ', true);;
         $task->longitude = stristr($coordinates, ' ', false);;
@@ -74,11 +73,9 @@ class NewTaskForm extends Model
         $task->category_id = $this->category;
         $task->city_id = $city->id;
 
-        // FIXME: fix it when the task requires it
         $task->executor_id = 1;
         $task->owner_id = 1;
         $task->status_id = 1;
-        //$task->validate();
 
         if (!$task->save()) {
             return false;

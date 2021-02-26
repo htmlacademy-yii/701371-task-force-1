@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var $form ActiveForm
  * @var $model LoginForm
@@ -6,6 +7,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 ?>
 
 <section class="modal enter-form form-modal" id="enter-form">

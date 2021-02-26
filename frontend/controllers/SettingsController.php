@@ -1,15 +1,10 @@
 <?php
 
-
 namespace frontend\controllers;
 
-
-use frontend\models\Notification;
-use frontend\models\UsersAvatar;
 use frontend\models\UsersImage;
 use frontend\models\UserSpecialization;
 use yii\helpers\ArrayHelper;
-use DateTime;
 use frontend\models\Category;
 use frontend\models\City;
 use frontend\models\Users;
@@ -19,9 +14,11 @@ use yii\web\UploadedFile;
 
 
 /**
+ * @note
  * For working with user settings
  *
  * Class SettingsController
+ * @package frontend\controllers
  */
 class SettingsController extends SecuredController
 {

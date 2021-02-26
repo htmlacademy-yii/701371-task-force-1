@@ -2,7 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveRecord;
+
 
 /**
  * This is the model class for table "task_respond".
@@ -19,15 +20,15 @@ use Yii;
  * @property Task $task
  * @property TaskStatus $status
  */
-class TaskRespond extends \yii\db\ActiveRecord
+class TaskRespond extends ActiveRecord
 {
-    // NOTE: noviy
+    /** @note noviy */
     const STATUS_NEW = 1;
 
-    // NOTE: prinytiy
+    /** @note prinytiy */
     const STATUS_APPROVED = 2;
 
-    // NOTE: otklonenniy
+    /** @note otklonenniy */
     const STATUS_REFUSED = 3;
 
     /**
@@ -87,7 +88,8 @@ class TaskRespond extends \yii\db\ActiveRecord
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
-    // NOTE: my functions -----------------------------------------------------
+
+    /** @note my functions ------------------------------------------------- */
 
     /**
      * @return bool

@@ -1,22 +1,16 @@
 <?php
 
-
 namespace frontend\models\forms;
 
-
 use app\models\UserNotification;
-use common\models\User;
 use DateTime;
 use frontend\models\Users;
 use frontend\models\UsersAvatar;
-use frontend\models\UsersImage;
 use frontend\models\UserSpecialization;
 use Yii;
 use yii\base\Model;
-use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
-
 
 /**
  * @var UserNotification $notificationModel
@@ -31,7 +25,10 @@ use yii\web\UploadedFile;
  */
 class SettingsForm extends Model
 {
-    // NOTE: subscription_id
+    /**
+     * @note
+     * subscription_id
+     */
     const SUBSCRIPTION_NEW_MESSAGE = 1;
     const SUBSCRIPTION_ACTION_TASK = 2;
     const SUBSCRIPTION_NEW_REVIEW = 3;
@@ -44,7 +41,7 @@ class SettingsForm extends Model
         self::SUBSCRIPTION_SHOW_CONTACT_CUSTOMER => 'Показывать мои контакты только заказчику',
     ];
 
-    // **
+    /**/
 
     /** @note img with avatar */
     private $avatar;
@@ -69,8 +66,6 @@ class SettingsForm extends Model
     public $description;
     public $oldDescription;
 
-    // **
-
     /** @note for user password */
     public $password;
     public $oldPassword;
@@ -80,8 +75,6 @@ class SettingsForm extends Model
     /** @note for user uploading files */
     public $files;
     public $oldFiles;
-
-    /**/
 
     /** @note for user contacts */
     public $phone;
@@ -151,7 +144,7 @@ class SettingsForm extends Model
         return [
             [['email'], 'required'],
             [['cityId', 'phone'], 'integer'],
-            [['avatar', 'specialization', 'birthday', 'files', 'notification'], 'safe'],
+            [['avatar', 'specialization', 'birthday', 'files', 'notification', 'visit'], 'safe'],
             [['password', 'passwordCopy'], 'string', 'min' => 6],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 31],
@@ -194,6 +187,7 @@ class SettingsForm extends Model
      * @note
      * saving user data
      *
+     * @var Users $user
      * @throws \Exception
      */
     private function saveUserData($user)

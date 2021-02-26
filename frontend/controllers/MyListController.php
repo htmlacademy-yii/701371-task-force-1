@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use frontend\models\Task;
 use function GuzzleHttp\Promise\all;
 
+
 /**
  * For working with the user's task list
  *
@@ -30,11 +31,6 @@ class MyListController extends SecuredController
             ])
             ->where(['status_id' => $status])
             ->all();
-
-        /**
-         * @todo
-         * помочь сделать активный маркер в зависимости от выбранного раздела
-         */
 
         return $this->render('index', compact(
             'tasks'

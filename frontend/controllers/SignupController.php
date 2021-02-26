@@ -1,17 +1,14 @@
 <?php
 
-
 namespace frontend\controllers;
 
 use frontend\models\City;
-use frontend\models\Users;
 use frontend\models\forms\SignupForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
+
 
 class SignupController extends Controller
 {
@@ -37,7 +34,12 @@ class SignupController extends Controller
 
     /**/
 
-    // NOTE: ...index.php?r=signup
+    /**
+     * @note
+     * ...index.php?r=signup
+     *
+     * @return string|\yii\web\Response
+     */
     public function actionIndex()
     {
         if (!Yii::$app->user->isGuest) {

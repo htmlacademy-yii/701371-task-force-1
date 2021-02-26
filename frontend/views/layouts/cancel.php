@@ -1,14 +1,16 @@
 <?php
+
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+
 /**
  * @var $form ActiveForm
  * @var $model LoginForm
  * @var TYPE_NAME $taskId
  */
 
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-use yii\helpers\Html;
 ?>
+
 
 <div class="modal fade" tabindex="-1" role="dialog" id="task-refuse-form">
   <div class="modal-dialog" role="document">
