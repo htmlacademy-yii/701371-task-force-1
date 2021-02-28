@@ -1,10 +1,9 @@
 <?php
 
-
 namespace frontend\assets;
 
-
 use yii\web\AssetBundle;
+
 
 class AutocompleteAsset extends AssetBundle
 {
@@ -22,6 +21,4 @@ class AutocompleteAsset extends AssetBundle
         'frontend\assets\AppAsset',
         'yii\web\JQueryAsset',
     ];
-
-
 }

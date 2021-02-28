@@ -1,9 +1,9 @@
 <?php
 
-
 namespace frontend\assets;
 
 use yii\web\AssetBundle;
+
 
 class TasksAsset extends AssetBundle
 {

@@ -4,6 +4,7 @@ namespace frontend\assets;
 
 use yii\web\AssetBundle;
 
+
 class YandexMapAsset extends AssetBundle
 {
     public $basePath = '@webroot';
