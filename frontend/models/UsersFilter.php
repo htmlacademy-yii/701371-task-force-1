@@ -14,6 +14,26 @@ class UsersFilter extends Model
     public $haveReview;
     public $userName;
 
+    public function rules(): array
+    {
+        return [
+            [['categories', 'isFree', 'isOnline', 'haveReview'], 'safe'],
+            [['isFree', 'isOnline', 'haveReview'], 'boolean'],
+            [['userName'], 'string'],
+        ];
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'categories' => 'Категории',
+            'isFree' => 'Сейчас свободен',
+            'isOnline' => 'Сейчас онлайн',
+            'haveReview' => 'Есть отзывы',
+            'search' => 'Поиск по названию',
+        ];
+    }
+
     public function getDataProvider(): ActiveDataProvider
     {
         $query = Users::find()->alias('u');
@@ -78,25 +98,5 @@ class UsersFilter extends Model
                 'pageSize' => 5,
             ],
         ]);
-    }
-
-    public function attributeLabels(): array
-    {
-        return [
-            'categories' => 'Категории',
-            'isFree' => 'Сейчас свободен',
-            'isOnline' => 'Сейчас онлайн',
-            'haveReview' => 'Есть отзывы',
-            'search' => 'Поиск по названию',
-        ];
-    }
-
-    public function rules(): array
-    {
-        return [
-            [['categories', 'isFree', 'isOnline', 'haveReview'], 'safe'],
-            [['isFree', 'isOnline', 'haveReview'], 'boolean'],
-            [['userName'], 'string'],
-        ];
     }
 }

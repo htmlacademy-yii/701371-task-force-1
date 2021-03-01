@@ -1,13 +1,10 @@
 <?php
 
 use frontend\assets\AppAsset;
-use frontend\models\Users;
 use frontend\widgets\WomanSignupWidget;
 use frontend\widgets\MyNavWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
-$users = new Users();
 
 AppAsset::register($this);
 
@@ -102,7 +99,7 @@ AppAsset::register($this);
             </div>
             <div class="header__account">
                 <a class="header__account-photo">
-                    <?= Html::img("@web/img/" . $users->getUserAvatarPath(),
+                    <?= Html::img("@web/img/" . Yii::$app->user->identity->getUserAvatarPath(),
                         [
                             'alt' => 'Аватар заказчика',
                             'style' => 'width: 43px; height: 44px;'

@@ -22,13 +22,8 @@ use yii\db\ActiveRecord;
  */
 class TaskRespond extends ActiveRecord
 {
-    /** @note noviy */
     const STATUS_NEW = 1;
-
-    /** @note prinytiy */
     const STATUS_APPROVED = 2;
-
-    /** @note otklonenniy */
     const STATUS_REFUSED = 3;
 
     /**

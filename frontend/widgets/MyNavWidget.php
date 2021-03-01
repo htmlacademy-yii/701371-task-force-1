@@ -6,6 +6,7 @@ namespace frontend\widgets;
 use yii\bootstrap\Nav;
 use yii\helpers\Html;
 
+
 class MyNavWidget extends Nav
 {
     public function init()

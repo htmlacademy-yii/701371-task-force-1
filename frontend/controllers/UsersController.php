@@ -22,9 +22,7 @@ class UsersController extends SecuredController
         $userFilter = new UsersFilter();
         $categories = ArrayHelper::map(Category::find()->all(), 'id', 'name');
 
-        if (Yii::$app->request->isPost) {
-            $userFilter->load(Yii::$app->request->post());
-        }
+        $userFilter->load(Yii::$app->request->get());
 
         return $this->render('index', [
             'categories' => $categories,

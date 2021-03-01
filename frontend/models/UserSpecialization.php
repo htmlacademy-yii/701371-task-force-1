@@ -10,6 +10,8 @@ namespace frontend\models;
  * @property int $id
  * @property int $user_id
  * @property int $category_id
+ *
+ * @property Category $category
  */
 class UserSpecialization extends \yii\db\ActiveRecord
 {
@@ -43,5 +45,10 @@ class UserSpecialization extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'category_id' => 'Category ID',
         ];
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 }

@@ -46,6 +46,8 @@ use yii\web\IdentityInterface;
  * @property UsersFavorites[] $usersFavorites
  * @property UsersFavorites[] $usersFavorites0
  * @property UsersImage[] $usersImages
+ * @property Task[] $executedTasks
+ * @property int $completedTasksCount
  *
  * @property UserRoles $roles
  */
@@ -188,8 +190,12 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getTasks(): ActiveQuery
     {
-        //return $this->hasMany(Task::className(), ['executor_id' => 'id']);
         return $this->hasMany(Task::className(), ['owner_id' => 'id']);
+    }
+
+    public function getExecutedTasks(): ActiveQuery
+    {
+        return $this->hasMany(Task::className(), ['executor_id' => 'id']);
     }
 
     /**
@@ -404,5 +410,15 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getUserAvatarPath()
     {
         return $this->avatar ? $this->avatar->image_path : 'user-photo.png';
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getCompletedTasksCount()
+    {
+        return $this->getExecutedTasks()
+            ->where(['status_id' => Task::STATUS_COMPLETED])
+            ->count();
     }
 }

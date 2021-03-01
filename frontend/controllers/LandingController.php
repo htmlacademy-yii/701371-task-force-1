@@ -56,12 +56,6 @@ class LandingController extends Controller
         $this->layout = 'landing';
         $form = new LoginForm();
 
-        /**
-         * @note
-         * for renderAjax in view->landing->index
-         */
-        $this->view->params['model'] = $form;
-
         $tasks = Task::find()
             ->orderBy(['created' => SORT_ASC])
             ->limit(4)
@@ -70,12 +64,7 @@ class LandingController extends Controller
         if (Yii::$app->request->getIsPost() && Yii::$app->request->isAjax) {
             if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                 $user = $form->getUser();
-
-                if (Yii::$app->user->login($user)) {
-                    $user = Users::findOne(Yii::$app->user->identity->getId());
-                    $user->visit = date('Y-m-d h:i:s');
-                    $user->save();
-                }
+                Yii::$app->user->login($user);
 
                 return $this->redirect(['tasks/index']);
             } else {

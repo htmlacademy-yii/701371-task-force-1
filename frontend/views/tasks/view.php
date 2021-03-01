@@ -27,8 +27,6 @@ use yii\helpers\Html;
 $this->title = 'Главная страница';
 Yii::$app->formatter->language = 'ru-RU';
 
-$users = new Users();
-
 TasksAsset::register($this);
 YandexMapAsset::register($this);
 
