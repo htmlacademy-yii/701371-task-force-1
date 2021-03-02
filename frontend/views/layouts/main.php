@@ -1,19 +1,16 @@
 <?php
 
-use common\widgets\Alert;
-
-use frontend\widgets\WomanSignupWidget;
 use frontend\assets\AppAsset;
+use frontend\widgets\WomanSignupWidget;
 use frontend\widgets\MyNavWidget;
 use yii\helpers\Html;
-
-use yii\bootstrap\NavBar;
 use yii\helpers\Url;
-use yii\widgets\Breadcrumbs;
-
 
 AppAsset::register($this);
+
 ?>
+
+
 <?php $this->beginPage() ?>
 
 <!DOCTYPE html>
@@ -65,13 +62,13 @@ AppAsset::register($this);
                         <a href="<?= Url::to(['tasks/index']); ?>">Задания</a>
                     </li>
                     <li class="site-list__item">
-                        <a href="#">Исполнители</a>
+                        <a href="<?= Url::to(['users/index']); ?>">Исполнители</a>
                     </li>
                     <li class="site-list__item">
                         <a href="<?= Url::to(['tasks/create']); ?>">Создать задание</a>
                     </li>
                     <li class="site-list__item site-list__item--active">
-                        <a>Мой профиль</a>
+                        <a href="<?= Url::to(['settings/index']); ?>">Мой профиль</a>
                     </li>
                 </ul>
             </div>
@@ -102,9 +99,12 @@ AppAsset::register($this);
             </div>
             <div class="header__account">
                 <a class="header__account-photo">
-                    <img src="./img/user-photo.png"
-                         width="43" height="44"
-                         alt="Аватар пользователя">
+                    <?= Html::img("@web/img/" . Yii::$app->user->identity->getUserAvatarPath(),
+                        [
+                            'alt' => 'Аватар заказчика',
+                            'style' => 'width: 43px; height: 44px;'
+                        ]
+                    ) ?>
                 </a>
                 <span class="header__account-name">
                     <?= (Yii::$app->user->isGuest) ? 'Гость' : Yii::$app->user->identity->name; ?>

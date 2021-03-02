@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
+
 
 /**
  * This is the model class for table "user_notification".
@@ -14,7 +15,7 @@ use Yii;
  *
  * @property Users $user
  */
-class UserNotification extends \yii\db\ActiveRecord
+class UserNotification extends ActiveRecord
 {
     /**
      * {@inheritdoc}

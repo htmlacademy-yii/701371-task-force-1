@@ -6,6 +6,7 @@ use frontend\models\TaskRespond;
 use Yii;
 use yii\base\Model;
 
+
 class ResponseForm extends Model
 {
     public $price;
@@ -37,7 +38,6 @@ class ResponseForm extends Model
         $respond->datetime = date("Y-m-d H:i:s");
         $respond->user_id = Yii::$app->user->identity->getId();
 
-        // TODO: what make it is ?
         $respond->task_id = 2;
         $respond->status_id = TaskRespond::STATUS_NEW;
 

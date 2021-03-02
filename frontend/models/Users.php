@@ -7,6 +7,7 @@ use Yii;
 use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
 
+
 /**
  * This is the model class for table "signup".
  *
@@ -45,6 +46,8 @@ use yii\web\IdentityInterface;
  * @property UsersFavorites[] $usersFavorites
  * @property UsersFavorites[] $usersFavorites0
  * @property UsersImage[] $usersImages
+ * @property Task[] $executedTasks
+ * @property int $completedTasksCount
  *
  * @property UserRoles $roles
  */
@@ -187,8 +190,12 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getTasks(): ActiveQuery
     {
-        //return $this->hasMany(Task::className(), ['executor_id' => 'id']);
         return $this->hasMany(Task::className(), ['owner_id' => 'id']);
+    }
+
+    public function getExecutedTasks(): ActiveQuery
+    {
+        return $this->hasMany(Task::className(), ['executor_id' => 'id']);
     }
 
     /**
@@ -229,7 +236,6 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getSpecializationsList(): ActiveQuery
     {
-//        return $this->hasMany(UserSpecialization::className(), ['id' => 'specialization_id']);
         return $this->hasMany(UserSpecialization::className(), ['user_id' => 'id']);
     }
 
@@ -277,7 +283,8 @@ class Users extends ActiveRecord implements IdentityInterface
             ['account_id' => 'id']);
     }
 
-    // NOTE: my functions -----------------------------------------------------
+
+    /** @note my functions ------------------------------------------------- */
 
     public function getAverageRating(): float
     {
@@ -297,8 +304,12 @@ class Users extends ActiveRecord implements IdentityInterface
 
     /**/
 
-    // NOTE: for login
-
+    /**
+     * @note
+     * for login
+     *
+     * @return ActiveQuery
+     */
     public function getRespond(): ActiveQuery
     {
         return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
@@ -329,7 +340,6 @@ class Users extends ActiveRecord implements IdentityInterface
         return null;
     }
 
-    // NOTE: for login
     public static function findByUsername($username)
     {
         return static::findOne(['email' => $username]);
@@ -342,23 +352,39 @@ class Users extends ActiveRecord implements IdentityInterface
 
     /**/
 
-    // NOTE: for roles
+    /**
+     * @note
+     * for roles
+     *
+     * @return bool
+     */
     public function isCustomer()
     {
-        // NOTE: if there are no roles
+        /**
+         * @note
+         * if there are no roles
+         */
         if (!$this->role) {
             return false;
         }
 
-        // return: true || false
+        /**
+         * @note
+         * true || false
+         */
         return $this->role->key_code === UsersRoles::CUSTOMER_KEY_CODE;
     }
 
     /**/
 
-    // NOTE: for vk auth, import methods from user.php model
+    /**
+     * @note
+     * for all bottom methods
+     * for vk auth, import methods from user.php model
+     */
 
     /**
+     * @note
      * Generates "remember me" authentication key
      */
     public function generateAuthKey()
@@ -367,10 +393,32 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @note
      * Generates new password reset token
      */
     public function generatePasswordResetToken()
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * @note
+     * used in - views/layouts/main.php
+     *
+     * @return string
+     */
+    public function getUserAvatarPath()
+    {
+        return $this->avatar ? $this->avatar->image_path : 'user-photo.png';
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getCompletedTasksCount()
+    {
+        return $this->getExecutedTasks()
+            ->where(['status_id' => Task::STATUS_COMPLETED])
+            ->count();
     }
 }

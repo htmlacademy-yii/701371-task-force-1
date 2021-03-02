@@ -1,10 +1,12 @@
 <?php
 
 use frontend\assets\AppAsset;
+use frontend\widgets\LoginModalWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 AppAsset::register($this);
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -212,7 +214,7 @@ AppAsset::register($this);
                 </div>
             </footer>
 
-            <?= $this->renderAjax('login', ['model' => $this->params['model']]); ?>
+            <?= LoginModalWidget::widget(); ?>
 
         </div>
         <div class="overlay"></div>
@@ -220,4 +222,3 @@ AppAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
-

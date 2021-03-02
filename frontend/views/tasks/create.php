@@ -18,10 +18,15 @@ use frontend\assets\AutocompleteAsset;
 $this->title = 'Создать задание';
 Yii::$app->formatter->language = 'ru-RU';
 
-// NOTE: register specifically in this view
+/**
+ * @note
+ * register specifically in this view
+ */
 TaskErrorAsset::register($this);
 AutocompleteAsset::register($this);
+
 ?>
+
 
 <main class="page-main">
     <div class="main-container page-container">
@@ -102,9 +107,6 @@ AutocompleteAsset::register($this);
                             'id' => 'test',
                         ])?>
 
-                        <!-- FIXME: left it for later, now it is not required -->
-                        <!-- <div id="myId" class="create__file"></div> -->
-
                     <!-- ** -->
 
                     <?= $form->field($taskForm, 'address',
@@ -161,21 +163,22 @@ AutocompleteAsset::register($this);
                                 <p>Если загружаете фотографии объекта, то убедитесь,
                                     что всё в фокусе, а фото показывает объект со всех
                                     ракурсов.</p>
-
                             </div>
 
+                            <div class="warning-item warning-item--error">
 
-                          <div class="warning-item warning-item--error">
-                              <?= $form->errorSummary(
-                                  $taskForm,
-                                  ['header' => '<h2 class="warning-error">Ошибки заполнения формы</h2><h3>Категория</h3>']
-                              ); ?>
-                          </div>
+                                <?= $form->errorSummary(
+                                    $taskForm,
+                                    ['header' => '<h2 class="warning-error">Ошибки заполнения формы</h2><h3>Категория</h3>']
+                                ); ?>
+
+                            </div>
                         </div>
                     </div>
 
                     <?= Html::submitButton('Опубликовать', ['class' => 'button']); ?>
                 <?php ActiveForm::end(); ?>
+
             </div>
         </section>
     </div>

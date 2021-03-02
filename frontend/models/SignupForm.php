@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
-use yii\web\NotFoundHttpException;
+
 
 class SignupForm extends Model
 {

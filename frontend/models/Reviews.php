@@ -2,8 +2,6 @@
 
 namespace frontend\models;
 
-use DateTime;
-use Yii;
 
 /**
  * This is the model class for table "reviews".
@@ -87,9 +85,4 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Users::className(), ['raiting_id' => 'id']);
     }
-
-
-    // NOTE: my functions -----------------------------------------------------
-
-
 }

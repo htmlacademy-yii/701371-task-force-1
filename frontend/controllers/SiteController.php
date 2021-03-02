@@ -1,17 +1,16 @@
 <?php
+
 namespace frontend\controllers;
 
-use app\models\Auth;
 use common\models\LoginForm;
-use common\models\User;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\Users;
 use frontend\models\VerifyEmailForm;
 use frontend\models\forms\SignupForm;
-use yii\authclient\OAuth2;
+use yii\authclient\clients\VKontakte;
+use yii\authclient\AuthAction;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -20,9 +19,7 @@ use yii\web\Controller;
 use Yii;
 
 use TaskForce\components\AuthVKontakte;
-use yii\authclient\clients\VKontakte;
-use yii\authclient\AuthAction;
-use yii\web\Response;
+
 
 /**
  * Site controller
@@ -97,7 +94,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        // TODO: defaultRoute is don't work, why ? Help me...
         return $this->redirect(['tasks/index']);
     }
 

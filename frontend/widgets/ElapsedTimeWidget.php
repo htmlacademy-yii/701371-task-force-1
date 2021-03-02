@@ -5,6 +5,7 @@ namespace frontend\widgets;
 use DateTime;
 use yii\base\Widget;
 
+
 class ElapsedTimeWidget extends Widget
 {
     public $currentTime;
