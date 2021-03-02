@@ -73,8 +73,7 @@ class NewTaskForm extends Model
         $task->category_id = $this->category;
         $task->city_id = $city->id;
 
-        $task->executor_id = 1;
-        $task->owner_id = 1;
+        $task->owner_id = Task::STATUS_NEW;
         $task->status_id = 1;
 
         if (!$task->save()) {
