@@ -46,6 +46,10 @@ phpunit.phar
 /backend/
 /environments/
 /vagrant/
+/console/config/
+/console/controllers/
+/console/models/
+/console/runtime/
 
 #common -> files
 /common/config/.gitignore
