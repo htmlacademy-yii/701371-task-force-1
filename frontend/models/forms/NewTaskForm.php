@@ -73,8 +73,8 @@ class NewTaskForm extends Model
         $task->category_id = $this->category;
         $task->city_id = $city->id;
 
-        $task->owner_id = Task::STATUS_NEW;
-        $task->status_id = 1;
+        $task->owner_id = Yii::$app->user->identity->getId();
+        $task->status_id = Task::STATUS_NEW;
 
         if (!$task->save()) {
             return false;
