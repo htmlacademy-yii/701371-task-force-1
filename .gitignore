@@ -44,10 +44,8 @@ phpunit.phar
 
 #my general rules
 /backend/
-/console/
 /environments/
 /vagrant/
-/vendor/
 
 #common -> files
 /common/config/.gitignore
@@ -83,16 +81,6 @@ phpunit.phar
 /frontend/web/index.php
 /frontend/web/robots.txt
 
-/frontend/site/_index.php
-/frontend/site/about.php
-/frontend/site/contact.php
-/frontend/site/error.php
-/frontend/site/login.php
-/frontend/site/requestPasswordResetToken.php
-/frontend/site/resendVerificationEmail.php
-/frontend/site/resetPassword.php
-/frontend/site/signup.php
-
 /frontend/views/layouts/_main.php
 /frontend/views/site/_index.php
 /frontend/views/site/about.php
@@ -114,7 +102,6 @@ phpunit.phar
 
 #root files
 codeception.yml
-composer.json
 composer.lock
 Contributing.md
 docker-compose.yml
@@ -129,10 +116,3 @@ queries.sql
 .gitattributes
 .bowerrc
 .editorconfig
-
-#TODO: what is it?
-/fonts
-/css
-/js
-task_force.sql
-index.php
