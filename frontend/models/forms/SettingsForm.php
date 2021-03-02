@@ -144,7 +144,7 @@ class SettingsForm extends Model
         return [
             [['email'], 'required'],
             [['cityId', 'phone'], 'integer'],
-            [['avatar', 'specialization', 'birthday', 'files', 'notification', 'visit'], 'safe'],
+            [['avatar', 'specialization', 'birthday', 'files', 'notification'], 'safe'],
             [['password', 'passwordCopy'], 'string', 'min' => 6],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 31],
