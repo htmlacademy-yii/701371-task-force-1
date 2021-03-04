@@ -33,7 +33,7 @@ SettingsFormAsset::register($this);
                     <div class="account__redaction-section-wrapper">
                         <div class="account__redaction-avatar">
 
-                            <?= Html::img('@web/img/' . Yii::$app->user->identity->userAvatarPath(),
+                            <?= Html::img('@web/img/' . Yii::$app->user->identity->getUserAvatarPath(),
                                 [
                                     'alt' => 'Аватар пользователя',
                                     'style' => 'width: 142px; height: 142px; border-radius: 4px;'
