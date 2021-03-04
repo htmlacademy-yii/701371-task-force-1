@@ -69,16 +69,8 @@ phpunit.phar
 /common/codeception.yml
 
 #frontend -> files
-/frontend/config/
 /frontend/runtime
 /frontend/tests/
-
-/frontend/models/ContactForm.php
-/frontend/models/PasswordResetRequestForm.php
-/frontend/models/ResendVerificationEmailForm.php
-/frontend/models/ResetPasswordForm.php
-/frontend/models/forms/SignupForm.php
-/frontend/models/VerifyEmailForm.php
 
 /frontend/web/favicon.ico
 /frontend/web/index-test.php
@@ -98,8 +90,6 @@ phpunit.phar
 /frontend/views/tasks/_index.php
 
 /frontend/controllers/_TasksController.php
-
-/frontend/behaviors
 
 /frontend/codeception.yml
 /frontend/Dockerfile
