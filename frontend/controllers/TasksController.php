@@ -39,10 +39,10 @@ class TasksController extends SecuredController
             'name'
         );
 
-        if (Yii::$app->request->isPost) {
-            $taskFilter->load(Yii::$app->request->post());
-            $taskFilter->applyFilters($tasks);
-        }
+
+        $taskFilter->load(Yii::$app->request->get());
+        $taskFilter->applyFilters($tasks);
+
 
         /**/
 

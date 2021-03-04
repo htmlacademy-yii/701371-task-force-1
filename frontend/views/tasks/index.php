@@ -83,7 +83,7 @@ Yii::$app->formatter->language = 'ru-RU';
         </section>
         <section  class="search-task">
             <div class="search-task__wrapper">
-                <form class="search-task__form" name="test" method="post" action="#">
+                <form class="search-task__form" name="test" method="get" action="#">
                     <fieldset class="search-task__categories">
                         <legend>Категории</legend>
 
