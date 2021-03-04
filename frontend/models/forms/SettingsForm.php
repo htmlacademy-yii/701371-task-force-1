@@ -4,8 +4,10 @@ namespace frontend\models\forms;
 
 use app\models\UserNotification;
 use DateTime;
+use frontend\models\ContactForm;
 use frontend\models\Users;
 use frontend\models\UsersAvatar;
+use frontend\models\UsersContacts;
 use frontend\models\UserSpecialization;
 use Yii;
 use yii\base\Model;
@@ -281,6 +283,11 @@ class SettingsForm extends Model
     private function saveUserMessangers(Users $user)
     {
         $contacts = $user->contacts;
+
+        if (!$contacts) {
+            $contacts = new UsersContacts();
+        }
+
         if ($this->phone != $this->oldPhone) {
             $contacts->phone = $this->phone;
         }
