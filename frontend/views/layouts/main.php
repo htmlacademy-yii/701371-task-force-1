@@ -98,14 +98,6 @@ AppAsset::register($this);
                 </p>
             </div>
             <div class="header__account">
-                <a class="header__account-photo">
-                    <?= Html::img("@web/img/" . Yii::$app->user->identity->getUserAvatarPath(),
-                        [
-                            'alt' => 'Аватар заказчика',
-                            'style' => 'width: 43px; height: 44px;'
-                        ]
-                    ) ?>
-                </a>
                 <span class="header__account-name">
                     <?= (Yii::$app->user->isGuest) ? 'Гость' : Yii::$app->user->identity->name; ?>
              </span>
