@@ -211,6 +211,8 @@ class SettingsForm extends Model
         if ($this->description != $this->oldDescription) {
             $user->about = $this->description;
         }
+
+        $user->save();
     }
 
     /**
