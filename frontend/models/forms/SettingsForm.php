@@ -268,6 +268,7 @@ class SettingsForm extends Model
             && $this->passwordCopy && $this->oldPasswordCopy) !== $user->password)
         {
             $user->password = $this->password;
+            $user->save();
         }
     }
 
