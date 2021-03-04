@@ -23,7 +23,6 @@ use yii\web\IdentityInterface;
  * @property int $views_counter
  * @property int $hide_account
  * @property int $show_contacts_to_customer
- * @property int|null $avatar_id
  * @property int|null $role_id
  * @property int|null $specialization_id
  * @property int|null $raiting_id
@@ -76,7 +75,6 @@ class Users extends ActiveRecord implements IdentityInterface
                 'views_counter',
                 'hide_account',
                 'show_contacts_to_customer',
-                'avatar_id',
                 'role_id',
                 'specialization_id',
                 'raiting_id',
@@ -95,12 +93,6 @@ class Users extends ActiveRecord implements IdentityInterface
                 'skipOnError' => true,
                 'targetClass' => UsersContacts::className(),
                 'targetAttribute' => ['contacts_id' => 'id']
-            ],
-            [['avatar_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => UsersAvatar::className(),
-                'targetAttribute' => ['avatar_id' => 'id']
             ],
             [['role_id'],
                 'exist',
@@ -143,7 +135,6 @@ class Users extends ActiveRecord implements IdentityInterface
             'views_counter' => 'Views Counter',
             'hide_account' => 'Hide Account',
             'show_contacts_to_customer' => 'Show Contacts To Customer',
-            'avatar_id' => 'Avatar ID',
             'role_id' => 'Role ID',
             'specialization_id' => 'specialization ID',
             'raiting_id' => 'Raiting ID',

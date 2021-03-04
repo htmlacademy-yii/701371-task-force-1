@@ -72,6 +72,8 @@ phpunit.phar
 /frontend/runtime
 /frontend/tests/
 
+/frontend/models/_SignupForm.php
+
 /frontend/web/favicon.ico
 /frontend/web/index-test.php
 /frontend/web/index.php
