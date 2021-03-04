@@ -275,19 +275,22 @@ class SettingsForm extends Model
      *
      * @param $user
      */
-    private function saveUserMessangers($user)
+    private function saveUserMessangers(Users $user)
     {
+        $contacts = $user->contacts;
         if ($this->phone != $this->oldPhone) {
-            $user->contacts->phone = $this->phone;
+            $contacts->phone = $this->phone;
         }
 
         if ($this->skype != $this->oldSkype) {
-            $user->contacts->skype = $this->skype;
+            $contacts->skype = $this->skype;
         }
 
         if ($this->otherMessenger != $this->oldOtherMessenger) {
-            $user->contacts->messanger = $this->otherMessenger;
+            $contacts->messanger = $this->otherMessenger;
         }
+
+        $contacts->save();
     }
 
     /**
