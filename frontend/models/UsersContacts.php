@@ -34,6 +34,7 @@ class UsersContacts extends ActiveRecord
         return [
             [['phone', 'skype', 'messanger'], 'required'],
             [['phone'], 'integer'],
+            [['phone'], 'max' => 11],
             [['skype', 'messanger'], 'string', 'max' => 64],
         ];
     }
