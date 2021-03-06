@@ -100,7 +100,7 @@ class SettingsForm extends Model
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'user_setting';
     }
@@ -141,7 +141,7 @@ class SettingsForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['email'], 'required'],
@@ -192,7 +192,7 @@ class SettingsForm extends Model
      * @var Users $user
      * @throws \Exception
      */
-    private function saveUserData($user)
+    private function saveUserData($user): bool
     {
         if ($this->name != $this->oldName) {
             $user->name = $this->name;
@@ -214,7 +214,7 @@ class SettingsForm extends Model
             $user->about = $this->description;
         }
 
-        $user->save();
+        return $user->save();
     }
 
     /**
@@ -227,8 +227,8 @@ class SettingsForm extends Model
      */
     private function saveUserSpecialization($user)
     {
-        $specializationToAdd = array_diff($this->specialization, $this->oldSpecialization);
-        $specializationToDrop = array_diff($this->oldSpecialization, $this->specialization);
+        $specializationToAdd = array_diff($this->specialization ?: [], $this->oldSpecialization);
+        $specializationToDrop = array_diff($this->oldSpecialization, $this->specialization ?: []);
 
         if ($specializationToAdd) {
             foreach ($specializationToAdd as $specializationId) {
@@ -263,14 +263,16 @@ class SettingsForm extends Model
      * save user password
      *
      * @param $user
+     * @return bool
      */
-    private function saveUserPassword($user)
+    private function saveUserPassword($user): bool
     {
         if (($this->password && $this->oldPassword
             && $this->passwordCopy && $this->oldPasswordCopy) !== $user->password)
         {
             $user->password = $this->password;
-            $user->save();
+
+            return $user->save();
         }
     }
 
@@ -279,8 +281,9 @@ class SettingsForm extends Model
      * saving user phone, skype and messanger
      *
      * @param $user
+     * @return bool
      */
-    private function saveUserMessangers(Users $user)
+    private function saveUserMessangers(Users $user): bool
     {
         $contacts = $user->contacts;
 
@@ -300,7 +303,7 @@ class SettingsForm extends Model
             $contacts->messanger = $this->otherMessenger;
         }
 
-        $contacts->save();
+        return $contacts->save();
     }
 
     /**
@@ -309,9 +312,15 @@ class SettingsForm extends Model
      *
      * @param $user
      */
-    private function saveUserNotification($user) {
-        $notificationToAdd  = array_diff($this->notification, $this->oldNotification);
-        $notificationToDrop = array_diff($this->oldNotification, $this->notification);
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    private function saveUserNotification($user): void
+    {
+        $notificationToAdd  = array_diff($this->notification ?: [], $this->oldNotification);
+        $notificationToDrop = array_diff($this->oldNotification, $this->notification ?: []);
 
         if ($notificationToAdd) {
             foreach ($notificationToAdd as $notificationId) {
@@ -326,12 +335,9 @@ class SettingsForm extends Model
                     $notificationModel->notification_type = $notificationId;
                     $notificationModel->active = 1;
                     $notificationModel->save();
-
-                    var_dump($notificationModel->getErrors());
                 } else {
                     $notificationModel->active = 1;
                     $notificationModel->save();
-                    var_dump($notificationModel->getErrors());
                 }
             }
         }
@@ -364,7 +370,7 @@ class SettingsForm extends Model
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function save()
+    public function save(): bool
     {
         $user = Users::findOne(Yii::$app->user->identity->getId());
 
@@ -399,7 +405,7 @@ class SettingsForm extends Model
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function saveAvatar($avatarUploadedFile)
+    public function saveAvatar($avatarUploadedFile): void
     {
         if (!empty($this->avatar)) {
             $currentAvatar = UsersAvatar::find()
@@ -419,7 +425,7 @@ class SettingsForm extends Model
 
     /**/
 
-    public function populate($id)
+    public function populate($id): void
     {
         $user = Users::findOne($id);
 
