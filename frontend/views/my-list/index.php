@@ -92,7 +92,7 @@ use yii\helpers\Url;
                         </p>
                         <div class="feedback-card__top ">
                             <a href="#">
-                                <?= Html::img('@web/img/' . $user->getUserAvatarPath(),
+                                <?= Html::img('@web/img/' . Yii::$app->user->identity->getUserAvatarPath(),
                                     [
                                         'alt' => 'Аватар заказчика',
                                         'style' => 'width: 36px; height: 36px;'
