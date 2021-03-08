@@ -174,7 +174,7 @@ YandexMapAsset::register($this);
                 <div class="profile-mini__wrapper">
                     <h3>Заказчик</h3>
                     <div class="profile-mini__top">
-                        <?= Html::img("@web/img/{$task->owner->avatar->image_path}",
+                        <?= Html::img('@web/img/' . $user->getUserAvatarPath(),
                             [
                                 'alt' => 'Аватар заказчика',
                                 'style' => 'width: 62px; height: 62px;'
