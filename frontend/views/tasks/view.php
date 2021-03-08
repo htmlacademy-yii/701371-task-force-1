@@ -58,7 +58,7 @@ YandexMapAsset::register($this);
                         <h3 class="content-view__h3">Вложения</h3>
 
                             <?php foreach ($task->taskFiles as $files): ?>
-                                <a href="./files/<?= $files->image_path; ?>" download><?= $files->image_path; ?></a>
+                                <a href="/files/<?= $files->image_path; ?>" download><?= $files->image_path; ?></a>
                             <?php endforeach; ?>
 
                     </div>
