@@ -110,5 +110,3 @@ class AuthVKontakte
         return null;
     }
 }
-//http://localhost:8888/work_yii-application-test/frontend/web/
-// redirect_uri=http%3A%2F%2Flocalhost%3A8888%2Fwork_yii-application-test%2Ffrontend%2Fweb%2Fsite%2Fauth%3Fauthclient%3Dvkontakte
