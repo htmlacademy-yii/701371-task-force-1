@@ -7,7 +7,11 @@ use common\models\User;
 
 
 /**
- * Password reset form
+ * @note
+ * password reset form
+ *
+ * Class ResetPasswordForm
+ * @package frontend\models
  */
 class ResetPasswordForm extends Model
 {
@@ -20,7 +24,8 @@ class ResetPasswordForm extends Model
 
 
     /**
-     * Creates a form model given a token.
+     * @note
+     * creates a form model given a token.
      *
      * @param string $token
      * @param array $config name-value pairs that will be used to initialize the object properties

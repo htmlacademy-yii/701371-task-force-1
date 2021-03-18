@@ -7,21 +7,24 @@ use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
 
+/**
+ * @note
+ * for email verify
+ *
+ * Class VerifyEmailForm
+ * @package frontend\models
+ */
 class VerifyEmailForm extends Model
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $token;
 
-    /**
-     * @var User
-     */
+    /** @var User */
     private $_user;
 
-
     /**
-     * Creates a form model with given token.
+     * @note
+     * creates a form model with given token.
      *
      * @param string $token
      * @param array $config name-value pairs that will be used to initialize the object properties
@@ -40,11 +43,12 @@ class VerifyEmailForm extends Model
     }
 
     /**
-     * Verify email
+     * @note
+     * verify email
      *
      * @return User|null the saved model or null if saving fails
      */
-    public function verifyEmail()
+    public function verifyEmail(): ?User
     {
         $user = $this->_user;
         $user->status = User::STATUS_ACTIVE;

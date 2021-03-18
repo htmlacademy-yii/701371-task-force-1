@@ -7,7 +7,8 @@ use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
- * This is the model class for table "users_roles".
+ * @note
+ * this is the model class for table "users_roles".
  *
  * @property int $id
  * @property string $title
@@ -59,7 +60,10 @@ class UsersRoles extends ActiveRecord
         return $this->hasMany(Users::className(), ['role_id' => 'id']);
     }
 
-    public function isCustomer()
+    /**
+     * @return bool
+     */
+    public function isCustomer(): bool
     {
         return $this->key_code == self::CUSTOMER_KEY_CODE;
     }

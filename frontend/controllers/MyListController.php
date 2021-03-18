@@ -7,9 +7,11 @@ use function GuzzleHttp\Promise\all;
 
 
 /**
- * For working with the user's task list
+ * @note
+ * for working with the user's task list
  *
  * Class MyListController
+ * @package frontend\controllers
  */
 class MyListController extends SecuredController
 {

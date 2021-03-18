@@ -7,7 +7,8 @@ use yii\db\ActiveQuery;
 
 
 /**
- * This is the model class for table "message".
+ * @note
+ * this is the model class for table "message".
  *
  * @property int $id
  * @property string $message

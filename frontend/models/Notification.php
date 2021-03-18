@@ -7,7 +7,8 @@ use yii\db\ActiveQuery;
 
 
 /**
- * This is the model class for table "notification".
+ * @note
+ * this is the model class for table "notification".
  *
  * @property int $id
  * @property int $new_messages

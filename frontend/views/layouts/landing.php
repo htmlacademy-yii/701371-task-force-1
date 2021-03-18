@@ -184,22 +184,7 @@ AppAsset::register($this);
                     <div class="page-footer__links">
                         <ul class="links__list">
                             <li class="links__item">
-                                <a href="">Задания</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Мой профиль</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Исполнители</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Регистрация</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Создать задание</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Справка</a>
+                                <a href="<?= Url::to(['signup/index']); ?>">Регистрация</a>
                             </li>
                         </ul>
                     </div>

@@ -7,7 +7,8 @@ use yii\db\ActiveQuery;
 
 
 /**
- * This is the model class for table "feedback".
+ * @note
+ * this is the model class for table "feedback".
  *
  * @property int $id
  * @property int|null $rating_id

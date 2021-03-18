@@ -1,10 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TaskForce\components;
 
 use app\components\exception\TaskException;
 
+
+/**
+ * @note
+ * class for working with task
+ *
+ * Class Task
+ * @package TaskForce\components
+ */
 class Task
 {
 	const STATUS_NEW = 'new';
@@ -21,6 +30,11 @@ class Task
 	private $clientId;
 	private $completed;
 
+    /**
+     * Task constructor.
+     * @param array $data
+     * @throws TaskException
+     */
 	public function __construct(array $data = []) {
 		foreach ($data as $key => $value) {
 			if (property_exists($this, $key)) {
@@ -33,8 +47,9 @@ class Task
 		}
 	}
 
-	/**/
-
+    /**
+     * @return array
+     */
 	public function getStatuses(): array
 	{
 		return [
@@ -46,16 +61,25 @@ class Task
 		];
 	}
 
+    /**
+     * @return int|null
+     */
 	public function getIdExecutor(): ?int
 	{
 		return $this->executorId;
 	}
 
+    /**
+     * @return int|null
+     */
 	public function getCurrentIdClient(): ?int
 	{
 		return $this->clientId;
 	}
 
+    /**
+     * @return string|null
+     */
 	public function getCurrentStatus(): ?string
 	{
 		return $this->status;

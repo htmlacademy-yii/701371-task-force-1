@@ -21,7 +21,7 @@ use yii\helpers\Html;
       </div>
 
       <div class="modal-body">
-          <?= Html::beginForm(Yii::$app->urlManager->createUrl('tasks/cancel')); ?>
+          <?= Html::beginForm(Yii::$app->urlManager->createUrl('tasks/abort')); ?>
 
               <p>
                   Вы собираетесь отказаться от выполнения задания.

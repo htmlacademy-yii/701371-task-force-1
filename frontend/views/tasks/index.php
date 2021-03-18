@@ -38,7 +38,7 @@ Yii::$app->formatter->language = 'ru-RU';
                                 <a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular">
                                     <h2><?= $task->title; ?></h2>
                                 </a>
-                                <a class="new-task__type link-regular" href="#">
+                                <a class="new-task__type link-regular" href="?TaskFilter[categories]=<?= $task->category->id; ?>">
                                     <p><?= $task->category->name; ?></p>
                                 </a>
 

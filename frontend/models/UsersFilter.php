@@ -6,6 +6,13 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 
+/**
+ * @note
+ * for user filter
+ *
+ * Class UsersFilter
+ * @package frontend\models
+ */
 class UsersFilter extends Model
 {
     public $categories;
@@ -14,6 +21,9 @@ class UsersFilter extends Model
     public $haveReview;
     public $userName;
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -23,6 +33,9 @@ class UsersFilter extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels(): array
     {
         return [
@@ -34,6 +47,12 @@ class UsersFilter extends Model
         ];
     }
 
+    /**
+     * @note
+     * for data provider of the user
+     *
+     * @return ActiveDataProvider
+     */
     public function getDataProvider(): ActiveDataProvider
     {
         $query = Users::find()->alias('u');

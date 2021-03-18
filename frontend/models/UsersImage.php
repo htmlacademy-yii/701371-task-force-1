@@ -7,7 +7,8 @@ use yii\db\ActiveQuery;
 
 
 /**
- * This is the model class for table "users_image".
+ * @note
+ * this is the model class for table "users_image".
  *
  * @property int $id
  * @property string $image_path

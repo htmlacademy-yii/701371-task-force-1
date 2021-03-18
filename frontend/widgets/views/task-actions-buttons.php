@@ -4,6 +4,7 @@ use frontend\models\Task;
 use TaskForce\components\CancelAction;
 use TaskForce\components\CompleteAction;
 use TaskForce\components\RespondAction;
+use TaskForce\components\FailAction;
 use yii\helpers\Url;
 
 /**
@@ -26,7 +27,7 @@ use yii\helpers\Url;
             type="button"
             data-for="response-form"
             data-toggle="modal"
-            data-target="#task-response-form">Откликнуться</button>
+            data-target="#task-response-form"><?= RespondAction::getTitle(); ?></button>
     <?php endif; ?>
 
     <?php if (isset($actions[CancelAction::class])): ?>
@@ -34,7 +35,7 @@ use yii\helpers\Url;
             type="button"
             data-for="refuse-form"
             data-toggle="modal"
-            data-target="#task-refuse-form">Отказаться</button>
+            data-target="#task-refuse-form"><?= CancelAction::getTitle(); ?></button>
     <?php endif; ?>
 
     <?php if (isset($actions[CompleteAction::class])): ?>
@@ -43,7 +44,15 @@ use yii\helpers\Url;
             'taskId' => $task->id
         ]); ?>"
            class="button button__big-color connection-button">
-                Завершить
+              <?= CompleteAction::getTitle(); ?>
         </a>
+    <?php endif; ?>
+
+    <?php if (isset($actions[FailAction::class])): ?>
+        <button class="button button__big-color refusal-button"
+            type="button"
+            data-for="refuse-form"
+            data-toggle="modal"
+            data-target="#task-refuse-form"><?= FailAction::getTitle(); ?></button>
     <?php endif; ?>
 </div>

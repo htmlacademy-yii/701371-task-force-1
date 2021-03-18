@@ -2,9 +2,12 @@
 
 namespace frontend\models;
 
+use yii\db\ActiveRecord;
+
 
 /**
- * This is the model class for table "reviews".
+ * @note
+ * this is the model class for table "reviews".
  *
  * @property int $id
  * @property string $description
@@ -18,7 +21,7 @@ namespace frontend\models;
  * @property TaskStatus $status
  * @property Users[] $users
  */
-class Reviews extends \yii\db\ActiveRecord
+class Reviews extends ActiveRecord
 {
     const STATUS_NEW = 1;
 

@@ -17,7 +17,7 @@ class TaskActionsButtonsWidget extends Widget
 
     public function run()
     {
-        // NOTE: sending - [0 => CancelAction, 1 => RespondAction, ...]
+        /** @note sending - [0 => CancelAction, 1 => RespondAction, ...]  */
         $actions = AvailableActions::getAvailableActions($this->task, Yii::$app->user);
 
         /*

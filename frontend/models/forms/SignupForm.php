@@ -14,16 +14,9 @@ class SignupForm extends Model
     public $city;
     public $password;
 
-    public function attributeLabels(): array
-    {
-        return [
-            'email' => 'Почта',
-            'name' => 'Имя',
-            'city' => 'Город проживания',
-            'password' => 'Пароль',
-        ];
-    }
-
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -43,7 +36,27 @@ class SignupForm extends Model
         ];
     }
 
-    public function createUser()
+    /**
+     * @return array
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'email' => 'Почта',
+            'name' => 'Имя',
+            'city' => 'Город проживания',
+            'password' => 'Пароль',
+        ];
+    }
+
+    /**
+     * @note
+     * for registry a new user
+     *
+     * @return Users|null
+     * @throws \yii\base\Exception
+     */
+    public function createUser(): ?Users
     {
         $user = new Users();
         $user->name = $this->name;

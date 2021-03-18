@@ -8,8 +8,16 @@ use frontend\models\TaskFile;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 
+/**
+ * @note
+ * for creating new task
+ *
+ * Class NewTaskForm
+ * @package frontend\models\forms
+ */
 class NewTaskForm extends Model
 {
     public $name;
@@ -22,6 +30,27 @@ class NewTaskForm extends Model
 
     private $taskModel;
 
+    /**
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            [['name', 'description', 'category'], 'required'],
+            [['name', 'address'], 'string', 'max' => 255],
+            [['description'], 'string'],
+            [['category', 'budget'], 'integer'],
+            [['term', 'files'], 'safe'],
+            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, gif, webp', 'maxFiles' => 10],
+            [['term'], 'date', 'format' => 'php:Y-m-d'],
+
+            [['name', 'description'], 'filter', 'filter' => [Html::class, 'encode']],
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function attributeLabels(): array
     {
         return [
@@ -35,23 +64,14 @@ class NewTaskForm extends Model
         ];
     }
 
-    public function rules(): array
-    {
-        return [
-            [['name', 'description', 'category'], 'required'],
-            [['name', 'address'], 'string', 'max' => 255],
-            [['description'], 'string'],
-            [['category', 'budget'], 'integer'],
-            [['term', 'files'], 'safe'],
-            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, gif, webp', 'maxFiles' => 10],
-            [['term'], 'date', 'format' => 'php:Y-m-d'],
-        ];
-    }
-
     /**
-     * @return Task
+     * @note
+     * creating and saving the task
+     *
+     * @return bool
+     * @throws \Exception
      */
-    public function createTask()
+    public function createTask(): bool
     {
         $task = new Task();
         $city = City::find()
@@ -66,8 +86,8 @@ class NewTaskForm extends Model
         $task->title = $this->name;
         $task->description = $this->description;
         $task->address = $city->title;
-        $task->latitude = stristr($coordinates, ' ', true);;
-        $task->longitude = stristr($coordinates, ' ', false);;
+        $task->latitude = stristr($coordinates, ' ', false);
+        $task->longitude = stristr($coordinates, ' ', true);
         $task->price = $this->budget;
         $task->deadline = $this->term;
         $task->category_id = $this->category;
@@ -77,6 +97,7 @@ class NewTaskForm extends Model
         $task->status_id = Task::STATUS_NEW;
 
         if (!$task->save()) {
+            echo $task->status_id . '<br>';
             return false;
         }
 
@@ -85,10 +106,14 @@ class NewTaskForm extends Model
     }
 
     /**
+     * @note
+     * for get full name of loading file
+     * and save him in the folder
+     *
      * @param UploadedFile $files
      * @return bool
      */
-    public function upload()
+    public function upload(): bool
     {
         if (!$this->files) {
             return false;
@@ -102,6 +127,12 @@ class NewTaskForm extends Model
         }
     }
 
+    /**
+     * @note
+     * for saving files in table, look up method
+     *
+     * @param $fileName
+     */
     public function writeFile($fileName)
     {
         $taskFile = new TaskFile;

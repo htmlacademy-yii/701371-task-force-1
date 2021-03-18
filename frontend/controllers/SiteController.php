@@ -274,6 +274,15 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @note
+     * login from VK
+     *
+     * @param VKontakte $client
+     * @return \yii\web\Response
+     * @throws \yii\base\Exception
+     * @throws \yii\db\Exception
+     */
     public function onAuthSuccess(VKontakte $client)
     {
         if ($user = AuthVKontakte::onAuthSuccess($client)) {

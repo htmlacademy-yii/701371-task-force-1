@@ -8,7 +8,11 @@ use common\models\User;
 
 
 /**
- * Password reset request form
+ * @note
+ * password reset request form
+ *
+ * Class PasswordResetRequestForm
+ * @package frontend\models
  */
 class PasswordResetRequestForm extends Model
 {
@@ -33,7 +37,8 @@ class PasswordResetRequestForm extends Model
     }
 
     /**
-     * Sends an email with a link, for resetting the password.
+     * @note
+     * sends an email with a link, for resetting the password.
      *
      * @return bool whether the email was send
      */

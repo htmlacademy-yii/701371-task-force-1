@@ -28,6 +28,14 @@ return [
 
         /**
          * @note
+         * for minify html, css, js
+         */
+        'AssetsMinify' => [
+            'class' => '\soladiem\autoMinify\AssetsMinify',
+        ],
+
+        /**
+         * @note
          * including Redis
          *
          * for installing:
@@ -103,6 +111,9 @@ return [
                  'tasks' => 'tasks/index',
                  'view/<id:\d+>' => 'tasks/view',
                  'mylist' => 'my-list/index',
+                 'settings' => 'settings/index',
+                 'create' => 'tasks/create',
+                 'users' => 'users/index',
 
                  /**
                   * @note

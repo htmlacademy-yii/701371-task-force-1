@@ -3,13 +3,15 @@
 namespace frontend\models;
 
 use app\models\UserNotification;
+use phpDocumentor\Reflection\Types\Integer;
 use Yii;
 use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
 
 
 /**
- * This is the model class for table "signup".
+ * @note
+ * this is the model class for table "signup".
  *
  * @property int $id
  * @property string $email
@@ -277,24 +279,6 @@ class Users extends ActiveRecord implements IdentityInterface
 
     /** @note my functions ------------------------------------------------- */
 
-    public function getAverageRating(): float
-    {
-        // NOTE: если в текущей модели нету ни одного отзыва (массив пуст), то...
-        if (!$this->reviews) {
-            return 0;
-        }
-
-        /*
-         * NOTE:
-         * array_column - формирует массив значений массива по колючу, который
-         * я передал, т.е. в итоге вернет массив состоящий из значения рейтинга
-         * для каждой записи
-         * */
-        return array_sum(array_column($this->reviews, 'raiting')) / count($this->reviews);
-    }
-
-    /**/
-
     /**
      * @note
      * for login
@@ -306,42 +290,93 @@ class Users extends ActiveRecord implements IdentityInterface
         return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
     }
 
-    public static function findIdentity($id)
-    {
-        return self::findOne($id);
-    }
-
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        return null;
-    }
-
+    /**
+     * @return int|mixed|string
+     */
     public function getId()
     {
         return $this->getPrimaryKey();
     }
 
-    public function getAuthKey()
+    /**
+     * @return string|null
+     */
+    public function getAuthKey(): ?string
     {
         return null;
     }
 
-    public function validateAuthKey($authKey)
+    /**
+     * @note
+     * for rating
+     *
+     * @return float
+     */
+    public function getAverageRating(): float
+    {
+        /**
+         * @note
+         * if there are no reviews in the current
+         * model (the array is empty), then...
+         */
+        if (!$this->reviews) {
+            return 0;
+        }
+
+        /**
+         * @note
+         * generates an array of array values based on the key that I passed,
+         * i.e. it will eventually return an array consisting of the rating
+         * value for each record
+         */
+        return array_sum(array_column($this->reviews, 'raiting')) / count($this->reviews);
+    }
+
+    /**
+     * @param int|string $id
+     * @return Users|IdentityInterface|null
+     */
+    public static function findIdentity($id): ?Users
+    {
+        return self::findOne($id);
+    }
+
+    /**
+     * @param mixed $token
+     * @param null $type
+     * @return IdentityInterface|null
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
     {
         return null;
     }
 
-    public static function findByUsername($username)
+    /**
+     * @param string $authKey
+     * @return bool|null
+     */
+    public function validateAuthKey($authKey): ?bool
+    {
+        return null;
+    }
+
+    /**
+     * @param $username
+     * @return Users|null
+     */
+    public static function findByUsername($username): ?Users
     {
         return static::findOne(['email' => $username]);
     }
 
-    public function validatePassword($password)
+    /**
+     * @param $password
+     * @return bool
+     */
+    public function validatePassword($password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password);
     }
-
-    /**/
 
     /**
      * @note
@@ -349,24 +384,14 @@ class Users extends ActiveRecord implements IdentityInterface
      *
      * @return bool
      */
-    public function isCustomer()
+    public function isCustomer(): bool
     {
-        /**
-         * @note
-         * if there are no roles
-         */
-        if (!$this->role) {
-            return false;
-        }
-
         /**
          * @note
          * true || false
          */
-        return $this->role->key_code === UsersRoles::CUSTOMER_KEY_CODE;
+        return count($this->specializationsList) === 0;
     }
-
-    /**/
 
     /**
      * @note
@@ -376,7 +401,9 @@ class Users extends ActiveRecord implements IdentityInterface
 
     /**
      * @note
-     * Generates "remember me" authentication key
+     * generates "remember me" authentication key
+     *
+     * @throws \yii\base\Exception
      */
     public function generateAuthKey()
     {
@@ -385,7 +412,9 @@ class Users extends ActiveRecord implements IdentityInterface
 
     /**
      * @note
-     * Generates new password reset token
+     * generates new password reset token
+     *
+     * @throws \yii\base\Exception
      */
     public function generatePasswordResetToken()
     {
@@ -398,7 +427,7 @@ class Users extends ActiveRecord implements IdentityInterface
      *
      * @return string
      */
-    public function getUserAvatarPath()
+    public function getUserAvatarPath(): string
     {
         return $this->avatar ? $this->avatar->image_path : 'user-photo.png';
     }

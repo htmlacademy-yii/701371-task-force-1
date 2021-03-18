@@ -10,8 +10,18 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 
+/**
+ * @note
+ * for login & save
+ *
+ * Class SignupController
+ * @package frontend\controllers
+ */
 class SignupController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -32,13 +42,12 @@ class SignupController extends Controller
         ];
     }
 
-    /**/
-
     /**
      * @note
-     * ...index.php?r=signup
+     * login & save there
      *
      * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionIndex()
     {

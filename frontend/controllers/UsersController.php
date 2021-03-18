@@ -17,6 +17,9 @@ use yii\helpers\ArrayHelper;
  */
 class UsersController extends SecuredController
 {
+    /**
+     * @return string
+     */
     public function actionIndex(): string
     {
         $userFilter = new UsersFilter();

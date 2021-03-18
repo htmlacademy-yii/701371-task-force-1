@@ -12,6 +12,13 @@ use yii\web\Response;
 use Yii;
 
 
+/**
+ * @note
+ * for landing page (not auth user)
+ *
+ * Class LandingController
+ * @package frontend\controllers
+ */
 class LandingController extends Controller
 {
     /**
@@ -21,7 +28,7 @@ class LandingController extends Controller
      *
      * @return array
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -51,7 +58,7 @@ class LandingController extends Controller
      *
      * @return array|string|Response
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $this->layout = 'landing';
         $form = new LoginForm();

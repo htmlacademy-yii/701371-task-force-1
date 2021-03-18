@@ -2,9 +2,12 @@
 
 namespace frontend\models;
 
+use yii\db\ActiveRecord;
+
 
 /**
- * This is the model class for table "task".
+ * @note
+ * this is the model class for table "task".
  *
  * @property int $id
  * @property string $title
@@ -30,11 +33,9 @@ namespace frontend\models;
  * @property TaskFile[] $taskFiles
  * @property TaskRespond[] $responds
  */
-class Task extends \yii\db\ActiveRecord
+class Task extends ActiveRecord
 {
-    /** @note otkliknutsa */
     const STATUS_RESPOND = 1;
-
     const STATUS_CANCEL = 2;
     const STATUS_COMPLETED = 3;
     const STATUS_FAIL = 4;
@@ -174,7 +175,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isResponded()
+    public function isResponded(): bool
     {
         return $this->status_id == self::STATUS_RESPOND;
     }
@@ -182,7 +183,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isCanceled()
+    public function isCanceled(): bool
     {
         return $this->status_id == self::STATUS_CANCEL;
     }
@@ -190,7 +191,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isCompleted()
+    public function isCompleted(): bool
     {
         return $this->status_id == self::STATUS_COMPLETED;
     }
@@ -198,7 +199,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isFailed()
+    public function isFailed(): bool
     {
         return $this->status_id == self::STATUS_FAIL;
     }
@@ -206,12 +207,12 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isWork()
+    public function isWork(): bool
     {
         return $this->status_id == self::STATUS_WORK;
     }
 
-    public function isNew()
+    public function isNew(): bool
     {
         return $this->status_id == self::STATUS_NEW;
     }

@@ -25,6 +25,16 @@ class SettingsController extends SecuredController
     public $avatarsPath = '';
     public $photosPath = '';
 
+    /**
+     * @note
+     * this method also loading user data on page
+     * look in - populate
+     * after this method is saving user data
+     *
+     * @return string
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionIndex(): string
     {
         $settingsForm = new SettingsForm;
@@ -87,6 +97,13 @@ class SettingsController extends SecuredController
         ));
     }
 
+    /**
+     * @note
+     * for drop image
+     *
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDrop()
     {
         $id = Yii::$app->request->post('id');

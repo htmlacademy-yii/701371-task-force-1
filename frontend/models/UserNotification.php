@@ -33,13 +33,6 @@ class UserNotification extends ActiveRecord
         return [
             [['user_id', 'notification_type', 'active'], 'required'],
             [['user_id', 'notification_type', 'active'], 'integer'],
-
-            // NOTE: causes an error
-            /*
-            [['user_id'], 'exist', 'skipOnError' => true,
-                'targetClass' => Users::class,
-                'targetAttribute' => ['user_id' => 'id']],
-            */
         ];
     }
 
@@ -57,7 +50,8 @@ class UserNotification extends ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * @note
+     * gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */

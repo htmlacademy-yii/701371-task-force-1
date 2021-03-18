@@ -57,12 +57,12 @@ class TaskRespond extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'        => 'ID',
-            'comment'   => 'Comment',
-            'price'     => 'Price',
-            'datetime'  => 'Datetime',
-            'user_id'   => 'User ID',
-            'task_id'   => 'Task ID',
+            'id' => 'ID',
+            'comment' => 'Comment',
+            'price' => 'Price',
+            'datetime' => 'Datetime',
+            'user_id' => 'User ID',
+            'task_id' => 'Task ID',
             'status_id' => 'Status ID',
         ];
     }
@@ -89,7 +89,7 @@ class TaskRespond extends ActiveRecord
     /**
      * @return bool
      */
-    public function isNew()
+    public function isNew(): bool
     {
         return $this->status_id == self::STATUS_NEW;
     }
@@ -97,7 +97,7 @@ class TaskRespond extends ActiveRecord
     /**
      * @return bool
      */
-    public function isApproved()
+    public function isApproved(): bool
     {
         return $this->status_id == self::STATUS_APPROVED;
     }
@@ -105,7 +105,7 @@ class TaskRespond extends ActiveRecord
     /**
      * @return bool
      */
-    public function isRefused()
+    public function isRefused(): bool
     {
         return $this->status_id == self::STATUS_REFUSED;
     }

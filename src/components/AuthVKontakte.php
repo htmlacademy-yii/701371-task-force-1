@@ -1,8 +1,6 @@
 <?php
 
-
 namespace TaskForce\components;
-
 
 use app\models\Auth;
 use frontend\models\Users;
@@ -11,6 +9,13 @@ use yii\authclient\OAuth2;
 use yii\web\NotFoundHttpException;
 
 
+/**
+ * @note
+ * VK auth & login, used OAuth
+ *
+ * Class AuthVKontakte
+ * @package TaskForce\components
+ */
 class AuthVKontakte
 {
     /**
@@ -56,6 +61,16 @@ class AuthVKontakte
         }
     }
 
+    /**
+     * @note
+     * create user in DB
+     *
+     * @param $client
+     * @param $attributes
+     * @return Users|null
+     * @throws \yii\base\Exception
+     * @throws \yii\db\Exception
+     */
     private static function registryNewUser($client, $attributes)
     {
         if (isset($attributes['email']) && Users::find()->where(['email' => $attributes['email']])->exists()) {
@@ -95,3 +110,5 @@ class AuthVKontakte
         return null;
     }
 }
+//http://localhost:8888/work_yii-application-test/frontend/web/
+// redirect_uri=http%3A%2F%2Flocalhost%3A8888%2Fwork_yii-application-test%2Ffrontend%2Fweb%2Fsite%2Fauth%3Fauthclient%3Dvkontakte

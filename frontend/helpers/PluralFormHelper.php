@@ -1,6 +1,15 @@
 <?php
+
 namespace frontend\helpers;
 
+
+/**
+ * @note
+ * for last time visit
+ *
+ * Class PluralFormHelper
+ * @package frontend\helpers
+ */
 class PluralFormHelper
 {
     /**

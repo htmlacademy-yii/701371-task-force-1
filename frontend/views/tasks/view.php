@@ -42,7 +42,7 @@ YandexMapAsset::register($this);
                         <div class="content-view__headline">
                             <h1><?= $task->title; ?></h1>
                             <span>Размещено в категории
-                                <a href="#" class="link-regular"><?= $task->category->name; ?></a>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['tasks', 'TaskFilter' => ['categories' => $task->category->id]]); ?>" class="link-regular"><?= $task->category->name; ?></a>
                                 <?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?> назад
                         </div>
                         <b class="new-task__price new-task__price--clean content-view-price"><?= $task->price; ?><b> ₽</b></b>
@@ -65,18 +65,7 @@ YandexMapAsset::register($this);
                     <div class="content-view__location">
                         <h3 class="content-view__h3">Расположение</h3>
                         <div class="content-view__location-wrapper">
-                            <div class="content-view__map"
-                                 style="width: 361px; height: 292px;">
-
-                                <a href="#">
-                                    <?= Html::img('@web/img/map.jpg',
-                                        [
-                                            'alt' => 'Москва, Новый арбат, 23 к. 1',
-                                            'style' => 'width: 361px; height: 292px;'
-                                        ]
-                                    ) ?>
-                                </a>
-                            </div>
+                            <div id="map" class="content-view__map" style="width: 361px; height: 292px;"></div>
 
                             <div class="content-view__address">
                                 <span class="address__town">
@@ -194,11 +183,15 @@ YandexMapAsset::register($this);
                         <span><?= count($task->owner->reviews); ?> отзывов</span>
                         <span class="last-"><?= count($task->owner->tasks); ?> заказов</span>
                     </p>
-                    <a href="#" class="link-regular">Смотреть профиль</a>
+                    <a href="<?= Url::to(['settings/index']); ?>" class="link-regular">Смотреть профиль</a>
                 </div>
             </div>
             <div id="chat-container">
-                <chat class="connect-desk__chat" task="<?= $task->id; ?>"></chat>
+
+                  <?php if (TaskPermissionHelper::canUsersSeeChat($task)): ?>
+                      <chat class="connect-desk__chat" task="<?= $task->id; ?>"></chat>
+                  <?php endif; ?>
+
             </div>
         </section>
     </div>

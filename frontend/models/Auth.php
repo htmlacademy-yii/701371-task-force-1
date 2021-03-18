@@ -5,6 +5,7 @@ namespace app\models;
 use frontend\models\Users;
 use yii\db\ActiveRecord;
 
+
 /**
  * This is the model class for table "auth".
  *
@@ -52,7 +53,8 @@ class Auth extends ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * @note
+     * gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */

@@ -7,7 +7,8 @@ use yii\db\ActiveQuery;
 
 
 /**
- * This is the model class for table "task_status".
+ * @note
+ * this is the model class for table "task_status".
  *
  * @property int $id
  * @property string $title

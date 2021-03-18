@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 
+use yii\db\ActiveQuery;
+
 /**
  * @note
  * This is the model class for table "user_specialization".
@@ -16,6 +18,9 @@ namespace frontend\models;
 class UserSpecialization extends \yii\db\ActiveRecord
 {
     /**
+     * @note
+     * set table name
+     *
      * {@inheritdoc}
      */
     public static function tableName()
@@ -24,6 +29,9 @@ class UserSpecialization extends \yii\db\ActiveRecord
     }
 
     /**
+     * @note
+     * for rules validation
+     *
      * {@inheritdoc}
      */
     public function rules()
@@ -36,6 +44,9 @@ class UserSpecialization extends \yii\db\ActiveRecord
     }
 
     /**
+     * @note
+     * for labels
+     *
      * {@inheritdoc}
      */
     public function attributeLabels()
@@ -47,7 +58,10 @@ class UserSpecialization extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getCategory()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory(): ActiveQuery
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }

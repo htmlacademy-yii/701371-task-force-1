@@ -6,8 +6,11 @@ use GuzzleHttp\Client;
 use yii\helpers\Json;
 
 /**
- * NOTE:
- * Class for working with geocoder (yandex map)
+ * @note
+ * class for working with geocoder (yandex map)
+ *
+ * Class Geocoder
+ * @package TaskForce\components
  */
 class Geocoder
 {
@@ -15,16 +18,28 @@ class Geocoder
     private $lang = 'ru_RU';
     private $format = 'json';
 
+    /**
+     * @note
+     * get coordinates for current city
+     *
+     * @param string $cityName
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getCoordinates(string $cityName): array
     {
         return $this->sendRequest($cityName);
     }
 
-    /*
-     * NOTE:
+    /**
+     * @note
      * use GuzzleHttp, for install: composer require guzzlehttp/guzzle:^7.0
      * for http requests
-     * */
+     *
+     * @param $cityName
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     private function sendRequest($cityName)
     {
         /**

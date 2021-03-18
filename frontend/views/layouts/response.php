@@ -53,6 +53,9 @@ use yii\widgets\ActiveForm;
 
                     <?= Html::submitButton('Опубликовать', ['class' => 'button modal-button']); ?>
 
+                    <?= $form->field($responseForm, 'taskId', ['template' => '{input}'])
+                            ->hiddenInput(); ?>
+
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
