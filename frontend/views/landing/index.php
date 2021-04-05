@@ -25,7 +25,7 @@ $this->title = 'TaskForse - главная страница';
             <div class="landing-task-info">
                 <div class="task-info-left">
                     <p><a href="#" class="link-regular"><?= $task->category->name; ?></a></p>
-                    <p><?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?> назад</p>
+                    <p><?= ElapsedTimeWidget::widget(['timeStamp' => $task->created]); ?> назад</p>
                 </div>
                 <span><?= $task->price; ?> <b>₽</b></span>
             </div>

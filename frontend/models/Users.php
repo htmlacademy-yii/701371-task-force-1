@@ -205,7 +205,7 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getContacts(): ActiveQuery
     {
         return $this->hasOne(UsersContacts::className(),
-            ['id' => 'contacts_id']);
+            ['account_id' => 'id']);
     }
 
     /**

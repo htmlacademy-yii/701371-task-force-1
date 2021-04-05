@@ -50,7 +50,7 @@ Yii::$app->formatter->language = 'ru-RU';
                             <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
                             <p class="new-task__place"><?= $task->address; ?></p>
 
-                            <?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?>
+                            <?= ElapsedTimeWidget::widget(['timeStamp' => $task->created]); ?>
 
                         </div>
 

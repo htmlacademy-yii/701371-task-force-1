@@ -159,7 +159,7 @@ class TasksController extends SecuredController
      * @return \yii\web\Response
      * @throws BadRequestHttpException
      */
-    public function actionRefuse($respondId)
+    public function actionRefuse(int $respondId): ?Response
     {
         $taskRespond = TaskRespond::findOne($respondId);
 
@@ -187,7 +187,7 @@ class TasksController extends SecuredController
      * @throws NotFoundHttpException
      * @throws BadRequestHttpException
      */
-    public function actionApproved($respondId)
+    public function actionApproved(int $respondId): ?Response
     {
         $taskRespond = TaskRespond::findOne($respondId);
 
@@ -214,7 +214,7 @@ class TasksController extends SecuredController
      *
      * @return \yii\web\Response
      */
-    public function actionResponse(): Response
+    public function actionResponse(): ?Response
     {
         $response = new ResponseForm();
 
@@ -236,7 +236,7 @@ class TasksController extends SecuredController
      * @return \yii\web\Response
      * @throws BadRequestHttpException
      */
-    public function actionCancel(): Response
+    public function actionCancel(): ?Response
     {
         $task = Task::findOne(Yii::$app->request->post('taskId'));
 
@@ -256,7 +256,7 @@ class TasksController extends SecuredController
      * @return \yii\web\Response
      * @throws BadRequestHttpException
      */
-    public function actionAbort(): Response
+    public function actionAbort(): ?Response
     {
         $task = Task::findOne(Yii::$app->request->post('taskId'));
 
@@ -277,7 +277,7 @@ class TasksController extends SecuredController
      * @return \yii\web\Response
      * @throws BadRequestHttpException
      */
-    public function actionComplete($taskId): Response
+    public function actionComplete(int $taskId): ?Response
     {
         $task = Task::findOne($taskId);
 

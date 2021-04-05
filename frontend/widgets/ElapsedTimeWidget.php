@@ -6,14 +6,18 @@ use DateTime;
 use yii\base\Widget;
 
 
+/**
+ * Class ElapsedTimeWidget
+ * @package frontend\widgets
+ */
 class ElapsedTimeWidget extends Widget
 {
-    public $currentTime;
+    public $timeStamp;
 
     public function run()
     {
         $currentDate = new DateTime();
-        $createDate = new DateTime($this->currentTime);
+        $createDate = new DateTime($this->timeStamp);
         $interval = $currentDate->diff($createDate);
 
         return $this->render('elapsed', compact('interval'));

@@ -1,4 +1,7 @@
 <?php
+
+$params = require_once __DIR__ . DIRECTORY_SEPARATOR . 'params.php';
+
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -8,7 +11,7 @@ return [
     'components' => [
         'geocoder' => [
             'class' => 'TaskForce\components\Geocoder',
-            'apiKey' => 'abd2d308-bf38-48fb-aa1a-2a45797320b7',
+            'apiKey' => $params['yaApiKey'],
         ],
 
         'cache' => [

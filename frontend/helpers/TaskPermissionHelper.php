@@ -54,7 +54,7 @@ class TaskPermissionHelper
     public static function canUsersSeeChat(Task $task): bool
     {
         return
-            Yii::$app->user->identity->getId() == $task->owner_id
-            || Yii::$app->user->identity->getId() == $task->executor_id;
+            Yii::$app->user->identity->getId() === $task->owner_id
+            || Yii::$app->user->identity->getId() === $task->executor_id;
     }
 }

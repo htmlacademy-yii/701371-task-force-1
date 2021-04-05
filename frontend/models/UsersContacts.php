@@ -13,6 +13,7 @@ use yii\db\ActiveQuery;
  * @property int $phone
  * @property string $skype
  * @property string $messanger
+ * @property int $account_id
  *
  * @property Users[] $users
  */
@@ -32,9 +33,10 @@ class UsersContacts extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['phone', 'skype', 'messanger'], 'required'],
-            [['phone'], 'integer', 'max' => 11],
-            [['skype', 'messanger'], 'string', 'max' => 64],
+            [['phone', 'skype', 'messanger'], 'safe'],
+//            [['phone'], 'integer', 'max' => 11],
+//            [['skype', 'messanger'], 'string', 'max' => 64],
+            [['account_id'], 'integer'],
         ];
     }
 
@@ -48,6 +50,7 @@ class UsersContacts extends ActiveRecord
             'phone' => 'Phone',
             'skype' => 'Skype',
             'messanger' => 'Messanger',
+            'account_id' => 'AccountId',
         ];
     }
 

@@ -5,6 +5,10 @@ namespace frontend\widgets;
 use yii\base\Widget;
 
 
+/**
+ * Class RatingWidget
+ * @package frontend\widgets
+ */
 class RatingWidget extends Widget
 {
     public $currentRaiting;

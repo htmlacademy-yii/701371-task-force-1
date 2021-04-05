@@ -229,15 +229,16 @@ class SettingsForm extends Model
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function saveAvatar($avatarUploadedFile): void
+    public function saveAvatar($avatarUploadedFile)
     {
         if (!empty($this->avatar)) {
+            $avatarModel = new UsersAvatar();
             $currentAvatar = UsersAvatar::find()
                 ->where(['account_id' => Yii::$app->user->identity->getId()])
                 ->one();
+
             $currentAvatar->delete();
 
-            $avatarModel = new UsersAvatar();
             $fileName = $avatarUploadedFile->baseName . '.' . $avatarUploadedFile->extension;
             $avatarUploadedFile->saveAs('files/' . $fileName);
 
@@ -257,6 +258,9 @@ class SettingsForm extends Model
     public function populate($id): void
     {
         $user = Users::findOne($id);
+        $userContacts = UsersContacts::find()
+            ->where(['account_id' => $id])
+            ->one();
 
         $this->name = $this->oldName = $user->name;
         $this->email = $this->oldEmail = $user->email;
@@ -274,9 +278,9 @@ class SettingsForm extends Model
             ? array_column($user->specializationsList, 'category_id')
             : [];
 
-        $this->phone = $this->oldPhone = $user->contacts->phone ?? '';
-        $this->skype = $this->oldSkype = $user->contacts->skype ?? '';
-        $this->otherMessenger = $this->oldOtherMessenger = Yii::$app->user->identity->contacts->messanger ?? '';
+        $this->phone = $this->oldPhone = $userContacts->phone ?? '';
+        $this->skype = $this->oldSkype = $userContacts->skype ?? '';
+        $this->otherMessenger = $this->oldOtherMessenger = $userContacts->messanger ?? '';
 
         $this->notification = $this->oldNotification = $user->notificationsList ? array_column($user->notificationsList, 'notification_type') : [];
     }
@@ -377,30 +381,34 @@ class SettingsForm extends Model
      * @note
      * saving user phone, skype and messanger
      *
-     * @param $user
+     * @param Users $user
      * @return bool
      */
     private function saveUserMessangers(Users $user): bool
     {
-        $contacts = $user->contacts;
+        $userContacts = UsersContacts::find()
+            ->where(['account_id' => $user->id])
+            ->one();
 
-        if (!$contacts) {
-            $contacts = new UsersContacts();
+        if (!$userContacts) {
+            $userContacts = new UsersContacts();
         }
 
         if ($this->phone != $this->oldPhone) {
-            $contacts->phone = $this->phone;
+            $userContacts->phone = $this->phone;
         }
 
         if ($this->skype != $this->oldSkype) {
-            $contacts->skype = $this->skype;
+            $userContacts->skype = $this->skype;
         }
 
         if ($this->otherMessenger != $this->oldOtherMessenger) {
-            $contacts->messanger = $this->otherMessenger;
+            $userContacts->messanger = $this->otherMessenger;
         }
 
-        return $contacts->save();
+        $userContacts->account_id = $user->id;
+
+        return $userContacts->save();
     }
 
     /**

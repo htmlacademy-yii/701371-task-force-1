@@ -22,9 +22,6 @@ use yii\web\UploadedFile;
  */
 class SettingsController extends SecuredController
 {
-    public $avatarsPath = '';
-    public $photosPath = '';
-
     /**
      * @note
      * this method also loading user data on page
@@ -72,17 +69,31 @@ class SettingsController extends SecuredController
                 foreach ($files as $file) {
                     $usersImage = new UsersImage();
 
-                    // NOTE: saving files in folder
+                    /**
+                     * @note saving files in folder
+                     */
                     $fileName = $file->baseName . '.' . $file->extension;
                     $file->saveAs('files/' . $fileName);
 
-                    // NOTE: saving file name for db
+                    /**
+                     * @note saving file name for db
+                     */
                     $usersImage->image_path = $fileName;
                     $usersImage->account_id = Yii::$app->user->identity->getId();
                     $usersImage->save();
                 }
 
+                /**
+                 * @note
+                 * if avatar has changed
+                 */
                 $settingsForm->saveAvatar($avatarUploadedFile);
+
+                /**
+                 * @note
+                 * for default avatar
+                 */
+                $user->getUserAvatarPath();
             }
         }
 

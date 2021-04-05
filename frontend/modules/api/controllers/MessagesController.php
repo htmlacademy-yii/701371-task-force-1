@@ -13,7 +13,11 @@ class MessagesController extends Controller
 {
     public $enableCsrfValidation = false;
 
-    public function actionGet($id)
+    /**
+     * @param $id
+     * @throws \yii\base\ExitException
+     */
+    public function actionGet(int $id)
     {
         $task = Task::findOne($id);
         $messages = Message::find()
@@ -21,7 +25,7 @@ class MessagesController extends Controller
                 'task_id' => $id,
 
                 /**
-                 * NOTE:
+                 * @note
                  * yii2 translates this to the - IN...
                  * task_id = ? AND sender_id IN (?, ?)
                  */
@@ -44,6 +48,10 @@ class MessagesController extends Controller
         \Yii::$app->end(Json::encode($data));
     }
 
+    /**
+     * @param int $id
+     * @throws \yii\base\ExitException
+     */
     public function actionCreate(int $id)
     {
         Yii::$app->response->setStatusCode(201);
@@ -60,7 +68,10 @@ class MessagesController extends Controller
 
         $message->save();
 
-        // NOTE: stopping processing of all requests
+        /**
+         * @note
+         * stopping processing of all requests
+         */
         Yii::$app->end(Json::encode([
             'id' => $message->id,
             'message' => $message->message,
@@ -69,8 +80,14 @@ class MessagesController extends Controller
         ]));
     }
 
-    public function actionView(int $id)
+    /**
+     * @param int $id
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function actionView(int $id): ?array
     {
         return Message::find()->where(['reciver_id' => $id])->all();
     }
 }
+
+// TODO: 1.12 hr

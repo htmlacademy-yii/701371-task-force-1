@@ -16,6 +16,7 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'timeZone' => 'Europe/Moscow',
     'controllerNamespace' => 'frontend\controllers',
 
     'modules' => [

@@ -43,7 +43,7 @@ YandexMapAsset::register($this);
                             <h1><?= $task->title; ?></h1>
                             <span>Размещено в категории
                                 <a href="<?= Yii::$app->urlManager->createUrl(['tasks', 'TaskFilter' => ['categories' => $task->category->id]]); ?>" class="link-regular"><?= $task->category->name; ?></a>
-                                <?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?> назад
+                                <?= ElapsedTimeWidget::widget(['timeStamp' => $task->created]); ?> назад
                         </div>
                         <b class="new-task__price new-task__price--clean content-view-price"><?= $task->price; ?><b> ₽</b></b>
                         <div class="new-task__icon new-task__icon--<?= $task->category->css_class; ?> content-view-icon"></div>
@@ -112,13 +112,11 @@ YandexMapAsset::register($this);
                                     ) ?>
                                 </a>
                                 <div class="feedback-card__top--name">
-
-                                    <p><a href="#" class="link-regular"><?= $respond->user->name; ?></a></p>
+                                    <p><a href="<?= Url::to(['users/view', 'id' => $respond->user->id]); ?>" class="link-regular"><?= $respond->user->name; ?></a></p>
                                     <?php echo RatingWidget::widget(['currentRaiting' => $respond->user->averageRating]); ?>
                                     <b><?= $respond->user->averageRating; ?></b>
-
                                 </div>
-                                <span class="new-task__time"><?= ElapsedTimeWidget::widget(['currentTime' => $respond->datetime]); ?> назад</span>
+                                <span class="new-task__time"><?= ElapsedTimeWidget::widget(['timeStamp' => $respond->datetime]); ?> назад</span>
                             </div>
                             <div class="feedback-card__content">
                                 <p><?= $respond->comment; ?></p>
@@ -127,7 +125,8 @@ YandexMapAsset::register($this);
                             </div>
 
                             <?php if (TaskRespondPermissionHelper::canViewAllResponds($task, $user)): ?>
-                                <?php if ($respond->isNew() || $respond->isApproved()): ?>
+                                <?php if ($respond->isNew() || $respond->isApproved() || !$task->status_id !== Task::STATUS_COMPLETED): ?>
+
                                     <div class="feedback-card__actions">
                                         <a href="<?= Url::to([
                                             'tasks/approved',
@@ -148,6 +147,7 @@ YandexMapAsset::register($this);
                                         <button class="button__chat button"
                                             type="button"></button>
                                     </div>
+
                                 <?php endif; ?>
                             <?php endif; ?>
 
@@ -163,17 +163,19 @@ YandexMapAsset::register($this);
                 <div class="profile-mini__wrapper">
                     <h3>Заказчик</h3>
                     <div class="profile-mini__top">
-                        <?= Html::img('@web/img/' . $user->getUserAvatarPath(),
+
+                        <?= Html::img('@web/img/' . $task->getOwnerAvatarPath(),
                             [
                                 'alt' => 'Аватар заказчика',
                                 'style' => 'width: 62px; height: 62px;'
                             ]
                         ) ?>
+
                         <div class="profile-mini__name five-stars__rate">
 
                             <p><?= $task->owner->name; ?></p>
 
-                            <?php echo RatingWidget::widget(['currentRaiting' => $task->owner->averageRating]); ?>
+                            <?= RatingWidget::widget(['currentRaiting' => $task->owner->averageRating]); ?>
 
                             <b><?= round($task->owner->averageRating, 2); ?></b>
 

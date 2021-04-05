@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use yii\db\ActiveRecord;
+use frontend\models\UsersAvatar;
 
 
 /**
@@ -215,5 +216,19 @@ class Task extends ActiveRecord
     public function isNew(): bool
     {
         return $this->status_id == self::STATUS_NEW;
+    }
+
+    /**
+     * @note
+     * used in - views/tasks/view.php
+     * for output avatar of owner
+     *
+     * @return string
+     */
+    public function getOwnerAvatarPath(): string
+    {
+        $avatar = UsersAvatar::findOne($this->owner_id);
+
+        return $avatar ? $avatar->image_path : 'user-photo.png';
     }
 }

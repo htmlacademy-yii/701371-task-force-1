@@ -9,6 +9,7 @@ use frontend\widgets\RatingWidget;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
 
@@ -57,7 +58,11 @@ use yii\widgets\LinkPager;
                             <span><?= count($user->reviews); ?> отзывов</span>
                         </div>
                         <div class="feedback-card__top--name user__search-card">
-                            <p class="link-name"><a href="#" class="link-regular"><?= $user->name; ?></a></p>
+                            <p class="link-name">
+                                <a href="<?= Url::to(['users/view', 'id' => $user->id]); ?>" class="link-regular">
+                                    <?= $user->name; ?>
+                                </a>
+                            </p>
 
                             <?php echo RatingWidget::widget(['currentRaiting' => $user->averageRating]); ?>
                             <b><?= $user->averageRating; ?></b>
@@ -66,7 +71,7 @@ use yii\widgets\LinkPager;
                                 <?= $user->about; ?>
                             </p>
                         </div>
-                        <span class="new-task__time">Был на сайте <?= ElapsedTimeWidget::widget(['currentTime' => $user->visit]); ?> назад</span>
+                        <span class="new-task__time">Был на сайте <?= ElapsedTimeWidget::widget(['timeStamp' => $user->visit]); ?> назад</span>
                     </div>
                     <div class="link-specialization user__search-link--bottom">
 

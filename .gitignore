@@ -79,6 +79,7 @@ phpunit.phar
 /frontend/web/index.php
 /frontend/web/robots.txt
 
+/frontend/helpers/_TaskAllRespondsPermissionHelper.php
 /frontend/views/layouts/_main.php
 /frontend/views/site/_index.php
 /frontend/views/site/about.php
@@ -90,6 +91,9 @@ phpunit.phar
 /frontend/views/site/resetPassword.php
 /frontend/views/site/signup.php
 /frontend/views/tasks/_index.php
+
+/frontend/modules/api/controllers/_DefaultController.php
+/frontend/modules/api/views/default/_index.php.php
 
 /frontend/controllers/_TasksController.php
 

@@ -8,6 +8,10 @@ use yii\base\Widget;
 use TaskForce\components\AvailableActions;
 
 
+/**
+ * Class TaskActionsButtonsWidget
+ * @package frontend\widgets
+ */
 class TaskActionsButtonsWidget extends Widget
 {
     /**
