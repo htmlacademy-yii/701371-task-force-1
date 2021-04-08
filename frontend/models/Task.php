@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use yii\db\ActiveRecord;
-use frontend\models\UsersAvatar;
 
 
 /**
@@ -54,7 +53,7 @@ class Task extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title', 'description', 'address', 'latitude', 'longitude', 'price', 'deadline'], 'required'],
@@ -76,7 +75,7 @@ class Task extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use app\models\UserNotification;
-use phpDocumentor\Reflection\Types\Integer;
+
 use Yii;
 use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
@@ -355,7 +355,7 @@ class Users extends ActiveRecord implements IdentityInterface
      * @param string $authKey
      * @return bool|null
      */
-    public function validateAuthKey($authKey): ?bool
+    public function validateAuthKey(string $authKey): ?bool
     {
         return null;
     }

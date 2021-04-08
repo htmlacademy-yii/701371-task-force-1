@@ -8,6 +8,7 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use Yii;
 
+// 8.07
 
 class MessagesController extends Controller
 {
@@ -19,7 +20,10 @@ class MessagesController extends Controller
      */
     public function actionGet(int $id)
     {
+        /** @var Task $task */
         $task = Task::findOne($id);
+
+        /** @var Message[] $messages */
         $messages = Message::find()
             ->where([
                 'task_id' => $id,

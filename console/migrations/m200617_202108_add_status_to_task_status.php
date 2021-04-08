@@ -10,7 +10,7 @@ class m200617_202108_add_status_to_task_status extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $this->batchInsert(
             \frontend\models\TaskStatus::tableName(),
@@ -22,7 +22,7 @@ class m200617_202108_add_status_to_task_status extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->delete(
             \frontend\models\TaskStatus::tableName(),

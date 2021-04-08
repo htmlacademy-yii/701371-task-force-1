@@ -74,6 +74,8 @@ class NewTaskForm extends Model
     public function createTask(): bool
     {
         $task = new Task();
+
+        /** @var City $city */
         $city = City::find()
             ->where(['id' => $this->address])
             ->one();

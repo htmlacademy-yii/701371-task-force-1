@@ -7,8 +7,12 @@ use yii\db\Migration;
  */
 class m201207_194814_user_contacts_fill_data extends Migration
 {
-    public function safeUp()
+    public function safeUp(): void
     {
+        /**
+         * @note
+         * add column & data & link
+         */
         $this->addColumn(
             \frontend\models\UsersContacts::tableName(),
             'account_id',
@@ -32,7 +36,11 @@ class m201207_194814_user_contacts_fill_data extends Migration
         );
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop column & data & link
+     */
+    public function safeDown(): void
     {
         $this->dropForeignKey(
             'fk_contacts_account_id_column_to_users_id',

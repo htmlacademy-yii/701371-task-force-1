@@ -28,7 +28,7 @@ class UserNotification extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['user_id', 'notification_type', 'active'], 'required'],
@@ -39,7 +39,7 @@ class UserNotification extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

@@ -7,7 +7,11 @@ use yii\db\Migration;
  */
 class m200704_205908_task_respond_add_status extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * insert data into the table
+     */
+    public function safeUp(): void
     {
         $this->truncateTable(\frontend\models\TaskRespond::tableName());
 
@@ -23,9 +27,10 @@ class m200704_205908_task_respond_add_status extends Migration
     }
 
     /**
-     * {@inheritdoc}
+     * @note
+     * return default data
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->truncateTable(\frontend\models\TaskRespond::tableName());
 

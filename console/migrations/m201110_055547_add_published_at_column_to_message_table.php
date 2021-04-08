@@ -10,11 +10,10 @@ use yii\db\Migration;
 class m201110_055547_add_published_at_column_to_message_table extends Migration
 {
     /**
+     * @note
      * Add id column to message table
-     *
-     * @return integer
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $this->addColumn(
             'message',
@@ -24,11 +23,10 @@ class m201110_055547_add_published_at_column_to_message_table extends Migration
     }
 
     /**
+     * @note
      * Delete id column from table
-     *
-     * @return integer
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->dropColumn(\frontend\models\Message::tableName(), 'published_at');
     }

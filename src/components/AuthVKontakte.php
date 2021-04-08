@@ -59,7 +59,7 @@ class AuthVKontakte
                 $auth->save();
             }
         }
-    }
+    }//14.56
 
     /**
      * @note
@@ -71,7 +71,7 @@ class AuthVKontakte
      * @throws \yii\base\Exception
      * @throws \yii\db\Exception
      */
-    private static function registryNewUser($client, $attributes)
+    private static function registryNewUser($client, $attributes): ?Users
     {
         if (isset($attributes['email']) && Users::find()->where(['email' => $attributes['email']])->exists()) {
             Yii::$app->getSession()->setFlash('error', [

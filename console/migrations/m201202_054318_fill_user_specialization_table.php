@@ -10,7 +10,7 @@ class m201202_054318_fill_user_specialization_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $this->batchInsert(
             \frontend\models\UserSpecialization::tableName(),
@@ -29,7 +29,7 @@ class m201202_054318_fill_user_specialization_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->delete(\frontend\models\UserSpecialization::tableName());
     }

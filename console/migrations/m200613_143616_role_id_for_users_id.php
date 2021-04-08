@@ -7,9 +7,12 @@ use yii\db\Migration;
  */
 class m200613_143616_role_id_for_users_id extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * add columns
+     */
+    public function safeUp(): void
     {
-
         // NOTE: for the first use of migration
         /*
         $this->dropForeignKey(
@@ -37,9 +40,12 @@ class m200613_143616_role_id_for_users_id extends Migration
     }
 
     /**
+     * @note
+     * drop columns to default
+     *
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->dropColumn(\frontend\models\Users::tableName(), 'role_id');
 

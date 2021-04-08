@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use frontend\models\Task;
 use frontend\models\forms\LoginForm;
-use frontend\models\Users;
 use yii\filters\AccessControl;
 use yii\widgets\ActiveForm;
 use yii\web\Controller;

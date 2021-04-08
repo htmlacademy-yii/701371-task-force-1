@@ -7,7 +7,11 @@ use yii\db\Migration;
  */
 class m201218_204009_user_notification_fix_links extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * create table & link
+     */
+    public function safeUp(): void
     {
         $this->dropTable('notification');
 
@@ -27,7 +31,11 @@ class m201218_204009_user_notification_fix_links extends Migration
         );
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop link & data
+     */
+    public function safeDown(): void
     {
         $this->dropForeignKey(
             'fk_users_notification_id_to_user_notification_id',

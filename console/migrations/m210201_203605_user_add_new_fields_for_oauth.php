@@ -11,7 +11,11 @@ use yii\db\Migration;
  */
 class m210201_203605_user_add_new_fields_for_oauth extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * create columns and table
+     */
+    public function safeUp(): void
     {
         $this->addColumn(
             \frontend\models\Users::tableName(),
@@ -41,7 +45,11 @@ class m210201_203605_user_add_new_fields_for_oauth extends Migration
         $this->addForeignKey('fk-auth-user_id-user-id', 'auth', 'user_id', \frontend\models\Users::tableName(), 'id', 'CASCADE', 'CASCADE');
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop all created data
+     */
+    public function safeDown(): void
     {
         $this->dropColumn(\frontend\models\Users::tableName(), 'auth_key');
         $this->dropColumn(\frontend\models\Users::tableName(), 'password_reset_token');

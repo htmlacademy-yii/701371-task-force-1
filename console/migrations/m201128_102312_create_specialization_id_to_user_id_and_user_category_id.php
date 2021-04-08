@@ -7,7 +7,11 @@ use yii\db\Migration;
  */
 class m201128_102312_create_specialization_id_to_user_id_and_user_category_id extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * create link
+     */
+    public function safeUp(): void
     {
         $this->addForeignKey(
             'fk_user_specialization_to_user_specialization_id',
@@ -26,7 +30,11 @@ class m201128_102312_create_specialization_id_to_user_id_and_user_category_id ex
         );
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop link
+     */
+    public function safeDown(): void
     {
         $this->dropForeignKey(
             'fk_user_specialization_to_user_specialization_id',

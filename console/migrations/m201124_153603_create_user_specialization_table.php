@@ -8,11 +8,10 @@ use yii\db\Migration;
 class m201124_153603_create_user_specialization_table extends Migration
 {
     /**
+     * @note
      * create table and fields
-     *
-     * @return bool|void
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $this->createTable('user_specialization', [
             'id' => $this->primaryKey(),
@@ -22,11 +21,10 @@ class m201124_153603_create_user_specialization_table extends Migration
     }
 
     /**
+     * @note
      * delete table and fields
-     *
-     * @return bool|void
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->dropTable('user_specialization');
     }

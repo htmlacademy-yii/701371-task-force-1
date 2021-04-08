@@ -7,7 +7,11 @@ use yii\db\Migration;
  */
 class m210103_210522_user_avatar_fix_table extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * create table, column and link
+     */
+    public function safeUp(): void
     {
         $this->truncateTable(\frontend\models\UsersAvatar::tableName());
 
@@ -48,7 +52,11 @@ class m210103_210522_user_avatar_fix_table extends Migration
         );
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop all created data
+     */
+    public function safeDown(): void
     {
         $this->dropForeignKey(
             'fk_user_avatar_to_user_id',

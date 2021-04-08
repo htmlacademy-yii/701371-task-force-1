@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 use frontend\models\Task;
-use function GuzzleHttp\Promise\all;
 
 
 /**

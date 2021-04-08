@@ -7,7 +7,11 @@ use yii\db\Migration;
  */
 class m201208_200523_create_links_for_notification extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * fill data
+     */
+    public function safeUp(): void
     {
         $this->batchInsert(
             \frontend\models\Notification::tableName(),
@@ -28,7 +32,11 @@ class m201208_200523_create_links_for_notification extends Migration
 //        );
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop all data
+     */
+    public function safeDown(): void
     {
 //        $this->dropForeignKey(
 //            'fk_notifications_to_user_id',

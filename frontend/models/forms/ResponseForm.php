@@ -2,13 +2,16 @@
 
 namespace frontend\models\forms;
 
-use frontend\models\Task;
 use frontend\models\TaskRespond;
 use Yii;
 use yii\base\Model;
 use yii\helpers\Html;
 
 
+/**
+ * Class ResponseForm
+ * @package frontend\models\forms
+ */
 class ResponseForm extends Model
 {
     public $price;

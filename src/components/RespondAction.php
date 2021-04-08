@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TaskForce\components;
 
 use frontend\models\{Task, Users};
-use frontend\models\UsersRoles;
 
 
 /**

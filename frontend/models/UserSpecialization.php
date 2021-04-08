@@ -2,8 +2,8 @@
 
 namespace frontend\models;
 
-
 use yii\db\ActiveQuery;
+
 
 /**
  * @note
@@ -34,7 +34,7 @@ class UserSpecialization extends \yii\db\ActiveRecord
      *
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['category_id', 'user_id'], 'required'],
@@ -49,7 +49,7 @@ class UserSpecialization extends \yii\db\ActiveRecord
      *
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

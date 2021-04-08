@@ -10,7 +10,7 @@ class m201225_052329_user_files_fill_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $this->batchInsert(
             \frontend\models\UsersImage::tableName(),
@@ -25,7 +25,7 @@ class m201225_052329_user_files_fill_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->truncateTable(\frontend\models\UsersImage::tableName());
     }

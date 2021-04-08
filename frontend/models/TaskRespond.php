@@ -37,7 +37,7 @@ class TaskRespond extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['comment', 'price'], 'required'],
@@ -54,7 +54,7 @@ class TaskRespond extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

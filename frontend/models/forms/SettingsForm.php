@@ -4,7 +4,6 @@ namespace frontend\models\forms;
 
 use app\models\UserNotification;
 use DateTime;
-use frontend\models\ContactForm;
 use frontend\models\Users;
 use frontend\models\UsersAvatar;
 use frontend\models\UsersContacts;
@@ -257,7 +256,10 @@ class SettingsForm extends Model
      */
     public function populate($id): void
     {
+        /** @var Users $user */
         $user = Users::findOne($id);
+
+        /** @var UsersContacts $userContacts */
         $userContacts = UsersContacts::find()
             ->where(['account_id' => $id])
             ->one();
@@ -424,6 +426,7 @@ class SettingsForm extends Model
 
         if ($notificationToAdd) {
             foreach ($notificationToAdd as $notificationId) {
+                /** @var UserNotification $notificationModel */
                 $notificationModel = UserNotification::find()
                     ->where(['user_id' => $user->id])
                     ->andWhere(['notification_type' => $notificationId])
@@ -444,6 +447,7 @@ class SettingsForm extends Model
 
         if ($notificationToDrop) {
             foreach ($notificationToDrop as $notificationId) {
+                /** @var UserNotification $model */
                 $model = UserNotification::find()
                     ->where(['notification_type' => $notificationId, 'user_id' => $user->id])
                     ->one();

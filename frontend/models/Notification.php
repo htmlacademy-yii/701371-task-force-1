@@ -30,7 +30,7 @@ class Notification extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['new_messages', 'task_actions', 'new_responds'], 'required'],
@@ -41,7 +41,7 @@ class Notification extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

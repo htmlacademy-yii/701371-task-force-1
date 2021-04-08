@@ -33,7 +33,7 @@ class Feedback extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['rating_id', 'account_id', 'task_id', 'status_id'], 'integer'],
@@ -46,7 +46,7 @@ class Feedback extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

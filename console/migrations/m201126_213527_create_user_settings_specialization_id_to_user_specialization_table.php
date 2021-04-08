@@ -7,7 +7,11 @@ use yii\db\Migration;
  */
 class m201126_213527_create_user_settings_specialization_id_to_user_specialization_table extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * create link
+     */
+    public function safeUp(): void
     {
         $this->addColumn(
             \frontend\models\Users::tableName(),
@@ -23,7 +27,11 @@ class m201126_213527_create_user_settings_specialization_id_to_user_specializati
         );
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop link
+     */
+    public function safeDown(): void
     {
         $this->dropColumn(\frontend\models\Users::tableName(), 'specialization_id');
 

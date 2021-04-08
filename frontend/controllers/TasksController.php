@@ -86,6 +86,7 @@ class TasksController extends SecuredController
      */
     public function actionView(int $id): string
     {
+        /** @var Task $task */
         $task = Task::find()
             ->where(['id' => $id])
             ->with(['taskFiles', 'owner', 'responds'])

@@ -7,7 +7,11 @@ use yii\db\Migration;
  */
 class m201208_195140_add_columns_to_notification extends Migration
 {
-    public function safeUp()
+    /**
+     * @note
+     * add columns
+     */
+    public function safeUp(): void
     {
         $this->addColumn(
             \frontend\models\Notification::tableName(),
@@ -22,7 +26,11 @@ class m201208_195140_add_columns_to_notification extends Migration
         );
     }
 
-    public function safeDown()
+    /**
+     * @note
+     * drop columns
+     */
+    public function safeDown(): void
     {
         $this->dropColumn(\frontend\models\Notification::tableName(), 'hidden_contacts');
         $this->dropColumn(\frontend\models\Notification::tableName(), 'hidden_profile');

@@ -10,7 +10,7 @@ class m200606_201551_fill_usersRole_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function safeUp(): void
     {
 
         $this->batchInsert(
@@ -26,7 +26,7 @@ class m200606_201551_fill_usersRole_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->truncateTable(\frontend\models\UsersRoles::tableName());
     }
