@@ -59,7 +59,7 @@ class AuthVKontakte
                 $auth->save();
             }
         }
-    }//14.56
+    }
 
     /**
      * @note

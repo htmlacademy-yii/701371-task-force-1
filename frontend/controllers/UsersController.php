@@ -40,8 +40,11 @@ class UsersController extends SecuredController
         ]);
     }
 
-
-    public function actionView($id)
+    /**
+     * @param $id
+     * @return string
+     */
+    public function actionView($id): string
     {
         /**
          * @var Users $user

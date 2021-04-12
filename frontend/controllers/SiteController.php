@@ -11,6 +11,7 @@ use yii\web\Controller;
 use Yii;
 
 use TaskForce\components\AuthVKontakte;
+use yii\web\Response;
 
 
 /**
@@ -19,9 +20,9 @@ use TaskForce\components\AuthVKontakte;
 class SiteController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -52,9 +53,9 @@ class SiteController extends Controller
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function actions()
+    public function actions(): array
     {
         return [
             'error' => [
@@ -82,9 +83,9 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
-     * @return mixed
+     * @return \yii\web\Response
      */
-    public function actionIndex()
+    public function actionIndex(): Response
     {
         return $this->redirect(['tasks/index']);
     }
@@ -92,9 +93,9 @@ class SiteController extends Controller
     /**
      * Logs in a user.
      *
-     * @return mixed
+     * @return string|Response
      */
-    public function actionLogin()
+    public function actionLogin(): string
     {
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -111,9 +112,9 @@ class SiteController extends Controller
     /**
      * Logs out the current user.
      *
-     * @return mixed
+     * @return Response
      */
-    public function actionLogout()
+    public function actionLogout(): Response
     {
         Yii::$app->user->logout();
 

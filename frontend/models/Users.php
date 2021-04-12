@@ -342,9 +342,13 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param mixed $token
-     * @param null $type
-     * @return IdentityInterface|null
+     * Finds an identity by the given token.
+     * @param mixed $token the token to be looked for
+     * @param mixed $type the type of the token. The value of this parameter depends on the implementation.
+     * For example, [[\yii\filters\auth\HttpBearerAuth]] will set this parameter to be `yii\filters\auth\HttpBearerAuth`.
+     * @return IdentityInterface|null the identity object that matches the given token.
+     * Null should be returned if such an identity cannot be found
+     * or the identity is not in an active state (disabled, deleted, etc.)
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -352,10 +356,14 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param string $authKey
-     * @return bool|null
+     * Validates the given auth key.
+     *
+     * This is required if [[User::enableAutoLogin]] is enabled.
+     * @param string $authKey the given auth key
+     * @return bool whether the given auth key is valid.
+     * @see getAuthKey()
      */
-    public function validateAuthKey(string $authKey): ?bool
+    public function validateAuthKey($authKey): ?bool
     {
         return null;
     }
@@ -364,7 +372,7 @@ class Users extends ActiveRecord implements IdentityInterface
      * @param $username
      * @return Users|null
      */
-    public static function findByUsername($username): ?Users
+    public static function findByUsername(string $username): ?Users
     {
         return static::findOne(['email' => $username]);
     }
@@ -373,7 +381,7 @@ class Users extends ActiveRecord implements IdentityInterface
      * @param $password
      * @return bool
      */
-    public function validatePassword($password): bool
+    public function validatePassword(string $password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password);
     }
@@ -430,15 +438,5 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getUserAvatarPath(): string
     {
         return $this->avatar ? $this->avatar->image_path : 'user-photo.png';
-    }
-
-    /**
-     * @return int|string
-     */
-    public function getCompletedTasksCount()
-    {
-        return $this->getExecutedTasks()
-            ->where(['status_id' => Task::STATUS_COMPLETED])
-            ->count();
     }
 }

@@ -8,7 +8,6 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use Yii;
 
-// 8.07
 
 class MessagesController extends Controller
 {

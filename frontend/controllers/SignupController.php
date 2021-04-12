@@ -22,7 +22,7 @@ class SignupController extends Controller
     /**
      * @return array
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -49,7 +49,7 @@ class SignupController extends Controller
      * @return string|\yii\web\Response
      * @throws \yii\base\Exception
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();

@@ -11,6 +11,7 @@ use frontend\models\UserSpecialization;
 use Yii;
 use yii\base\Model;
 use yii\helpers\Html;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -228,7 +229,7 @@ class SettingsForm extends Model
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function saveAvatar($avatarUploadedFile)
+    public function saveAvatar($avatarUploadedFile): void
     {
         if (!empty($this->avatar)) {
             $avatarModel = new UsersAvatar();
@@ -328,7 +329,7 @@ class SettingsForm extends Model
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    private function saveUserSpecialization($user)
+    private function saveUserSpecialization($user): void
     {
         $specializationToAdd = array_diff($this->specialization ?: [], $this->oldSpecialization);
         $specializationToDrop = array_diff($this->oldSpecialization, $this->specialization ?: []);
@@ -366,10 +367,15 @@ class SettingsForm extends Model
      * save user password
      *
      * @param $user
-     * @return bool
      */
-    private function saveUserPassword($user): bool
+    private function saveUserPassword($user): void
     {
+        if (($this->password && $this->oldPassword
+            && $this->passwordCopy && $this->oldPasswordCopy) === $user->password) {
+            return;
+        }
+
+        /*
         if (($this->password && $this->oldPassword
             && $this->passwordCopy && $this->oldPasswordCopy) !== $user->password)
         {
@@ -377,6 +383,11 @@ class SettingsForm extends Model
 
             return $user->save();
         }
+        */
+
+        $user->password = $this->password;
+
+        $user->save();
     }
 
     /**
@@ -419,7 +430,7 @@ class SettingsForm extends Model
      *
      * @param $user
      */
-    private function saveUserNotification($user)
+    private function saveUserNotification($user): void
     {
         $notificationToAdd  = array_diff($this->notification ?: [], $this->oldNotification);
         $notificationToDrop = array_diff($this->oldNotification, $this->notification ?: []);

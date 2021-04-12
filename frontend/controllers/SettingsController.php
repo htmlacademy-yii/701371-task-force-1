@@ -88,12 +88,6 @@ class SettingsController extends SecuredController
                  * if avatar has changed
                  */
                 $settingsForm->saveAvatar($avatarUploadedFile);
-
-                /**
-                 * @note
-                 * for default avatar
-                 */
-                $user->getUserAvatarPath();
             }
         }
 
@@ -115,7 +109,7 @@ class SettingsController extends SecuredController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDrop()
+    public function actionDrop(): void
     {
         $id = Yii::$app->request->post('id');
         $userImage = UsersImage::find()

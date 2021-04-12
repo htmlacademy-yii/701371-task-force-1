@@ -156,8 +156,8 @@ class TasksController extends SecuredController
      * @note
      * for refuse task
      *
-     * @param $respondId
-     * @return \yii\web\Response
+     * @param int $respondId
+     * @return Response|null
      * @throws BadRequestHttpException
      */
     public function actionRefuse(int $respondId): ?Response
@@ -183,9 +183,8 @@ class TasksController extends SecuredController
      * @note
      * for approved task
      *
-     * @param $respondId
-     * @return \yii\web\Response|null
-     * @throws NotFoundHttpException
+     * @param int $respondId
+     * @return Response|null
      * @throws BadRequestHttpException
      */
     public function actionApproved(int $respondId): ?Response
@@ -213,7 +212,7 @@ class TasksController extends SecuredController
      * @note
      * for response task
      *
-     * @return \yii\web\Response
+     * @return Response|null
      */
     public function actionResponse(): ?Response
     {
@@ -234,7 +233,7 @@ class TasksController extends SecuredController
      * @note
      * for cancel task
      *
-     * @return \yii\web\Response
+     * @return Response|null
      * @throws BadRequestHttpException
      */
     public function actionCancel(): ?Response
@@ -254,7 +253,7 @@ class TasksController extends SecuredController
      * @note
      * for abort task
      *
-     * @return \yii\web\Response
+     * @return Response|null
      * @throws BadRequestHttpException
      */
     public function actionAbort(): ?Response
@@ -274,8 +273,8 @@ class TasksController extends SecuredController
      * @note
      * for complete task
      *
-     * @param $taskId
-     * @return \yii\web\Response
+     * @param int $taskId
+     * @return Response|null
      * @throws BadRequestHttpException
      */
     public function actionComplete(int $taskId): ?Response

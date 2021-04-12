@@ -112,13 +112,12 @@ class NewTaskForm extends Model
      * for get full name of loading file
      * and save him in the folder
      *
-     * @param UploadedFile $files
-     * @return bool
+     * @return void
      */
-    public function upload(): bool
+    public function upload(): void
     {
         if (!$this->files) {
-            return false;
+            return;
         }
 
         foreach ($this->files as $file) {
@@ -133,9 +132,9 @@ class NewTaskForm extends Model
      * @note
      * for saving files in table, look up method
      *
-     * @param $fileName
+     * @param string $fileName
      */
-    public function writeFile($fileName)
+    public function writeFile(string $fileName): void
     {
         $taskFile = new TaskFile;
 

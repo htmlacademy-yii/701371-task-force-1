@@ -1,14 +1,20 @@
 <?php
 
 use frontend\assets\SettingsFormAsset;
+use frontend\models\City;
+use frontend\models\Notification;
 use frontend\models\forms\SettingsForm;
+use frontend\models\Users;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
 /**
- * @var SettingsForm $settingsForm
  * @var ArrayHelper $categoryMap
+ * @var Notification[] $notificationList
+ * @var SettingsForm $settingsForm
+ * @var Users $user
+ * @var City[] $cities
  */
 
 SettingsFormAsset::register($this);
