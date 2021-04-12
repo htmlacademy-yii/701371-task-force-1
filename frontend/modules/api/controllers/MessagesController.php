@@ -17,7 +17,7 @@ class MessagesController extends Controller
      * @param $id
      * @throws \yii\base\ExitException
      */
-    public function actionGet(int $id)
+    public function actionGet(int $id): void
     {
         /** @var Task $task */
         $task = Task::findOne($id);
@@ -55,7 +55,7 @@ class MessagesController extends Controller
      * @param int $id
      * @throws \yii\base\ExitException
      */
-    public function actionCreate(int $id)
+    public function actionCreate(int $id): void
     {
         Yii::$app->response->setStatusCode(201);
         $task = Task::findOne($id);
@@ -92,5 +92,3 @@ class MessagesController extends Controller
         return Message::find()->where(['reciver_id' => $id])->all();
     }
 }
-
-// TODO: 1.12 hr

@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 
@@ -68,7 +69,7 @@ class Reviews extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccount()
+    public function getAccount(): ActiveQuery
     {
         return $this->hasOne(Users::className(), ['id' => 'account_id']);
     }
@@ -76,7 +77,7 @@ class Reviews extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatus()
+    public function getStatus(): ActiveQuery
     {
         return $this->hasOne(TaskStatus::className(), ['id' => 'status_id']);
     }
@@ -84,7 +85,7 @@ class Reviews extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUsers(): ActiveQuery
     {
         return $this->hasMany(Users::className(), ['raiting_id' => 'id']);
     }
