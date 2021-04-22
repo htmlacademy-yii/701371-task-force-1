@@ -18,7 +18,7 @@ use yii\db\ActiveQuery;
 class UsersFavorites extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -26,7 +26,7 @@ class UsersFavorites extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -35,20 +35,20 @@ class UsersFavorites extends ActiveRecord
             [['favorites_account_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Users::className(),
+                'targetClass' => Users::class,
                 'targetAttribute' => ['favorites_account_id' => 'id']
             ],
             [['account_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Users::className(),
+                'targetClass' => Users::class,
                 'targetAttribute' => ['account_id' => 'id']
             ],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -64,7 +64,7 @@ class UsersFavorites extends ActiveRecord
      */
     public function getFavoritesAccount(): ActiveQuery
     {
-        return $this->hasOne(Users::className(),
+        return $this->hasOne(Users::class,
             ['id' => 'favorites_account_id']);
     }
 
@@ -73,6 +73,6 @@ class UsersFavorites extends ActiveRecord
      */
     public function getAccount(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'account_id']);
+        return $this->hasOne(Users::class, ['id' => 'account_id']);
     }
 }

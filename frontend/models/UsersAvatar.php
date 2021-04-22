@@ -18,15 +18,15 @@ use yii\db\ActiveQuery;
 class UsersAvatar extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users_avatar';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -38,7 +38,7 @@ class UsersAvatar extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -53,6 +53,6 @@ class UsersAvatar extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['account_id' => 'id']);
+        return $this->hasOne(Users::class, ['account_id' => 'id']);
     }
 }

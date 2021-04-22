@@ -20,7 +20,7 @@ use yii\db\ActiveQuery;
 class UsersContacts extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -28,20 +28,18 @@ class UsersContacts extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
     public function rules(): array
     {
         return [
             [['phone', 'skype', 'messanger'], 'safe'],
-//            [['phone'], 'integer', 'max' => 11],
-//            [['skype', 'messanger'], 'string', 'max' => 64],
             [['account_id'], 'integer'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -59,6 +57,6 @@ class UsersContacts extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['contacts_id' => 'id']);
+        return $this->hasMany(Users::class, ['contacts_id' => 'id']);
     }
 }

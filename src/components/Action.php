@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace TaskForce\components;
-use \frontend\models\Task;
+use frontend\models\Task;
 
 
 /**
@@ -26,12 +26,12 @@ abstract class Action
 	}
 
     /**
-     * @param Task $AvailableActions
+     * @param Task $task
      * @param int $userId
      * @return bool
      */
 	abstract public static function rightsVerification(
-		Task $AvailableActions,
+		Task $task,
 		int $userId
 	): bool;
 }

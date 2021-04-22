@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 
 /**
@@ -15,15 +16,15 @@ use yii\db\ActiveQuery;
  *
  * @property Category $category
  */
-class UserSpecialization extends \yii\db\ActiveRecord
+class UserSpecialization extends ActiveRecord
 {
     /**
      * @note
      * set table name
      *
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'user_specialization';
     }
@@ -32,7 +33,7 @@ class UserSpecialization extends \yii\db\ActiveRecord
      * @note
      * for rules validation
      *
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -47,7 +48,7 @@ class UserSpecialization extends \yii\db\ActiveRecord
      * @note
      * for labels
      *
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -59,7 +60,7 @@ class UserSpecialization extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCategory(): ActiveQuery
     {

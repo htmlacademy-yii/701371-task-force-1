@@ -15,8 +15,8 @@ use frontend\models\Users;
  */
 class LoginForm extends Model
 {
-    public $email;
-    public $password;
+    public string $email = '';
+    public string $password = '';
 
     private $userBuffer;
 
@@ -52,21 +52,6 @@ class LoginForm extends Model
 
     /**
      * @note
-     * we receive the user by email
-     *
-     * @return Users|null
-     */
-    public function getUser(): ?Users
-    {
-        if ($this->userBuffer === null) {
-            $this->userBuffer = Users::findOne(['email' => $this->email]);
-        }
-
-        return $this->userBuffer;
-    }
-
-    /**
-     * @note
      * for validation user password
      *
      * @param $attribute
@@ -81,5 +66,20 @@ class LoginForm extends Model
                 $this->addError($attribute, 'Неправильный email / пароль');
             }
         }
+    }
+
+    /**
+     * @note
+     * we receive the user by email
+     *
+     * @return Users|null
+     */
+    public function getUser(): ?Users
+    {
+        if ($this->userBuffer === null) {
+            $this->userBuffer = Users::findOne(['email' => $this->email]);
+        }
+
+        return $this->userBuffer;
     }
 }

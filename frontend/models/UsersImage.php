@@ -19,7 +19,7 @@ use yii\db\ActiveQuery;
 class UsersImage extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -27,7 +27,7 @@ class UsersImage extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -38,14 +38,14 @@ class UsersImage extends ActiveRecord
             [['account_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Users::className(),
+                'targetClass' => Users::class,
                 'targetAttribute' => ['account_id' => 'id']
             ],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -61,6 +61,6 @@ class UsersImage extends ActiveRecord
      */
     public function getImagesList(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['id' => 'account_id']);
+        return $this->hasMany(Users::class, ['id' => 'account_id']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use frontend\models\Users;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -19,15 +20,15 @@ use yii\db\ActiveRecord;
 class UserNotification extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'user_notification';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
     public function rules(): array
     {
@@ -38,7 +39,7 @@ class UserNotification extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -54,10 +55,10 @@ class UserNotification extends ActiveRecord
      * @note
      * gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(Users::class, ['id' => 'user_id']);
     }
 }

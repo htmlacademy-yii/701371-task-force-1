@@ -18,15 +18,15 @@ use yii\db\ActiveQuery;
 class TaskStatus extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'task_status';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
     public function rules(): array
     {
@@ -37,7 +37,7 @@ class TaskStatus extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -52,6 +52,6 @@ class TaskStatus extends ActiveRecord
      */
     public function getTasks(): ActiveQuery
     {
-        return $this->hasMany(Task::className(), ['status_id' => 'id']);
+        return $this->hasMany(Task::class, ['status_id' => 'id']);
     }
 }

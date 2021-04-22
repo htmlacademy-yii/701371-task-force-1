@@ -1,8 +1,6 @@
 <?php
 
-use frontend\models\Task;
 use frontend\models\Users;
-use frontend\models\UsersCategory;
 use frontend\models\UsersFilter;
 use frontend\widgets\ElapsedTimeWidget;
 use frontend\widgets\RatingWidget;
@@ -54,7 +52,7 @@ use yii\widgets\LinkPager;
                                     ]
                                 ) ?>
                             </a>
-                            <span><?= $user->completedTasksCount; ?> заданий</span>
+                            <span><?= count($user->tasks); ?> заданий</span>
                             <span><?= count($user->reviews); ?> отзывов</span>
                         </div>
                         <div class="feedback-card__top--name user__search-card">

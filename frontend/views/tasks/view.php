@@ -4,6 +4,8 @@ use frontend\assets\TasksAsset;
 use frontend\assets\YandexMapAsset;
 use frontend\helpers\TaskPermissionHelper;
 use frontend\helpers\TaskRespondPermissionHelper;
+use frontend\models\Reviews;
+use frontend\models\forms\ResponseForm;
 use frontend\models\Task;
 use frontend\models\TaskRespond;
 use frontend\models\Users;
@@ -17,11 +19,12 @@ use yii\helpers\Html;
 /**
  * @var Task[] $customerOrders
  * @var Task[] $customerReviews
- * @var Review[] $customerRaiting
+ * @var Reviews[] $customerRaiting
  * @var TaskRespond[] $responds
  * @var Users $user
  * @var Task $task
  * @var View $this
+ * @var ResponseForm $responseForm
  */
 
 $this->title = 'Главная страница';
@@ -125,7 +128,7 @@ YandexMapAsset::register($this);
                             </div>
 
                             <?php if (TaskRespondPermissionHelper::canViewAllResponds($task, $user)): ?>
-                                <?php if ($respond->isNew() || $respond->isApproved() || !$task->status_id !== Task::STATUS_COMPLETED): ?>
+                                <?php if ($respond->isNew() || $respond->isApproved() || $task->status_id !== Task::STATUS_COMPLETED): ?>
 
                                     <div class="feedback-card__actions">
                                         <a href="<?= Url::to([

@@ -5,15 +5,15 @@ use frontend\helpers\TaskPermissionHelper;
 use frontend\models\Task;
 use frontend\models\TaskRespond;
 use frontend\models\Users;
-use frontend\widgets\ElapsedTimeWidget;
+use frontend\widgets\ElapsedTimeWidget as ElapsedTimeWidgetAlias;
 use frontend\widgets\RatingWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
- * @var Users $user;
- * @var String $userAge;
- * @var Task $userTasks
+ * @var Users $user
+ * @var String $userAge
+ * @var Task $userTask
  * @var Task $task
  * @var TaskRespond $userResponds
  * @var TaskRespond $userRespond
@@ -42,14 +42,24 @@ UsersAsset::register($this);
                               <p><?= $user->city_id ? $user->city->title : ''; ?>, <?= $userAge; ?> лет</p>
 
                               <div class="profile-mini__name five-stars__rate">
-                                  <?= RatingWidget::widget(['currentRaiting' => $user->getAverageRating()]); ?>
+
+                                  <?php try {
+                                      echo RatingWidget::widget(['currentRaiting' => $user->getAverageRating()]);
+                                  } catch (Exception $e) {} ?>
+
                                   <b><?= $user->getAverageRating(); ?></b>
                               </div>
-                              <b class="done-task">Выполнил <?= count($userTasks); ?> заказов</b>
+                              <b class="done-task">Выполнил <?= count($user->tasks); ?> заказов</b>
                               <b class="done-review">Получил <?= count($user->reviews); ?> отзывов</b>
                          </div>
                         <div class="content-view__headline user__card-bookmark user__card-bookmark--current">
-                            <span>Был на сайте <?= ElapsedTimeWidget::widget(['timeStamp' => $user->visit]); ?> назад</span>
+                            <span>Был на сайте
+
+                                <?php try {
+                                    echo ElapsedTimeWidgetAlias::widget(['timeStamp' => $user->visit]);
+                                } catch (Exception $e) {} ?>
+
+                              назад</span>
                              <a href="#"><b></b></a>
                         </div>
                     </div>
@@ -75,9 +85,18 @@ UsersAsset::register($this);
                             </div>
                             <h3 class="content-view__h3">Контакты</h3>
                             <div class="user__card-link">
-                                <a class="user__card-link--tel link-regular" href="#"><?= isset($user->contacts->phone) ? $user->contacts->phone : ''; ?></a>
-                                <a class="user__card-link--email link-regular" href="#"><?= isset($user->contacts->messanger) ? $user->contacts->messanger : ''; ?></a>
-                                <a class="user__card-link--skype link-regular" href="#"><?= isset($user->contacts->skype) ? $user->contacts->skype : ''; ?></a>
+
+                                <?php
+                                /**
+                                 * isset($user->contacts->phone) ? $user->contacts->phone : '';
+                                 * can use as
+                                 * $user->contacts->phone ?? ''
+                                 * where ?? - replaced a isset
+                                 */
+                                ?>
+                                <a class="user__card-link--tel link-regular" href="#"><?= $user->contacts->phone ?? ''; ?></a>
+                                <a class="user__card-link--email link-regular" href="#"><?= $user->contacts->messanger ?? ''; ?></a>
+                                <a class="user__card-link--skype link-regular" href="#"><?= $user->contacts->skype ?? ''; ?></a>
                             </div>
                          </div>
                         <div class="user__card-photo">
@@ -97,10 +116,10 @@ UsersAsset::register($this);
                     </div>
                 </div>
                 <div class="content-view__feedback">
-                    <h2>Отзывы<span> <?= count($userResponds); ?></span></h2>
+                    <h2>Отзывы<span> <?= count($user->responds); ?></span></h2>
                     <div class="content-view__feedback-wrapper reviews-wrapper">
 
-                        <?php foreach ($userTasks as $task): ?>
+                        <?php foreach ($user->tasks as $task): ?>
 
                             <div class="feedback-card__reviews">
                                 <p class="link-task link">Задание <a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular">«<?= $task->title; ?>»</a></p>
@@ -119,7 +138,7 @@ UsersAsset::register($this);
                                             <a href="#" class="link-regular"><?= $task->owner->name; ?></a>
                                         </p>
 
-                                        <p class="review-text"><?= isset($userRespond->comment) ? $userRespond->comment : ''; ?></p>
+                                        <p class="review-text"><?= $userResponds->comment ?? ''; ?></p>
                                     </div>
                                     <div class="card__review-rate">
                                         <p class="three-rate big-rate"><?= $user->averageRating; ?><span></span></p>
@@ -134,9 +153,10 @@ UsersAsset::register($this);
             </section>
             <section class="connect-desk">
 
-                <?php if (TaskPermissionHelper::canUsersSeeChat($task)): ?>
-                  <chat class="connect-desk__chat" task="<?= $task->id; ?>"></chat>
+                <?php if ($userTask && TaskPermissionHelper::canUsersSeeChat($userTask)): ?>
+                    <chat class="connect-desk__chat" task="<?= $userTask->id; ?>"></chat>
                 <?php endif; ?>
+
             </section>
         </div>
 </main>

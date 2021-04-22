@@ -126,14 +126,16 @@ class SiteController extends Controller
      * login from VK
      *
      * @param VKontakte $client
-     * @return \yii\web\Response
+     * @return Response|null
      * @throws \yii\base\Exception
      * @throws \yii\db\Exception
      */
-    public function onAuthSuccess(VKontakte $client)
+    public function onAuthSuccess(VKontakte $client): ?Response
     {
         if (AuthVKontakte::onAuthSuccess($client)) {
             return $this->goHome();
         }
+
+        return null;
     }
 }

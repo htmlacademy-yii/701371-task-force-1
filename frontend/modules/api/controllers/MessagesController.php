@@ -14,7 +14,7 @@ class MessagesController extends Controller
     public $enableCsrfValidation = false;
 
     /**
-     * @param $id
+     * @param int $id
      * @throws \yii\base\ExitException
      */
     public function actionGet(int $id): void
@@ -48,7 +48,7 @@ class MessagesController extends Controller
             ];
         }
 
-        \Yii::$app->end(Json::encode($data));
+        Yii::$app->end(Json::encode($data));
     }
 
     /**

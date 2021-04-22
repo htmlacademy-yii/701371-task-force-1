@@ -1,7 +1,10 @@
 <?php
 
+use frontend\models\Category;
+use frontend\models\Task;
 use frontend\models\TaskFilter;
 use frontend\widgets\ElapsedTimeWidget;
+use yii\data\Pagination;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -16,7 +19,7 @@ use yii\widgets\LinkPager;
  * @var Category[] $categories
  * @var TaskFilter[] $taskFilter
  * @var Task[] $tasks
- * @var Task[] $pagesPagination
+ * @var Pagination $pagesPagination
  */
 
 $this->title = 'Главная страница';
@@ -105,13 +108,13 @@ Yii::$app->formatter->language = 'ru-RU';
 
 return <<<HTML
                                         <input class="visually-hidden checkbox__input" 
-                                            id="{$index}" 
+                                            id="$index" 
                                             type="checkbox" 
-                                            name="{$name}" 
-                                            value="{$value}" 
-                                            {$isChecked}>
+                                            name="$name" 
+                                            value="$value" 
+                                            $isChecked>
                                           
-                                        <label for="{$index}">{$label}</label>
+                                        <label for="$index">$label</label>
 HTML;
                                         }
                                     ]

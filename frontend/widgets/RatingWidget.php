@@ -11,9 +11,15 @@ use yii\base\Widget;
  */
 class RatingWidget extends Widget
 {
-    public $currentRaiting;
+    public int $currentRaiting;
 
-    public function run()
+    /**
+     * @note
+     * for counting rating
+     *
+     * @return string
+     */
+    public function run(): string
     {
         $starsMax = 5;
         $starsFill = floor($this->currentRaiting);

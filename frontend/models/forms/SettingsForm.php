@@ -4,14 +4,15 @@ namespace frontend\models\forms;
 
 use app\models\UserNotification;
 use DateTime;
+use Exception;
 use frontend\models\Users;
 use frontend\models\UsersAvatar;
 use frontend\models\UsersContacts;
 use frontend\models\UserSpecialization;
 use Yii;
 use yii\base\Model;
+use yii\db\StaleObjectException;
 use yii\helpers\Html;
-use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -46,67 +47,56 @@ class SettingsForm extends Model
     /**/
 
     /** @note for user name */
-    public $name;
-    public $oldName;
+    public string $name;
+    public string $oldName;
 
     /** @note for user eMail */
-    public $email;
-    public $oldEmail;
+    public string $email;
+    public string $oldEmail;
 
     /** @note for user city ID */
-    public $cityId;
-    public $oldCityId;
+    public ?int $cityId;
+    public ?int $oldCityId;
 
     /** @note for user birthday */
-    public $birthday;
-    public $oldBirthday;
+    public string $birthday;
+    public string $oldBirthday;
 
     /** @note for user description */
-    public $description;
-    public $oldDescription;
+    public string $description;
+    public string $oldDescription;
 
     /** @note for user password */
-    public $password;
-    public $oldPassword;
-    public $passwordCopy;
-    public $oldPasswordCopy;
+    public string $password = '';
+    public string $oldPassword = '';
+    public string $passwordCopy = '';
+    public string $oldPasswordCopy = '';
 
     /** @note for user uploading files */
-    public $files;
-    public $oldFiles;
+    public array $files;
 
     /** @note for user contacts */
-    public $phone;
-    public $oldPhone;
+    public int $phone;
+    public int $oldPhone;
 
-    public $skype;
-    public $oldSkype;
+    public string $skype;
+    public string $oldSkype;
 
-    public $otherMessenger;
-    public $oldOtherMessenger;
+    public string $otherMessenger;
+    public string $oldOtherMessenger;
 
     /** @note for user check boxes */
-    public $specialization;
-    public $oldSpecialization;
+    public array $specialization;
+    public array $oldSpecialization;
 
-    public $notification;
-    public $oldNotification;
+    public array $notification;
+    public array $oldNotification;
 
     /** @note img with avatar */
-    private $avatar;
-
-    /**/
+    private string $avatar;
 
     /**
-     * {@inheritdoc}
-     */
-    public static function tableName(): string
-    {
-        return 'user_setting';
-    }
-
-    /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -155,9 +145,9 @@ class SettingsForm extends Model
      * @note
      * get current user avatar
      *
-     * @return UploadedFile|null
+     * @return ?string
      */
-    public function getAvatar(): ?UploadedFile
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -194,7 +184,7 @@ class SettingsForm extends Model
      *
      * @return bool
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
     public function save(): bool
     {
@@ -227,7 +217,7 @@ class SettingsForm extends Model
      *
      * @param $avatarUploadedFile
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
     public function saveAvatar($avatarUploadedFile): void
     {
@@ -253,7 +243,7 @@ class SettingsForm extends Model
      * saving other data user
      *
      * @param $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function populate($id): void
     {
@@ -294,7 +284,7 @@ class SettingsForm extends Model
      *
      * @param $user
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     private function saveUserData($user): bool
     {
@@ -327,7 +317,7 @@ class SettingsForm extends Model
      *
      * @param $user
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
     private function saveUserSpecialization($user): void
     {
@@ -375,18 +365,7 @@ class SettingsForm extends Model
             return;
         }
 
-        /*
-        if (($this->password && $this->oldPassword
-            && $this->passwordCopy && $this->oldPasswordCopy) !== $user->password)
-        {
-            $user->password = $this->password;
-
-            return $user->save();
-        }
-        */
-
         $user->password = $this->password;
-
         $user->save();
     }
 
@@ -447,12 +426,10 @@ class SettingsForm extends Model
                     $notificationModel = new UserNotification();
                     $notificationModel->user_id = $user->id;
                     $notificationModel->notification_type = $notificationId;
-                    $notificationModel->active = 1;
-                    $notificationModel->save();
-                } else {
-                    $notificationModel->active = 1;
-                    $notificationModel->save();
                 }
+
+                $notificationModel->active = 1;
+                $notificationModel->save();
             }
         }
 

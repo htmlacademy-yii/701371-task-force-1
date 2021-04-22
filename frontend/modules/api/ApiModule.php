@@ -7,13 +7,11 @@ namespace frontend\modules\api;
  */
 class ApiModule extends \yii\base\Module
 {
-    /**
-     * {@inheritdoc}
-     */
     public $controllerNamespace = 'frontend\modules\api\controllers';
 
     /**
-     * {@inheritdoc}
+     * @note
+     * basic method
      */
     public function init()
     {

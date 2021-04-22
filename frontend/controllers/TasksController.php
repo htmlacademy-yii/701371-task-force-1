@@ -169,14 +169,16 @@ class TasksController extends SecuredController
         }
 
         if (
-            $taskRespond->status_id == $taskRespond->isNew()
-            || $taskRespond->status_id == $taskRespond->isApproved()
+            $taskRespond->status_id != $taskRespond->isNew()
+            || $taskRespond->status_id != $taskRespond->isApproved()
         ) {
-            $taskRespond->status_id = TaskRespond::STATUS_REFUSED;
-            $taskRespond->save();
-
-            return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
+            throw new BadRequestHttpException("Задание (Refuse) не найдено");
         }
+
+        $taskRespond->status_id = TaskRespond::STATUS_REFUSED;
+        $taskRespond->save();
+
+        return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
     }
 
     /**
@@ -195,17 +197,19 @@ class TasksController extends SecuredController
             throw new BadRequestHttpException("Запрашиваемого отклика не существует");
         }
 
-        if ($taskRespond->status_id == $taskRespond->isNew()) {
-            $taskRespond->status_id = TaskRespond::STATUS_APPROVED;
-            $taskRespond->save();
-
-            $task = $taskRespond->task;
-            $task->executor_id = $taskRespond->user_id;
-            $task->status_id = Task::STATUS_WORK;
-            $task->save();
-
-            return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
+        if ($taskRespond->status_id != $taskRespond->isNew()) {
+            throw new BadRequestHttpException("Задание (Approved) не найдено");
         }
+
+        $taskRespond->status_id = TaskRespond::STATUS_APPROVED;
+        $taskRespond->save();
+
+        $task = $taskRespond->task;
+        $task->executor_id = $taskRespond->user_id;
+        $task->status_id = Task::STATUS_WORK;
+        $task->save();
+
+        return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
     }
 
     /**
@@ -227,6 +231,8 @@ class TasksController extends SecuredController
                 return $this->redirect(['tasks/view', 'id' => $response->taskId]);
             }
         }
+
+        return null;
     }
 
     /**

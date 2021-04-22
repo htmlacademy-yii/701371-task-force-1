@@ -9,7 +9,7 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
-//use \yii\web\Request;
+//use yii\web\Request;
 //$baseUrl = str_replace('/web', '', (new Request)->getBaseUrl());
 
 return [

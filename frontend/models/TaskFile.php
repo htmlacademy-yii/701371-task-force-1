@@ -19,7 +19,7 @@ use yii\db\ActiveQuery;
 class TaskFile extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -27,7 +27,7 @@ class TaskFile extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -45,7 +45,7 @@ class TaskFile extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -61,6 +61,6 @@ class TaskFile extends ActiveRecord
      */
     public function getTask(): ActiveQuery
     {
-        return $this->hasOne(Task::className(), ['id' => 'task_id']);
+        return $this->hasOne(Task::class, ['id' => 'task_id']);
     }
 }

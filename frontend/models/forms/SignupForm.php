@@ -3,16 +3,17 @@
 namespace frontend\models\forms;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
 use frontend\models\Users;
 
 
 class SignupForm extends Model
 {
-    public $email;
-    public $name;
-    public $city;
-    public $password;
+    public string $email = '';
+    public string $name = '';
+    public int $city = 0;
+    public string $password = '';
 
     /**
      * @return array
@@ -54,7 +55,7 @@ class SignupForm extends Model
      * for registry a new user
      *
      * @return Users|null
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function createUser(): ?Users
     {

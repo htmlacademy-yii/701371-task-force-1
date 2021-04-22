@@ -27,15 +27,15 @@ class Reviews extends ActiveRecord
     const STATUS_NEW = 1;
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'reviews';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -45,13 +45,13 @@ class Reviews extends ActiveRecord
             [['raiting', 'price'], 'number'],
             [['created'], 'safe'],
             [['status_id', 'account_id'], 'integer'],
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['account_id' => 'id']],
+            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatus::class, 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -67,26 +67,26 @@ class Reviews extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAccount(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'account_id']);
+        return $this->hasOne(Users::class, ['id' => 'account_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatus(): ActiveQuery
     {
-        return $this->hasOne(TaskStatus::className(), ['id' => 'status_id']);
+        return $this->hasOne(TaskStatus::class, ['id' => 'status_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['raiting_id' => 'id']);
+        return $this->hasMany(Users::class, ['raiting_id' => 'id']);
     }
 }

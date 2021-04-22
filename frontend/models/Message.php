@@ -23,15 +23,15 @@ use yii\db\ActiveQuery;
 class Message extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'message';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -39,14 +39,14 @@ class Message extends ActiveRecord
             [['message'], 'required'],
             [['message'], 'string'],
             [['sender_id', 'reciever_id', 'task_id'], 'integer'],
-            [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['sender_id' => 'id']],
-            [['reciever_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['reciever_id' => 'id']],
+            [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['sender_id' => 'id']],
+            [['reciever_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['reciever_id' => 'id']],
             [['published_at'], 'safe'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -65,7 +65,7 @@ class Message extends ActiveRecord
      */
     public function getSender(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'sender_id']);
+        return $this->hasOne(Users::class, ['id' => 'sender_id']);
     }
 
     /**
@@ -73,6 +73,6 @@ class Message extends ActiveRecord
      */
     public function getReciever(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'reciever_id']);
+        return $this->hasOne(Users::class, ['id' => 'reciever_id']);
     }
 }

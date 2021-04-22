@@ -1,10 +1,12 @@
 <?php
 
-use frontend\models\SignupForm;
+use frontend\models\forms\SignupForm;
+use frontend\models\City;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 /**
+ * @var City[] $cities
  * @var SignupForm $signupForm
  */
 

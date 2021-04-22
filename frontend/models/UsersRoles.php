@@ -21,7 +21,7 @@ class UsersRoles extends ActiveRecord
     const CUSTOMER_KEY_CODE = 'customer';
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -29,7 +29,7 @@ class UsersRoles extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -41,7 +41,7 @@ class UsersRoles extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -57,7 +57,7 @@ class UsersRoles extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['role_id' => 'id']);
+        return $this->hasMany(Users::class, ['role_id' => 'id']);
     }
 
     /**

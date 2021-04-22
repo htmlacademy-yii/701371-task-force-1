@@ -18,15 +18,15 @@ use yii\db\ActiveQuery;
 class FeedbackStatus extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'feedback_status';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
     public function rules(): array
     {
@@ -37,7 +37,7 @@ class FeedbackStatus extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -52,6 +52,6 @@ class FeedbackStatus extends ActiveRecord
      */
     public function getFeedbacks(): ActiveQuery
     {
-        return $this->hasMany(Feedback::className(), ['status_id' => 'id']);
+        return $this->hasMany(Feedback::class, ['status_id' => 'id']);
     }
 }

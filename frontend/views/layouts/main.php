@@ -132,6 +132,7 @@ AppAsset::register($this);
 
     <main class="page-main">
         <div class="main-container page-container">
+            <?php /* @var string $content */?>
             <?= $content ?>
         </div>
     </main>

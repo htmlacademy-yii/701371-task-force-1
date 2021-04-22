@@ -2,6 +2,7 @@
 
 namespace frontend\models\forms;
 
+use Exception;
 use frontend\models\City;
 use frontend\models\Task;
 use frontend\models\TaskFile;
@@ -20,13 +21,13 @@ use yii\helpers\Html;
  */
 class NewTaskForm extends Model
 {
-    public $name;
-    public $description;
-    public $category;
-    public $files;
-    public $address;
-    public $budget;
-    public $term;
+    public string $name = '';
+    public string $description = '';
+    public string $category = '';
+    public array $files = [];
+    public string $address = '';
+    public int $budget = 0;
+    public string $term = '';
 
     private $taskModel;
 
@@ -69,7 +70,7 @@ class NewTaskForm extends Model
      * creating and saving the task
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function createTask(): bool
     {

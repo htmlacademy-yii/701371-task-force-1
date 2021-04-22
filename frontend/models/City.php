@@ -20,15 +20,15 @@ use yii\db\ActiveQuery;
 class City extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'city';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -43,7 +43,7 @@ class City extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -60,7 +60,7 @@ class City extends ActiveRecord
      */
     public function getTasks(): ActiveQuery
     {
-        return $this->hasMany(Task::className(), ['city_id' => 'id']);
+        return $this->hasMany(Task::class, ['city_id' => 'id']);
     }
 
     /**
@@ -68,6 +68,6 @@ class City extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['city_id' => 'id']);
+        return $this->hasMany(Users::class, ['city_id' => 'id']);
     }
 }

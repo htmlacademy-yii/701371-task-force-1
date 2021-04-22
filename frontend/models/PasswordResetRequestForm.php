@@ -20,7 +20,7 @@ class PasswordResetRequestForm extends Model
 
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {

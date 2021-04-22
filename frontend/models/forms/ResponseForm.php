@@ -14,9 +14,9 @@ use yii\helpers\Html;
  */
 class ResponseForm extends Model
 {
-    public $price;
-    public $comment;
-    public $taskId;
+    public int $price = 0;
+    public string $comment = '';
+    public int $taskId = 0;
 
     /**
      * @return array

@@ -19,15 +19,15 @@ use yii\db\ActiveQuery;
 class Category extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'category';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -39,7 +39,7 @@ class Category extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -55,7 +55,7 @@ class Category extends ActiveRecord
      */
     public function getTasks(): ActiveQuery
     {
-        return $this->hasMany(Task::className(), ['category_id' => 'id']);
+        return $this->hasMany(Task::class, ['category_id' => 'id']);
     }
 
     /**
@@ -63,6 +63,6 @@ class Category extends ActiveRecord
      */
     public function getUsersCategories(): ActiveQuery
     {
-        return $this->hasMany(UsersCategory::className(), ['category_id' => 'id']);
+        return $this->hasMany(UsersCategory::class, ['category_id' => 'id']);
     }
 }

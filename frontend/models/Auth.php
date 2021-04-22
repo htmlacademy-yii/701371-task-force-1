@@ -3,6 +3,7 @@
 namespace app\models;
 
 use frontend\models\Users;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 
@@ -19,15 +20,15 @@ use yii\db\ActiveRecord;
 class Auth extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'auth';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -35,12 +36,12 @@ class Auth extends ActiveRecord
             [['user_id', 'source', 'source_id'], 'required'],
             [['user_id'], 'integer'],
             [['source', 'source_id'], 'string', 'max' => 255],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -56,10 +57,10 @@ class Auth extends ActiveRecord
      * @note
      * gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(Users::class, ['id' => 'user_id']);
     }
 }

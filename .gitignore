@@ -72,17 +72,11 @@ phpunit.phar
 /frontend/runtime
 /frontend/tests/
 
-/frontend/models/_SignupForm.php
-/frontend/models/_ContactForm.php
-
 /frontend/web/favicon.ico
 /frontend/web/index-test.php
 /frontend/web/index.php
 /frontend/web/robots.txt
 
-/frontend/helpers/_TaskAllRespondsPermissionHelper.php
-/frontend/views/layouts/_main.php
-/frontend/views/site/_index.php
 /frontend/views/site/about.php
 /frontend/views/site/contact.php
 /frontend/views/site/error.php
@@ -91,12 +85,6 @@ phpunit.phar
 /frontend/views/site/resendVerificationEmail.php
 /frontend/views/site/resetPassword.php
 /frontend/views/site/signup.php
-/frontend/views/tasks/_index.php
-
-/frontend/modules/api/controllers/_DefaultController.php
-/frontend/modules/api/views/default/_index.php.php
-
-/frontend/controllers/_TasksController.php
 
 /frontend/codeception.yml
 /frontend/Dockerfile

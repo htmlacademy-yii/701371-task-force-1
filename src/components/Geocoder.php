@@ -3,6 +3,8 @@
 namespace TaskForce\components;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Yii;
 use yii\helpers\Json;
 
 /**
@@ -24,7 +26,7 @@ class Geocoder
      *
      * @param string $cityName
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function getCoordinates(string $cityName): array
     {
@@ -38,7 +40,7 @@ class Geocoder
      *
      * @param $cityName
      * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     private function sendRequest($cityName)
     {
@@ -55,8 +57,8 @@ class Geocoder
          * if the value is already in the cache,
          * then we get it from the cache
          */
-        if (\Yii::$app->cache->exists($cacheKey)) {
-            return Json::decode(\Yii::$app->cache->get($cacheKey));
+        if (Yii::$app->cache->exists($cacheKey)) {
+            return Json::decode(Yii::$app->cache->get($cacheKey));
         }
 
         $client = new Client([
@@ -75,7 +77,7 @@ class Geocoder
         $content = $response->getBody()->getContents();
 
         /** @note writing the value to the cache */
-        \Yii::$app->cache->set($cacheKey, $content, 60 * 60 * 24);
+        Yii::$app->cache->set($cacheKey, $content, 60 * 60 * 24);
 
         return Json::decode($content);
     }

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace app\components\import;
+
 use app\components\exception\ImportException;
 use SplFileObject;
 
@@ -33,10 +34,10 @@ class Csv2SqlConverter
 		// NOTE: get data from CSV into the array
 		while (!$splFileObject->eof()) {
 			if ($splFileObject->key() === 0) {
-				$columns = $splFileObject->fgetcsv(',');
+				$columns = $splFileObject->fgetcsv();
 			}
 
-			$currentLineValues = $splFileObject->fgetcsv(',');
+			$currentLineValues = $splFileObject->fgetcsv();
 			if (count($columns) != count($currentLineValues)) {
 				continue;
 			}

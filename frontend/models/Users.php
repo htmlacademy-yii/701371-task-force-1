@@ -48,16 +48,16 @@ use yii\web\IdentityInterface;
  * @property UsersFavorites[] $usersFavorites0
  * @property UsersImage[] $usersImages
  * @property Task[] $executedTasks
- * @property int $completedTasksCount
  *
- * @property UserRoles $roles
+ * @property UsersRoles $roles
+ * @property Responds[] $responds
  */
 class Users extends ActiveRecord implements IdentityInterface
 {
     const ROLE_CLIENT = 1;
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -65,7 +65,7 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -88,30 +88,30 @@ class Users extends ActiveRecord implements IdentityInterface
             [['city_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => City::className(),
+                'targetClass' => City::class,
                 'targetAttribute' => ['city_id' => 'id']
             ],
             [['contacts_id'], 'exist',
                 'skipOnError' => true,
-                'targetClass' => UsersContacts::className(),
+                'targetClass' => UsersContacts::class,
                 'targetAttribute' => ['contacts_id' => 'id']
             ],
             [['role_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => UsersRoles::className(),
+                'targetClass' => UsersRoles::class,
                 'targetAttribute' => ['role_id' => 'id']
             ],
             [['specialization_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => UserSpecialization::className(),
+                'targetClass' => UserSpecialization::class,
                 'targetAttribute' => ['specialization_id' => 'id']
             ],
             [['notification_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Notification::className(),
+                'targetClass' => Notification::class,
                 'targetAttribute' => ['notification_id' => 'id']
             ],
             [['email'], 'unique'],
@@ -120,7 +120,7 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -151,7 +151,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getFeedbacks(): ActiveQuery
     {
-        return $this->hasMany(Feedback::className(), ['account_id' => 'id']);
+        return $this->hasMany(Feedback::class, ['account_id' => 'id']);
     }
 
     /**
@@ -159,7 +159,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getMessages(): ActiveQuery
     {
-        return $this->hasMany(Message::className(), ['sender_id' => 'id']);
+        return $this->hasMany(Message::class, ['sender_id' => 'id']);
     }
 
     /**
@@ -167,7 +167,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getMessages0(): ActiveQuery
     {
-        return $this->hasMany(Message::className(), ['reciever_id' => 'id']);
+        return $this->hasMany(Message::class, ['reciever_id' => 'id']);
     }
 
     /**
@@ -175,7 +175,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getReviews(): ActiveQuery
     {
-        return $this->hasMany(Reviews::className(), ['account_id' => 'id']);
+        return $this->hasMany(Reviews::class, ['account_id' => 'id']);
     }
 
     /**
@@ -183,12 +183,12 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getTasks(): ActiveQuery
     {
-        return $this->hasMany(Task::className(), ['owner_id' => 'id']);
+        return $this->hasMany(Task::class, ['owner_id' => 'id']);
     }
 
     public function getExecutedTasks(): ActiveQuery
     {
-        return $this->hasMany(Task::className(), ['executor_id' => 'id']);
+        return $this->hasMany(Task::class, ['executor_id' => 'id']);
     }
 
     /**
@@ -196,7 +196,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getCity(): ActiveQuery
     {
-        return $this->hasOne(City::className(), ['id' => 'city_id']);
+        return $this->hasOne(City::class, ['id' => 'city_id']);
     }
 
     /**
@@ -204,7 +204,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getContacts(): ActiveQuery
     {
-        return $this->hasOne(UsersContacts::className(),
+        return $this->hasOne(UsersContacts::class,
             ['account_id' => 'id']);
     }
 
@@ -213,7 +213,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getAvatar(): ActiveQuery
     {
-        return $this->hasOne(UsersAvatar::className(), ['account_id' => 'id']);
+        return $this->hasOne(UsersAvatar::class, ['account_id' => 'id']);
     }
 
     /**
@@ -221,7 +221,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getRole(): ActiveQuery
     {
-        return $this->hasOne(UsersRoles::className(), ['id' => 'role_id']);
+        return $this->hasOne(UsersRoles::class, ['id' => 'role_id']);
     }
 
     /**
@@ -229,7 +229,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getSpecializationsList(): ActiveQuery
     {
-        return $this->hasMany(UserSpecialization::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserSpecialization::class, ['user_id' => 'id']);
     }
 
     /**
@@ -237,7 +237,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getNotificationsList(): ActiveQuery
     {
-        return $this->hasMany(UserNotification::className(), ['user_id' => 'id'])->where(['active' => 1]);
+        return $this->hasMany(UserNotification::class, ['user_id' => 'id'])->where(['active' => 1]);
     }
 
     /**
@@ -245,7 +245,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getUsersCategories(): ActiveQuery
     {
-        return $this->hasMany(UsersCategory::className(),
+        return $this->hasMany(UsersCategory::class,
             ['account_id' => 'id']);
     }
 
@@ -254,7 +254,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getUsersFavorites(): ActiveQuery
     {
-        return $this->hasMany(UsersFavorites::className(),
+        return $this->hasMany(UsersFavorites::class,
             ['favorites_account_id' => 'id']);
     }
 
@@ -263,7 +263,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getUsersFavorites0(): ActiveQuery
     {
-        return $this->hasMany(UsersFavorites::className(),
+        return $this->hasMany(UsersFavorites::class,
             ['account_id' => 'id']);
     }
 
@@ -272,7 +272,7 @@ class Users extends ActiveRecord implements IdentityInterface
      */
     public function getUsersImages(): ActiveQuery
     {
-        return $this->hasMany(UsersImage::className(),
+        return $this->hasMany(UsersImage::class,
             ['account_id' => 'id']);
     }
 
@@ -280,14 +280,11 @@ class Users extends ActiveRecord implements IdentityInterface
     /** @note my functions ------------------------------------------------- */
 
     /**
-     * @note
-     * for login
-     *
      * @return ActiveQuery
      */
-    public function getRespond(): ActiveQuery
+    public function getResponds(): ActiveQuery
     {
-        return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
+        return $this->hasMany(TaskRespond::class, ['user_id' => 'id']);
     }
 
     /**
@@ -333,6 +330,17 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @note
+     * used in - views/layouts/main.php
+     *
+     * @return string
+     */
+    public function getUserAvatarPath(): string
+    {
+        return $this->avatar ? $this->avatar->image_path : 'user-photo.png';
+    }
+
+    /**
      * @param int|string $id
      * @return Users|IdentityInterface|null
      */
@@ -369,7 +377,7 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $username
+     * @param string string $username
      * @return Users|null
      */
     public static function findByUsername(string $username): ?Users
@@ -378,7 +386,7 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $password
+     * @param string string $password
      * @return bool
      */
     public function validatePassword(string $password): bool
@@ -399,44 +407,5 @@ class Users extends ActiveRecord implements IdentityInterface
          * true || false
          */
         return count($this->specializationsList) === 0;
-    }
-
-    /**
-     * @note
-     * for all bottom methods
-     * for vk auth, import methods from user.php model
-     */
-
-    /**
-     * @note
-     * generates "remember me" authentication key
-     *
-     * @throws \yii\base\Exception
-     */
-    public function generateAuthKey()
-    {
-        $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    /**
-     * @note
-     * generates new password reset token
-     *
-     * @throws \yii\base\Exception
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * @note
-     * used in - views/layouts/main.php
-     *
-     * @return string
-     */
-    public function getUserAvatarPath(): string
-    {
-        return $this->avatar ? $this->avatar->image_path : 'user-photo.png';
     }
 }

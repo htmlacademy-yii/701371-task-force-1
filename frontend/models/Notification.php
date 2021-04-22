@@ -20,15 +20,15 @@ use yii\db\ActiveQuery;
 class Notification extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'notification';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
     public function rules(): array
     {
@@ -39,7 +39,7 @@ class Notification extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -56,6 +56,6 @@ class Notification extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['notification_id' => 'id']);
+        return $this->hasMany(Users::class, ['notification_id' => 'id']);
     }
 }

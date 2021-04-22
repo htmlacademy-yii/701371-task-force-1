@@ -53,16 +53,15 @@ class UsersController extends SecuredController
             ->where(['id' => $id])
             ->one();
 
-        $userTasks = Task::find()
-            ->where(['owner_id' => $id])
-            ->all();
+        // TODO ???? WTF!?
 
         $userResponds = TaskRespond::find()
             ->where(['user_id' => $id])
             ->all();
 
-        $userRespond = TaskRespond::find()
-            ->where(['user_id' => $id])
+        $userTask = Task::find()
+            ->where(['owner_id' => $id])
+            ->with(['taskFiles', 'owner', 'responds'])
             ->one();
 
         if ($user === null) {
@@ -73,16 +72,12 @@ class UsersController extends SecuredController
         $currentYear = date('Y');
         $userAge = $currentYear - $userBorn;
 
-//        $contact = UsersContacts::find()->where(['account_id' => 21])->one();
-//        var_dump($user->contacts->phone); die();
-
         return $this->render('view',
             compact(
                 'user',
                 'userAge',
-                'userTasks',
                 'userResponds',
-                'userRespond'
+                'userTask'
             )
         );
     }

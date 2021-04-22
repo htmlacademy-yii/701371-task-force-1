@@ -14,11 +14,9 @@ class TemplateBehavior extends Behavior
         $createDate = new DateTime($date);
         $interval = $currentDate->diff($createDate);
 
-        $elapsedTime = ((int)$interval->d < 1)
+        return ($interval->d < 1)
             ? $interval->h . ' часа'
-            : (int)$interval->d . ' дней и ' . $interval->h . ' часа';
-
-        return $elapsedTime;
+            : $interval->d . ' дней и ' . $interval->h . ' часа';
     }
 
 }

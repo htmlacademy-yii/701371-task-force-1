@@ -3,6 +3,7 @@
 namespace frontend\behaviors;
 
 use frontend\models\Users;
+use Yii;
 use yii\base\Behavior;
 use yii\db\Expression;
 use yii\web\Controller;
@@ -16,11 +17,11 @@ class UserLastActivityTimestampBehavior extends Behavior
 
     public function setTimestamp()
     {
-        if (\Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             return;
         }
 
-        $user = Users::findOne(\Yii::$app->user->identity->getId());
+        $user = Users::findOne(Yii::$app->user->identity->getId());
         if (!$user) {
             return;
         }

@@ -25,10 +25,10 @@ class Task
 	const ROLES_ANONYMUS = 'anonymous';
 	const ROLES_REGISTRED = 'registered';
 
-	private $status;
-	private $executorId;
-	private $clientId;
-	private $completed;
+	private string $status = '';
+	private int $executorId = 0;
+	private int $clientId = 0;
+	private string $completed = '';
 
     /**
      * Task constructor.

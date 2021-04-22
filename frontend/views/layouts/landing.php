@@ -165,6 +165,7 @@ AppAsset::register($this);
                         </div>
                     </div>
                     <div class="landing-bottom">
+                        <?php /* @var string $content */?>
                         <?= $content; ?>
                     </div>
                 </div>

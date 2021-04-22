@@ -23,28 +23,28 @@ use yii\db\ActiveQuery;
 class Feedback extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'feedback';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
         return [
             [['rating_id', 'account_id', 'task_id', 'status_id'], 'integer'],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeedbackStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class, 'targetAttribute' => ['task_id' => 'id']],
+            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['account_id' => 'id']],
+            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeedbackStatus::class, 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -62,7 +62,7 @@ class Feedback extends ActiveRecord
      */
     public function getTask(): ActiveQuery
     {
-        return $this->hasOne(Task::className(), ['id' => 'task_id']);
+        return $this->hasOne(Task::class, ['id' => 'task_id']);
     }
 
     /**
@@ -70,7 +70,7 @@ class Feedback extends ActiveRecord
      */
     public function getAccount(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'account_id']);
+        return $this->hasOne(Users::class, ['id' => 'account_id']);
     }
 
     /**
@@ -78,6 +78,6 @@ class Feedback extends ActiveRecord
      */
     public function getStatus(): ActiveQuery
     {
-        return $this->hasOne(FeedbackStatus::className(), ['id' => 'status_id']);
+        return $this->hasOne(FeedbackStatus::class, ['id' => 'status_id']);
     }
 }

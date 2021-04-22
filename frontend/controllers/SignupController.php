@@ -8,6 +8,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\web\Response;
 
 
 /**
@@ -49,7 +50,7 @@ class SignupController extends Controller
      * @return string|\yii\web\Response
      * @throws \yii\base\Exception
      */
-    public function actionIndex(): string
+    public function actionIndex(): Response
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
