@@ -2,10 +2,12 @@
 
 namespace frontend\modules\api;
 
+use yii\base\Module;
+
 /**
  * api module definition class
  */
-class ApiModule extends \yii\base\Module
+class ApiModule extends Module
 {
     public $controllerNamespace = 'frontend\modules\api\controllers';
 

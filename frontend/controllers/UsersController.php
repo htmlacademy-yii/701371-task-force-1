@@ -9,6 +9,7 @@ use frontend\models\Users;
 use frontend\models\UsersFilter;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 
 
 /**
@@ -43,6 +44,7 @@ class UsersController extends SecuredController
     /**
      * @param $id
      * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id): string
     {

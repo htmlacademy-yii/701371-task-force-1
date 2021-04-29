@@ -11,7 +11,7 @@ use yii\base\Widget;
  */
 class RatingWidget extends Widget
 {
-    public int $currentRaiting;
+    public int $currentRating;
 
     /**
      * @note
@@ -22,7 +22,7 @@ class RatingWidget extends Widget
     public function run(): string
     {
         $starsMax = 5;
-        $starsFill = floor($this->currentRaiting);
+        $starsFill = floor($this->currentRating);
         $starsEmpty = $starsMax - $starsFill;
 
         return $this->render('rating', compact('starsFill', 'starsEmpty'));

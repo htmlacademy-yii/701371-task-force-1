@@ -3,16 +3,17 @@
 namespace frontend\controllers;
 
 use common\models\LoginForm;
+use TaskForce\components\AuthVKontakte;
+use Yii;
 use yii\authclient\clients\VKontakte;
 use yii\authclient\AuthAction;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
-use Yii;
-
-use TaskForce\components\AuthVKontakte;
 use yii\web\Response;
 
+use yii\base\Exception as BaseException;
+use yii\db\Exception as DbException;
 
 /**
  * Site controller
@@ -26,7 +27,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout', 'signup', 'login'],
                 'rules' => [
                     [
@@ -42,7 +43,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'signup' => ['POST'],
                     'login' => ['POST'],
@@ -83,7 +84,7 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
-     * @return \yii\web\Response
+     * @return Response
      */
     public function actionIndex(): Response
     {
@@ -127,8 +128,8 @@ class SiteController extends Controller
      *
      * @param VKontakte $client
      * @return Response|null
-     * @throws \yii\base\Exception
-     * @throws \yii\db\Exception
+     * @throws BaseException
+     * @throws DbException
      */
     public function onAuthSuccess(VKontakte $client): ?Response
     {

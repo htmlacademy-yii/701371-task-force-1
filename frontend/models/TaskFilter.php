@@ -3,8 +3,7 @@
 namespace frontend\models;
 
 use yii\base\Model;
-use yii\db\ActiveQuery;
-use yii\db\Expression;
+use yii\db\{ActiveQuery, Expression};
 
 
 /**
@@ -24,7 +23,7 @@ class TaskFilter extends Model
     public $period;
 
     /** @note for search */
-    public $title;
+    public string $title = '';
 
     const TIME_PERIOD_ALL = 'all';
     const TIME_PERIOD_DAY = 'day';

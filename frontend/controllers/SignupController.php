@@ -5,8 +5,9 @@ namespace frontend\controllers;
 use frontend\models\City;
 use frontend\models\forms\SignupForm;
 use Yii;
-use yii\filters\AccessControl;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -47,10 +48,10 @@ class SignupController extends Controller
      * @note
      * login & save there
      *
-     * @return string|\yii\web\Response
-     * @throws \yii\base\Exception
+     * @return string|Response
+     * @throws Exception
      */
-    public function actionIndex(): Response
+    public function actionIndex(): string
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();

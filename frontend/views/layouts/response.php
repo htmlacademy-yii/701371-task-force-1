@@ -1,5 +1,6 @@
 <?php
 
+use frontend\models\forms\LoginForm;
 use frontend\models\forms\ResponseForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

@@ -22,13 +22,12 @@ class Task
 	const STATUS_COMPLETED = 'completed';
 	const STATUS_FAILED = 'failed';
 
-	const ROLES_ANONYMUS = 'anonymous';
-	const ROLES_REGISTRED = 'registered';
+	const ROLES_ANONYMOUS = 'anonymous';
+	const ROLES_REGISTERED = 'registered';
 
 	private string $status = '';
 	private int $executorId = 0;
 	private int $clientId = 0;
-	private string $completed = '';
 
     /**
      * Task constructor.

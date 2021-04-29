@@ -2,8 +2,8 @@
 
 namespace frontend\models;
 
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
+
 
 /**
  * This is the model class for table "users_favorites".

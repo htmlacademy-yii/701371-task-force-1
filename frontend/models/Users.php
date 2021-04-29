@@ -3,10 +3,10 @@
 namespace frontend\models;
 
 use app\models\UserNotification;
-
 use Yii;
 use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
+use yii\base\InvalidConfigException;
 
 
 /**
@@ -27,35 +27,33 @@ use yii\web\IdentityInterface;
  * @property int $show_contacts_to_customer
  * @property int|null $role_id
  * @property int|null $specialization_id
- * @property int|null $raiting_id
+ * @property int|null $rating_id
  * @property int|null $city_id
  * @property int|null $contacts_id
  * @property int|null $notification_id
+ * @property float $averageRating
  *
+ * @property City $city
  * @property Feedback[] $feedbacks
  * @property Message[] $messages
  * @property Message[] $messages0
  * @property Reviews[] $reviews
  * @property Task[] $tasks
- * @property City $city
+ * @property Task[] $executedTasks
+ * @property TaskRespond[] $responds
  * @property UsersContacts $contacts
  * @property UsersAvatar $avatar
  * @property UsersRoles $role
  * @property UserSpecialization[] $specializationsList
  * @property UserNotification[] $notificationsList
  * @property UsersCategory[] $usersCategories
+ * @property UsersImage[] $usersImages
  * @property UsersFavorites[] $usersFavorites
  * @property UsersFavorites[] $usersFavorites0
- * @property UsersImage[] $usersImages
- * @property Task[] $executedTasks
- *
  * @property UsersRoles $roles
- * @property Responds[] $responds
  */
 class Users extends ActiveRecord implements IdentityInterface
 {
-    const ROLE_CLIENT = 1;
-
     /**
      * @return string
      */
@@ -79,7 +77,7 @@ class Users extends ActiveRecord implements IdentityInterface
                 'show_contacts_to_customer',
                 'role_id',
                 'specialization_id',
-                'raiting_id',
+                'rating_id',
                 'city_id',
                 'contacts_id',
                 'notification_id'], 'integer'
@@ -139,7 +137,7 @@ class Users extends ActiveRecord implements IdentityInterface
             'show_contacts_to_customer' => 'Show Contacts To Customer',
             'role_id' => 'Role ID',
             'specialization_id' => 'specialization ID',
-            'raiting_id' => 'Raiting ID',
+            'rating_id' => 'Raiting ID',
             'city_id' => 'City ID',
             'contacts_id' => 'Contacts ID',
             'notification_id' => 'Notification ID',
@@ -172,10 +170,12 @@ class Users extends ActiveRecord implements IdentityInterface
 
     /**
      * @return ActiveQuery
+     * @throws InvalidConfigException
      */
     public function getReviews(): ActiveQuery
     {
-        return $this->hasMany(Reviews::class, ['account_id' => 'id']);
+        return $this->hasMany(Reviews::class, ['task_id' => 'id'])
+            ->viaTable(Task::tableName(), ['executor_id' => 'id']);
     }
 
     /**
@@ -326,7 +326,7 @@ class Users extends ActiveRecord implements IdentityInterface
          * i.e. it will eventually return an array consisting of the rating
          * value for each record
          */
-        return array_sum(array_column($this->reviews, 'raiting')) / count($this->reviews);
+        return array_sum(array_column($this->reviews, 'rating')) / count($this->reviews);
     }
 
     /**

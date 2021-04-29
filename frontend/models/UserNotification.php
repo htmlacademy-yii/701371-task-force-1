@@ -3,8 +3,7 @@
 namespace app\models;
 
 use frontend\models\Users;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**

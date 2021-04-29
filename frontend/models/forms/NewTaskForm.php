@@ -3,13 +3,10 @@
 namespace frontend\models\forms;
 
 use Exception;
-use frontend\models\City;
-use frontend\models\Task;
-use frontend\models\TaskFile;
+use frontend\models\{City, Task, TaskFile};
 use Yii;
 use yii\base\Model;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use yii\helpers\{ArrayHelper, Html};
 
 
 /**

@@ -20,8 +20,8 @@ $this->title = 'Регистрация аккаунта';
     <div class="registration-wrapper">
         <?php $form = $filterForm = ActiveForm::begin([
             'options' => [
-                'method'    => 'post',
-                'class'     => 'registration__user-form form-create',
+                'method' => 'post',
+                'class' => 'registration__user-form form-create',
             ],
         ]); ?>
 
@@ -109,7 +109,7 @@ $this->title = 'Регистрация аккаунта';
                 ])
                 ->label('Пароль'); ?>
 
-            <?= Html::submitButton('Cоздать аккаунт', [
+            <?= Html::submitButton('Создать аккаунт', [
                 'class' => 'button button__registration'
             ]); ?>
         <?php ActiveForm::end(); ?>

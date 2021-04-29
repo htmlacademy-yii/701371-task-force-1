@@ -2,8 +2,10 @@
 
 namespace frontend\controllers;
 
+use Exception;
 use frontend\models\Category;
 use frontend\models\City;
+use frontend\models\Reviews;
 use frontend\models\Task;
 use frontend\models\TaskRespond;
 use frontend\models\TaskFilter;
@@ -118,8 +120,8 @@ class TasksController extends SecuredController
      * @note
      * creating new task
      *
-     * @return string|\yii\web\Response
-     * @throws \Exception
+     * @return string|Response
+     * @throws Exception
      */
     public function actionCreate()
     {
@@ -279,17 +281,25 @@ class TasksController extends SecuredController
      * @note
      * for complete task
      *
-     * @param int $taskId
      * @return Response|null
      * @throws BadRequestHttpException
      */
-    public function actionComplete(int $taskId): ?Response
+    public function actionComplete(): ?Response
     {
+        $taskId = Yii::$app->request->post('taskId');
+
         $task = Task::findOne($taskId);
+        $review = new Reviews();
 
         if ($task->isWork()) {
             $task->status_id = Task::STATUS_COMPLETED;
             $task->save();
+
+            $review->task_id = $taskId;
+            $review->description = Yii::$app->request->post('reviews');
+            $review->rating = Yii::$app->request->post('taskRating');
+            $review->save();
+
             return $this->redirect(Url::to(['tasks/view', 'id' => $taskId]));
         } else {
             throw new BadRequestHttpException('Не возможно завершить, провалено');

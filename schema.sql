@@ -111,7 +111,7 @@ CREATE TABLE users (
 
     avatar_id INT,
     role_id INT,
-    raiting_id INT,
+    rating_id INT,
     city_id INT,
     contacts_id INT,
     notification_id INT
@@ -236,7 +236,7 @@ ALTER TABLE task_file ADD FOREIGN KEY (task_id) REFERENCES task(id);
 ALTER TABLE message ADD FOREIGN KEY (sender_id) REFERENCES users(id);
 ALTER TABLE message ADD FOREIGN KEY (reciever_id) REFERENCES users(id);
 ALTER TABLE users ADD FOREIGN KEY (city_id) REFERENCES city(id);
-ALTER TABLE users ADD FOREIGN KEY (raiting_id) REFERENCES reviews(id);
+ALTER TABLE users ADD FOREIGN KEY (rating_id) REFERENCES reviews(id);
 ALTER TABLE users ADD FOREIGN KEY (contacts_id) REFERENCES users_contacts(id);
 ALTER TABLE users ADD FOREIGN KEY (avatar_id) REFERENCES users_avatar(id);
 ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES users_roles(id);

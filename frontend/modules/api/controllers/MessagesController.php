@@ -4,6 +4,8 @@ namespace frontend\modules\api\controllers;
 
 use frontend\models\Message;
 use frontend\models\Task;
+use yii\base\ExitException;
+use yii\db\ActiveRecord;
 use yii\helpers\Json;
 use yii\web\Controller;
 use Yii;
@@ -15,7 +17,7 @@ class MessagesController extends Controller
 
     /**
      * @param int $id
-     * @throws \yii\base\ExitException
+     * @throws ExitException
      */
     public function actionGet(int $id): void
     {
@@ -53,7 +55,7 @@ class MessagesController extends Controller
 
     /**
      * @param int $id
-     * @throws \yii\base\ExitException
+     * @throws ExitException
      */
     public function actionCreate(int $id): void
     {
@@ -85,7 +87,7 @@ class MessagesController extends Controller
 
     /**
      * @param int $id
-     * @return array|\yii\db\ActiveRecord[]
+     * @return array|ActiveRecord[]
      */
     public function actionView(int $id): ?array
     {

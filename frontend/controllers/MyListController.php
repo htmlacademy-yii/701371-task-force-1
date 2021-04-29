@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\Task;
+use Yii;
 
 
 /**
@@ -23,7 +24,7 @@ class MyListController extends SecuredController
      */
     public function actionIndex(int $status = Task::STATUS_NEW): string
     {
-        $user = \Yii::$app->user;
+        $user = Yii::$app->user;
         $tasks = Task::find()
             ->where([
                 'OR',

@@ -116,7 +116,7 @@ YandexMapAsset::register($this);
                                 </a>
                                 <div class="feedback-card__top--name">
                                     <p><a href="<?= Url::to(['users/view', 'id' => $respond->user->id]); ?>" class="link-regular"><?= $respond->user->name; ?></a></p>
-                                    <?php echo RatingWidget::widget(['currentRaiting' => $respond->user->averageRating]); ?>
+                                    <?php echo RatingWidget::widget(['currentRating' => $respond->user->averageRating]); ?>
                                     <b><?= $respond->user->averageRating; ?></b>
                                 </div>
                                 <span class="new-task__time"><?= ElapsedTimeWidget::widget(['timeStamp' => $respond->datetime]); ?> назад</span>
@@ -178,7 +178,7 @@ YandexMapAsset::register($this);
 
                             <p><?= $task->owner->name; ?></p>
 
-                            <?= RatingWidget::widget(['currentRaiting' => $task->owner->averageRating]); ?>
+                            <?= RatingWidget::widget(['currentRating' => $task->owner->averageRating]); ?>
 
                             <b><?= round($task->owner->averageRating, 2); ?></b>
 

@@ -5,10 +5,7 @@ namespace frontend\models\forms;
 use app\models\UserNotification;
 use DateTime;
 use Exception;
-use frontend\models\Users;
-use frontend\models\UsersAvatar;
-use frontend\models\UsersContacts;
-use frontend\models\UserSpecialization;
+use frontend\models\{Users, UsersAvatar, UsersContacts, UserSpecialization};
 use Yii;
 use yii\base\Model;
 use yii\db\StaleObjectException;
@@ -73,7 +70,7 @@ class SettingsForm extends Model
     public string $oldPasswordCopy = '';
 
     /** @note for user uploading files */
-    public array $files;
+    public array $files = [];
 
     /** @note for user contacts */
     public int $phone;
@@ -86,14 +83,14 @@ class SettingsForm extends Model
     public string $oldOtherMessenger;
 
     /** @note for user check boxes */
-    public array $specialization;
-    public array $oldSpecialization;
+    public $specialization;
+    public $oldSpecialization;
 
-    public array $notification;
-    public array $oldNotification;
+    public $notification;
+    public $oldNotification;
 
     /** @note img with avatar */
-    private string $avatar;
+    private $avatar;
 
     /**
      * @return array
@@ -145,7 +142,7 @@ class SettingsForm extends Model
      * @note
      * get current user avatar
      *
-     * @return ?string
+     * @return string
      */
     public function getAvatar(): ?string
     {
@@ -283,10 +280,10 @@ class SettingsForm extends Model
      * for saving basic block of user settings
      *
      * @param $user
-     * @return bool
+     * @return void
      * @throws Exception
      */
-    private function saveUserData($user): bool
+    private function saveUserData($user): void
     {
         if ($this->name != $this->oldName) {
             $user->name = $this->name;
@@ -308,7 +305,7 @@ class SettingsForm extends Model
             $user->about = $this->description;
         }
 
-        return $user->save();
+        $user->save();
     }
 
     /**

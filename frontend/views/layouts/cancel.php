@@ -1,12 +1,13 @@
 <?php
 
+use frontend\models\forms\LoginForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 /**
  * @var $form ActiveForm
  * @var $model LoginForm
- * @var TYPE_NAME $taskId
+ * @var int $taskId
  */
 
 ?>

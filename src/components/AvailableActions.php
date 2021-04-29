@@ -29,9 +29,9 @@ class AvailableActions
     ];
 
 	const RELATIONS_MAP = [
-		CancelAction::class => Task::STATUS_CANCELED,
+		CancelAction::class => Task::STATUS_CANCEL,
 		CompleteAction::class => Task::STATUS_COMPLETED,
-		FailAction::class => Task::STATUS_FAILED
+		FailAction::class => Task::STATUS_FAIL
 	];
 
     /**

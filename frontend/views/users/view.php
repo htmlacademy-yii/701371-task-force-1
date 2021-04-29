@@ -44,7 +44,7 @@ UsersAsset::register($this);
                               <div class="profile-mini__name five-stars__rate">
 
                                   <?php try {
-                                      echo RatingWidget::widget(['currentRaiting' => $user->getAverageRating()]);
+                                      echo RatingWidget::widget(['currentRating' => $user->getAverageRating()]);
                                   } catch (Exception $e) {} ?>
 
                                   <b><?= $user->getAverageRating(); ?></b>
@@ -116,16 +116,16 @@ UsersAsset::register($this);
                     </div>
                 </div>
                 <div class="content-view__feedback">
-                    <h2>Отзывы<span> <?= count($user->responds); ?></span></h2>
+                    <h2>Отзывы<span> <?= count($user->reviews); ?></span></h2>
                     <div class="content-view__feedback-wrapper reviews-wrapper">
 
-                        <?php foreach ($user->tasks as $task): ?>
+                        <?php foreach ($user->reviews as $review): ?>
 
                             <div class="feedback-card__reviews">
-                                <p class="link-task link">Задание <a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular">«<?= $task->title; ?>»</a></p>
+                                <p class="link-task link">Задание <a href="<?= Url::to(['tasks/view', 'id' => $review->task_id]); ?>" class="link-regular">«<?= $review->task->title; ?>»</a></p>
                                 <div class="card__review">
                                     <a href="#">
-                                        <?= Html::img('@web/img/' . $task->getOwnerAvatarPath(),
+                                        <?= Html::img('@web/img/' . $review->task->getOwnerAvatarPath(),
                                             [
                                                 'alt' => 'Аватар заказчика',
                                                 'style' => 'width: 55px; height: 54px;'
@@ -135,13 +135,13 @@ UsersAsset::register($this);
 
                                     <div class="feedback-card__reviews-content">
                                         <p class="link-name link">
-                                            <a href="#" class="link-regular"><?= $task->owner->name; ?></a>
+                                            <a href="#" class="link-regular"><?= $review->task->owner->name; ?></a>
                                         </p>
 
-                                        <p class="review-text"><?= $userResponds->comment ?? ''; ?></p>
+                                        <p class="review-text"><?= $review->description; ?></p>
                                     </div>
                                     <div class="card__review-rate">
-                                        <p class="three-rate big-rate"><?= $user->averageRating; ?><span></span></p>
+                                        <p class="three-rate big-rate"><?= $review->task->executor->averageRating; ?><span></span></p>
                                     </div>
                                 </div>
                             </div>

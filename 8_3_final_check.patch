@@ -125,7 +125,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
   * @property int|null $avatar_id
   * @property int|null $role_id
 + * @property int|null $specialization_id
-  * @property int|null $raiting_id
+  * @property int|null $rating_id
   * @property int|null $city_id
   * @property int|null $contacts_id
 @@ -37,7 +39,8 @@
@@ -143,7 +143,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
                  'avatar_id',
                  'role_id',
 +                'specialization_id',
-                 'raiting_id',
+                 'rating_id',
                  'city_id',
                  'contacts_id',
 @@ -101,6 +105,12 @@
@@ -164,7 +164,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
              'avatar_id' => 'Avatar ID',
              'role_id' => 'Role ID',
 +            'specialization_id' => 'specialization ID',
-             'raiting_id' => 'Raiting ID',
+             'rating_id' => 'Raiting ID',
              'city_id' => 'City ID',
              'contacts_id' => 'Contacts ID',
 @@ -201,7 +212,7 @@

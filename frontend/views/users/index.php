@@ -62,7 +62,7 @@ use yii\widgets\LinkPager;
                                 </a>
                             </p>
 
-                            <?php echo RatingWidget::widget(['currentRaiting' => $user->averageRating]); ?>
+                            <?php echo RatingWidget::widget(['currentRating' => $user->averageRating]); ?>
                             <b><?= $user->averageRating; ?></b>
 
                             <p class="user__search-content">
@@ -119,13 +119,13 @@ use yii\widgets\LinkPager;
 
                                     return <<<HTML
                                       <input class="visually-hidden checkbox__input" 
-                                          id="{$index}" 
+                                          id="$index" 
                                           type="checkbox" 
-                                          name="{$name}" 
-                                          value="{$value}" 
-                                          {$isChecked}>
+                                          name="$name" 
+                                          value="$value" 
+                                          $isChecked>
                                         
-                                      <label for="{$index}">{$label}</label>
+                                      <label for="$index">$label</label>
 HTML;
                               }
                           ]

@@ -3,6 +3,7 @@
 namespace frontend\widgets;
 
 use DateTime;
+use Exception;
 use yii\base\Widget;
 
 
@@ -12,9 +13,13 @@ use yii\base\Widget;
  */
 class ElapsedTimeWidget extends Widget
 {
-    public $timeStamp;
+    public string $timeStamp;
 
-    public function run()
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function run(): string
     {
         $currentDate = new DateTime();
         $createDate = new DateTime($this->timeStamp);

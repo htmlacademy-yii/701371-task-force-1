@@ -1,6 +1,8 @@
 <?php
 
+use frontend\models\forms\LoginForm;
 use yii\helpers\Html;
+use yii\authclient\widgets\AuthChoice;
 use yii\widgets\ActiveForm;
 
 /**
@@ -38,7 +40,7 @@ use yii\widgets\ActiveForm;
 
             <?= Html::submitButton('Войти', ['class' => 'button']) ?>
 
-            <?= yii\authclient\widgets\AuthChoice::widget([
+            <?= AuthChoice::widget([
                 'baseAuthUrl' => ['site/auth'],
                 'popupMode' => false,
             ]) ?>

@@ -117,7 +117,7 @@ use yii\helpers\Url;
                                         ->count(); ?>
                                 </b></a>
 
-                                <?= RatingWidget::widget(['currentRaiting' => $task->owner->averageRating]); ?>
+                                <?= RatingWidget::widget(['currentRating' => $task->owner->averageRating]); ?>
                                 <b><?= round($task->owner->averageRating, 2); ?></b>
                             </div>
                         </div>

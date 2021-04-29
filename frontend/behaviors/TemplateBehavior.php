@@ -4,11 +4,22 @@
 namespace frontend\behaviors;
 
 use DateTime;
+use Exception;
 use yii\base\Behavior;
 
+
+/**
+ * Class TemplateBehavior
+ * @package frontend\behaviors
+ */
 class TemplateBehavior extends Behavior
 {
-    public function getPublishedTimeDiff($date)
+    /**
+     * @param $date
+     * @return string
+     * @throws Exception
+     */
+    public function getPublishedTimeDiff($date): string
     {
         $currentDate = new DateTime();
         $createDate = new DateTime($date);

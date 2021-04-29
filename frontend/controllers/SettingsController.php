@@ -4,12 +4,13 @@ namespace frontend\controllers;
 
 use frontend\models\UsersImage;
 use frontend\models\UserSpecialization;
-use yii\helpers\ArrayHelper;
 use frontend\models\Category;
 use frontend\models\City;
 use frontend\models\Users;
 use frontend\models\forms\SettingsForm;
 use Yii;
+use yii\db\StaleObjectException;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 
@@ -30,7 +31,7 @@ class SettingsController extends SecuredController
      *
      * @return string
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
     public function actionIndex(): string
     {
@@ -107,7 +108,7 @@ class SettingsController extends SecuredController
      * for drop image
      *
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
     public function actionDrop(): void
     {

@@ -191,10 +191,12 @@ AppAsset::register($this);
                     </div>
                     <div class="page-footer__copyright">
                         <a href="https://htmlacademy.ru">
-                            <img class="copyright-logo"
-                                 src="./img/academy-logo.png"
-                                 width="185" height="63"
-                                 alt="Логотип HTML Academy">
+                            <?= Html::img("@web/img/academy-logo.png",
+                                [
+                                    'alt' => 'Логотип HTML Academy',
+                                    'style' => 'width: 185px; height: 63px;'
+                                ]
+                            ) ?>
                         </a>
                     </div>
                 </div>

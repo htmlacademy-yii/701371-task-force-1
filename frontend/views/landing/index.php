@@ -1,10 +1,11 @@
 <?php
 
+use frontend\models\Task;
 use frontend\widgets\ElapsedTimeWidget;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
-$this->title = 'TaskForse - главная страница';
+$this->title = 'TaskForce - главная страница';
 
 /**
  * @var Task[] $tasks
@@ -20,7 +21,7 @@ $this->title = 'TaskForse - главная страница';
             <div class="landing-task-top task-<?= $task->category->css_class; ?>"></div>
             <div class="landing-task-description">
                 <h3><a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular"><?= $task->title; ?></a></h3>
-                <p><?=StringHelper::truncate($task->description, 70, '...'); ?></p>
+                <p><?=StringHelper::truncate($task->description, 70); ?></p>
             </div>
             <div class="landing-task-info">
                 <div class="task-info-left">

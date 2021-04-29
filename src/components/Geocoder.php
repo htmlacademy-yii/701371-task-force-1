@@ -16,9 +16,9 @@ use yii\helpers\Json;
  */
 class Geocoder
 {
-    public $apiKey;
-    private $lang = 'ru_RU';
-    private $format = 'json';
+    public string $apiKey;
+    private string $lang = 'ru_RU';
+    private string $format = 'json';
 
     /**
      * @note

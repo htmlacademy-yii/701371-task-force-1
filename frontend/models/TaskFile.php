@@ -2,8 +2,7 @@
 
 namespace frontend\models;
 
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
@@ -38,7 +37,7 @@ class TaskFile extends ActiveRecord
             [['task_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Task::className(),
+                'targetClass' => Task::class,
                 'targetAttribute' => ['task_id' => 'id']
             ],
         ];

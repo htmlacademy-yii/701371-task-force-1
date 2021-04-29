@@ -3,8 +3,7 @@
 namespace frontend\models\forms;
 
 use Yii;
-use yii\base\Exception;
-use yii\base\Model;
+use yii\base\{Exception, Model};
 use frontend\models\Users;
 
 

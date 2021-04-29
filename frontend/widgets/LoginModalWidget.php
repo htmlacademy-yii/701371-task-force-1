@@ -12,7 +12,10 @@ use yii\base\Widget;
  */
 class LoginModalWidget extends Widget
 {
-    public function run()
+    /**
+     * @return string
+     */
+    public function run(): string
     {
         return $this->render('loginModal', ['model' => new LoginForm()]);
     }

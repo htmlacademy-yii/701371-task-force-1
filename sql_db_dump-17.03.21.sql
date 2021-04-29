@@ -1428,7 +1428,7 @@ CREATE TABLE `users` (
   `show_contacts_to_customer` tinyint(1) NOT NULL DEFAULT '0',
   `avatar_id` int(11) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL,
-  `raiting_id` int(11) DEFAULT NULL,
+  `rating_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
   `contacts_id` int(11) DEFAULT NULL,
   `notification_id` int(11) DEFAULT NULL,
@@ -1439,7 +1439,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `name`, `password`, `address`, `born`, `created`, `about`, `visit`, `quest_completed`, `views_counter`, `hide_account`, `show_contacts_to_customer`, `avatar_id`, `role_id`, `raiting_id`, `city_id`, `contacts_id`, `notification_id`, `specialization_id`) VALUES
+INSERT INTO `users` (`id`, `email`, `name`, `password`, `address`, `born`, `created`, `about`, `visit`, `quest_completed`, `views_counter`, `hide_account`, `show_contacts_to_customer`, `avatar_id`, `role_id`, `rating_id`, `city_id`, `contacts_id`, `notification_id`, `specialization_id`) VALUES
 (1, 'kbuttress0@1und1.de', 'Karrie Buttress', 'JcfoKBYAB4k', 'Sesame', '2020-06-25 09:06:10', '2019-08-10 00:00:00', NULL, '2020-06-25 09:06:10', 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, 0),
 (2, 'baymer1@hp.com', 'Bob Aymer', 'ZEE54kg', 'Sesame', '2020-06-25 09:06:10', '2018-12-21 00:00:00', NULL, '2020-06-25 09:06:10', 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, 0),
 (3, 'zboulding2@macromedia.com', 'Zilvia Boulding', 'VJyMV1Zat', 'Sesame', '2020-06-25 09:06:10', '2019-07-25 00:00:00', NULL, '2020-06-25 09:06:10', 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, 0),
@@ -1704,7 +1704,7 @@ ALTER TABLE `user`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `city_id` (`city_id`),
-  ADD KEY `raiting_id` (`raiting_id`),
+  ADD KEY `rating_id` (`rating_id`),
   ADD KEY `contacts_id` (`contacts_id`),
   ADD KEY `avatar_id` (`avatar_id`),
   ADD KEY `role_id` (`role_id`),
@@ -1951,7 +1951,7 @@ ALTER TABLE `task_respond`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`raiting_id`) REFERENCES `reviews` (`id`),
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`rating_id`) REFERENCES `reviews` (`id`),
   ADD CONSTRAINT `users_ibfk_3` FOREIGN KEY (`contacts_id`) REFERENCES `users_contacts` (`id`),
   ADD CONSTRAINT `users_ibfk_4` FOREIGN KEY (`avatar_id`) REFERENCES `users_avatar` (`id`),
   ADD CONSTRAINT `users_ibfk_5` FOREIGN KEY (`role_id`) REFERENCES `users_roles` (`id`),
