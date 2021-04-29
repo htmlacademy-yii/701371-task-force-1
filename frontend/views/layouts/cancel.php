@@ -5,8 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 /**
- * @var $form ActiveForm
- * @var $model LoginForm
+ * @var ActiveForm $form
+ * @var LoginForm $model
  * @var int $taskId
  */
 
