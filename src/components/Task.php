@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TaskForce\components;
 
-use app\components\exception\TaskException;
+use TaskForce\components\exception\TaskException;
 
 
 /**

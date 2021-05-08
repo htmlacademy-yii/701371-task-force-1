@@ -49,6 +49,7 @@ phpunit.phar
 /console/config/
 /console/controllers/
 /console/models/
+/console/migrations/old_migrations/
 /console/runtime/
 
 #common -> files
@@ -76,6 +77,7 @@ phpunit.phar
 /frontend/web/index-test.php
 /frontend/web/index.php
 /frontend/web/robots.txt
+/frontend/web/files/
 
 /frontend/views/site/about.php
 /frontend/views/site/contact.php

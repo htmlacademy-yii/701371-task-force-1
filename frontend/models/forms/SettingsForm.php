@@ -35,10 +35,17 @@ class SettingsForm extends Model
     const SUBSCRIPTION_SHOW_CONTACT_CUSTOMER = 4;
 
     const SUBSCRIPTION_MAP = [
-        self::SUBSCRIPTION_NEW_MESSAGE => 'Новое значение',
-        self::SUBSCRIPTION_ACTION_TASK => 'Действия по заданию',
-        self::SUBSCRIPTION_NEW_REVIEW => 'Новый отзыв',
-        self::SUBSCRIPTION_SHOW_CONTACT_CUSTOMER => 'Показывать мои контакты только заказчику',
+//        self::SUBSCRIPTION_NEW_MESSAGE => 'Новое значение',
+//        self::SUBSCRIPTION_ACTION_TASK => 'Действия по заданию',
+//        self::SUBSCRIPTION_NEW_REVIEW => 'Новый отзыв',
+//        self::SUBSCRIPTION_SHOW_CONTACT_CUSTOMER => 'Показывать мои контакты только заказчику',
+
+        self::SUBSCRIPTION_NEW_MESSAGE => 'Новое сообщение в чате',
+        self::SUBSCRIPTION_ACTION_TASK => 'Новый отклик к заданию',
+
+        self::SUBSCRIPTION_ABORT_TASK => 'Отказ от задания исполнителем',
+        self::SUBSCRIPTION_SHOW_START_TASK => 'Старт задания',
+        self::SUBSCRIPTION_SHOW_COMPLETED_TASK => 'Завершение задания',
     ];
 
     /**/
@@ -60,8 +67,8 @@ class SettingsForm extends Model
     public string $oldBirthday;
 
     /** @note for user description */
-    public string $description;
-    public string $oldDescription;
+    public ?string $description = '';
+    public ?string $oldDescription = '';
 
     /** @note for user password */
     public string $password = '';
@@ -73,8 +80,8 @@ class SettingsForm extends Model
     public array $files = [];
 
     /** @note for user contacts */
-    public int $phone;
-    public int $oldPhone;
+    public string $phone = '';
+    public string $oldPhone = '';
 
     public string $skype;
     public string $oldSkype;
@@ -219,12 +226,16 @@ class SettingsForm extends Model
     public function saveAvatar($avatarUploadedFile): void
     {
         if (!empty($this->avatar)) {
+            $user = Users::findOne(Yii::$app->user->identity->getId());
             $avatarModel = new UsersAvatar();
             $currentAvatar = UsersAvatar::find()
                 ->where(['account_id' => Yii::$app->user->identity->getId()])
                 ->one();
 
-            $currentAvatar->delete();
+
+            if (!empty($user->avatar)) {
+                $currentAvatar->delete();
+            }
 
             $fileName = $avatarUploadedFile->baseName . '.' . $avatarUploadedFile->extension;
             $avatarUploadedFile->saveAs('files/' . $fileName);
@@ -383,7 +394,7 @@ class SettingsForm extends Model
             $userContacts = new UsersContacts();
         }
 
-        if ($this->phone != $this->oldPhone) {
+        if ($this->phone != $this->oldPhone || $this->phone != '') {
             $userContacts->phone = $this->phone;
         }
 

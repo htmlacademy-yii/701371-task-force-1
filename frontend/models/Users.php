@@ -6,7 +6,7 @@ use app\models\UserNotification;
 use Yii;
 use yii\db\{ActiveRecord, ActiveQuery};
 use yii\web\IdentityInterface;
-use yii\base\InvalidConfigException;
+use yii\base\{InvalidConfigException, Exception};
 
 
 /**
@@ -24,13 +24,7 @@ use yii\base\InvalidConfigException;
  * @property int $quest_completed
  * @property int $views_counter
  * @property int $hide_account
- * @property int $show_contacts_to_customer
- * @property int|null $role_id
- * @property int|null $specialization_id
- * @property int|null $rating_id
  * @property int|null $city_id
- * @property int|null $contacts_id
- * @property int|null $notification_id
  * @property float $averageRating
  *
  * @property City $city
@@ -74,13 +68,8 @@ class Users extends ActiveRecord implements IdentityInterface
             [['quest_completed',
                 'views_counter',
                 'hide_account',
-                'show_contacts_to_customer',
-                'role_id',
-                'specialization_id',
-                'rating_id',
                 'city_id',
-                'contacts_id',
-                'notification_id'], 'integer'
+                ], 'integer'
             ],
             [['email', 'name', 'password'], 'string', 'max' => 64],
             [['city_id'],
@@ -88,29 +77,6 @@ class Users extends ActiveRecord implements IdentityInterface
                 'skipOnError' => true,
                 'targetClass' => City::class,
                 'targetAttribute' => ['city_id' => 'id']
-            ],
-            [['contacts_id'], 'exist',
-                'skipOnError' => true,
-                'targetClass' => UsersContacts::class,
-                'targetAttribute' => ['contacts_id' => 'id']
-            ],
-            [['role_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => UsersRoles::class,
-                'targetAttribute' => ['role_id' => 'id']
-            ],
-            [['specialization_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => UserSpecialization::class,
-                'targetAttribute' => ['specialization_id' => 'id']
-            ],
-            [['notification_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => Notification::class,
-                'targetAttribute' => ['notification_id' => 'id']
             ],
             [['email'], 'unique'],
             [['auth_key', 'password_reset_token', 'status'], 'safe'],
@@ -134,22 +100,8 @@ class Users extends ActiveRecord implements IdentityInterface
             'quest_completed' => 'Quest Completed',
             'views_counter' => 'Views Counter',
             'hide_account' => 'Hide Account',
-            'show_contacts_to_customer' => 'Show Contacts To Customer',
-            'role_id' => 'Role ID',
-            'specialization_id' => 'specialization ID',
-            'rating_id' => 'Raiting ID',
             'city_id' => 'City ID',
-            'contacts_id' => 'Contacts ID',
-            'notification_id' => 'Notification ID',
         ];
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getFeedbacks(): ActiveQuery
-    {
-        return $this->hasMany(Feedback::class, ['account_id' => 'id']);
     }
 
     /**
@@ -219,14 +171,6 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getRole(): ActiveQuery
-    {
-        return $this->hasOne(UsersRoles::class, ['id' => 'role_id']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
     public function getSpecializationsList(): ActiveQuery
     {
         return $this->hasMany(UserSpecialization::class, ['user_id' => 'id']);
@@ -246,24 +190,6 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getUsersCategories(): ActiveQuery
     {
         return $this->hasMany(UsersCategory::class,
-            ['account_id' => 'id']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getUsersFavorites(): ActiveQuery
-    {
-        return $this->hasMany(UsersFavorites::class,
-            ['favorites_account_id' => 'id']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getUsersFavorites0(): ActiveQuery
-    {
-        return $this->hasMany(UsersFavorites::class,
             ['account_id' => 'id']);
     }
 
@@ -407,5 +333,36 @@ class Users extends ActiveRecord implements IdentityInterface
          * true || false
          */
         return count($this->specializationsList) === 0;
+    }
+
+    /**
+     * @note
+     * generates "remember me" authentication key
+     *
+     * @throws Exception
+     */
+    public function generateAuthKey(): void
+    {
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * @note
+     * removes password reset token
+     */
+    public function removePasswordResetToken(): void
+    {
+        $this->password_reset_token = null;
+    }
+
+    /**
+     * @note
+     * generates new password reset token
+     *
+     * @throws Exception
+     */
+    public function generatePasswordResetToken(): void
+    {
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 }

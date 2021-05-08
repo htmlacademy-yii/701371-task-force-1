@@ -51,7 +51,7 @@ class SignupController extends Controller
      * @return string|Response
      * @throws Exception
      */
-    public function actionIndex(): string
+    public function actionIndex()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
