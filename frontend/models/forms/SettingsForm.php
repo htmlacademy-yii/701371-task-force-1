@@ -35,17 +35,10 @@ class SettingsForm extends Model
     const SUBSCRIPTION_SHOW_CONTACT_CUSTOMER = 4;
 
     const SUBSCRIPTION_MAP = [
-//        self::SUBSCRIPTION_NEW_MESSAGE => 'Новое значение',
-//        self::SUBSCRIPTION_ACTION_TASK => 'Действия по заданию',
-//        self::SUBSCRIPTION_NEW_REVIEW => 'Новый отзыв',
-//        self::SUBSCRIPTION_SHOW_CONTACT_CUSTOMER => 'Показывать мои контакты только заказчику',
-
-        self::SUBSCRIPTION_NEW_MESSAGE => 'Новое сообщение в чате',
-        self::SUBSCRIPTION_ACTION_TASK => 'Новый отклик к заданию',
-
-        self::SUBSCRIPTION_ABORT_TASK => 'Отказ от задания исполнителем',
-        self::SUBSCRIPTION_SHOW_START_TASK => 'Старт задания',
-        self::SUBSCRIPTION_SHOW_COMPLETED_TASK => 'Завершение задания',
+        self::SUBSCRIPTION_NEW_MESSAGE => 'Новое значение',
+        self::SUBSCRIPTION_ACTION_TASK => 'Действия по заданию',
+        self::SUBSCRIPTION_NEW_REVIEW => 'Новый отзыв',
+        self::SUBSCRIPTION_SHOW_CONTACT_CUSTOMER => 'Показывать мои контакты только заказчику',
     ];
 
     /**/
