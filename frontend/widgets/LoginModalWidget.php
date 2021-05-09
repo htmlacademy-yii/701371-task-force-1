@@ -6,9 +6,16 @@ use frontend\models\forms\LoginForm;
 use yii\base\Widget;
 
 
+/**
+ * Class LoginModalWidget
+ * @package frontend\widgets
+ */
 class LoginModalWidget extends Widget
 {
-    public function run()
+    /**
+     * @return string
+     */
+    public function run(): string
     {
         return $this->render('loginModal', ['model' => new LoginForm()]);
     }

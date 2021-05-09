@@ -2,12 +2,12 @@
 
 namespace frontend\models;
 
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
- * This is the model class for table "users_image".
+ * @note
+ * this is the model class for table "users_image".
  *
  * @property int $id
  * @property string $image_path
@@ -18,7 +18,7 @@ use yii\db\ActiveQuery;
 class UsersImage extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -26,7 +26,7 @@ class UsersImage extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -37,14 +37,14 @@ class UsersImage extends ActiveRecord
             [['account_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Users::className(),
+                'targetClass' => Users::class,
                 'targetAttribute' => ['account_id' => 'id']
             ],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -60,6 +60,6 @@ class UsersImage extends ActiveRecord
      */
     public function getImagesList(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['id' => 'account_id']);
+        return $this->hasMany(Users::class, ['id' => 'account_id']);
     }
 }

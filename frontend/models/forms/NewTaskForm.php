@@ -2,26 +2,53 @@
 
 namespace frontend\models\forms;
 
-use frontend\models\City;
-use frontend\models\Task;
-use frontend\models\TaskFile;
+use Exception;
+use frontend\models\{City, Task, TaskFile};
 use Yii;
 use yii\base\Model;
-use yii\helpers\ArrayHelper;
+use yii\helpers\{ArrayHelper, Html};
 
 
+/**
+ * @note
+ * for creating new task
+ *
+ * Class NewTaskForm
+ * @package frontend\models\forms
+ */
 class NewTaskForm extends Model
 {
-    public $name;
-    public $description;
-    public $category;
-    public $files;
-    public $address;
-    public $budget;
-    public $term;
+    public string $name = '';
+    public string $description = '';
+    public string $category = '';
+    public array $files = [];
+    public string $address = '';
+    public int $budget = 0;
+    public string $term = '';
 
     private $taskModel;
 
+    /**
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            [['name', 'description', 'category'], 'required'],
+            [['name', 'address'], 'string', 'max' => 255],
+            [['description'], 'string'],
+            [['category', 'budget'], 'integer'],
+            [['term', 'files'], 'safe'],
+            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, gif, webp', 'maxFiles' => 10],
+            [['term'], 'date', 'format' => 'php:Y-m-d'],
+
+            [['name', 'description'], 'filter', 'filter' => [Html::class, 'encode']],
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function attributeLabels(): array
     {
         return [
@@ -35,25 +62,18 @@ class NewTaskForm extends Model
         ];
     }
 
-    public function rules(): array
-    {
-        return [
-            [['name', 'description', 'category'], 'required'],
-            [['name', 'address'], 'string', 'max' => 255],
-            [['description'], 'string'],
-            [['category', 'budget'], 'integer'],
-            [['term', 'files'], 'safe'],
-            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, gif, webp', 'maxFiles' => 10],
-            [['term'], 'date', 'format' => 'php:Y-m-d'],
-        ];
-    }
-
     /**
-     * @return Task
+     * @note
+     * creating and saving the task
+     *
+     * @return bool
+     * @throws Exception
      */
-    public function createTask()
+    public function createTask(): bool
     {
         $task = new Task();
+
+        /** @var City $city */
         $city = City::find()
             ->where(['id' => $this->address])
             ->one();
@@ -66,8 +86,8 @@ class NewTaskForm extends Model
         $task->title = $this->name;
         $task->description = $this->description;
         $task->address = $city->title;
-        $task->latitude = stristr($coordinates, ' ', true);;
-        $task->longitude = stristr($coordinates, ' ', false);;
+        $task->latitude = stristr($coordinates, ' ', false);
+        $task->longitude = stristr($coordinates, ' ', true);
         $task->price = $this->budget;
         $task->deadline = $this->term;
         $task->category_id = $this->category;
@@ -77,6 +97,7 @@ class NewTaskForm extends Model
         $task->status_id = Task::STATUS_NEW;
 
         if (!$task->save()) {
+            echo $task->status_id . '<br>';
             return false;
         }
 
@@ -85,13 +106,16 @@ class NewTaskForm extends Model
     }
 
     /**
-     * @param UploadedFile $files
-     * @return bool
+     * @note
+     * for get full name of loading file
+     * and save him in the folder
+     *
+     * @return void
      */
-    public function upload()
+    public function upload(): void
     {
         if (!$this->files) {
-            return false;
+            return;
         }
 
         foreach ($this->files as $file) {
@@ -102,7 +126,13 @@ class NewTaskForm extends Model
         }
     }
 
-    public function writeFile($fileName)
+    /**
+     * @note
+     * for saving files in table, look up method
+     *
+     * @param string $fileName
+     */
+    public function writeFile(string $fileName): void
     {
         $taskFile = new TaskFile;
 

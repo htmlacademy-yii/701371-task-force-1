@@ -2,9 +2,12 @@
 
 namespace frontend\models;
 
+use yii\db\{ActiveRecord, ActiveQuery};
+
 
 /**
- * This is the model class for table "task".
+ * @note
+ * this is the model class for table "task".
  *
  * @property int $id
  * @property string $title
@@ -29,12 +32,11 @@ namespace frontend\models;
  * @property TaskStatus $status
  * @property TaskFile[] $taskFiles
  * @property TaskRespond[] $responds
+ * @property TaskRespond[] $userRespond
  */
-class Task extends \yii\db\ActiveRecord
+class Task extends ActiveRecord
 {
-    /** @note otkliknutsa */
     const STATUS_RESPOND = 1;
-
     const STATUS_CANCEL = 2;
     const STATUS_COMPLETED = 3;
     const STATUS_FAIL = 4;
@@ -42,17 +44,17 @@ class Task extends \yii\db\ActiveRecord
     const STATUS_NEW = 6;
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'task';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title', 'description', 'address', 'latitude', 'longitude', 'price', 'deadline'], 'required'],
@@ -62,19 +64,19 @@ class Task extends \yii\db\ActiveRecord
             [['city_id', 'executor_id', 'owner_id', 'status_id', 'category_id'], 'integer'],
             [['title'], 'string', 'max' => 64],
             [['address'], 'string', 'max' => 255],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['executor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['executor_id' => 'id']],
-            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['owner_id' => 'id']],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['executor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['executor_id' => 'id']],
+            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['owner_id' => 'id']],
+            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
+            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatus::class, 'targetAttribute' => ['status_id' => 'id']],
             [['avatar_id'], 'safe'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -95,78 +97,78 @@ class Task extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFeedbacks()
+    public function getFeedbacks(): ActiveQuery
     {
-        return $this->hasMany(Feedback::className(), ['task_id' => 'id']);
+        return $this->hasMany(Feedback::class, ['task_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCategory()
+    public function getCategory(): ActiveQuery
     {
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getExecutor()
+    public function getExecutor(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'executor_id']);
+        return $this->hasOne(Users::class, ['id' => 'executor_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getOwner()
+    public function getOwner(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'owner_id']);
+        return $this->hasOne(Users::class, ['id' => 'owner_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCity()
+    public function getCity(): ActiveQuery
     {
-        return $this->hasOne(City::className(), ['id' => 'city_id']);
+        return $this->hasOne(City::class, ['id' => 'city_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getStatus()
+    public function getStatus(): ActiveQuery
     {
-        return $this->hasOne(TaskStatus::className(), ['id' => 'status_id']);
+        return $this->hasOne(TaskStatus::class, ['id' => 'status_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getTaskFiles()
+    public function getTaskFiles(): ActiveQuery
     {
-        return $this->hasMany(TaskFile::className(), ['task_id' => 'id']);
+        return $this->hasMany(TaskFile::class, ['task_id' => 'id']);
     }
 
 
     /** @note my functions ------------------------------------------------- */
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getReviews()
+    public function getReviews(): ActiveQuery
     {
-        return $this->hasOne(Reviews::class(), ['status_id' => 'city_id']);
+        return $this->hasOne(Reviews::class, ['status_id' => 'city_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getResponds()
+    public function getResponds(): ActiveQuery
     {
-        return $this->hasMany(TaskRespond::className(), ['task_id' => 'id']);
+        return $this->hasMany(TaskRespond::class, ['task_id' => 'id']);
     }
 
     /**/
@@ -174,7 +176,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isResponded()
+    public function isResponded(): bool
     {
         return $this->status_id == self::STATUS_RESPOND;
     }
@@ -182,7 +184,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isCanceled()
+    public function isCanceled(): bool
     {
         return $this->status_id == self::STATUS_CANCEL;
     }
@@ -190,7 +192,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isCompleted()
+    public function isCompleted(): bool
     {
         return $this->status_id == self::STATUS_COMPLETED;
     }
@@ -198,7 +200,7 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isFailed()
+    public function isFailed(): bool
     {
         return $this->status_id == self::STATUS_FAIL;
     }
@@ -206,13 +208,27 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function isWork()
+    public function isWork(): bool
     {
         return $this->status_id == self::STATUS_WORK;
     }
 
-    public function isNew()
+    public function isNew(): bool
     {
         return $this->status_id == self::STATUS_NEW;
+    }
+
+    /**
+     * @note
+     * used in - views/tasks/view.php
+     * for output avatar of owner
+     *
+     * @return string
+     */
+    public function getOwnerAvatarPath(): string
+    {
+        $avatar = UsersAvatar::findOne($this->owner_id);
+
+        return $avatar ? $avatar->image_path : 'user-photo.png';
     }
 }

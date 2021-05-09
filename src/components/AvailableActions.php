@@ -1,12 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TaskForce\components;
 
 use frontend\models\Task;
-use frontend\models\forms\ResponseForm;
 use yii\web\User;
 
+
+/**
+ * @note
+ * for actions status
+ *
+ * Class AvailableActions
+ * @package TaskForce\components
+ */
 class AvailableActions
 {
 	const ACTION_RESPOND = 'respond';
@@ -21,13 +29,14 @@ class AvailableActions
     ];
 
 	const RELATIONS_MAP = [
-		CancelAction::class => Task::STATUS_CANCELED,
+		CancelAction::class => Task::STATUS_CANCEL,
 		CompleteAction::class => Task::STATUS_COMPLETED,
-		FailAction::class => Task::STATUS_FAILED
+		FailAction::class => Task::STATUS_FAIL
 	];
 
-	/**/
-
+    /**
+     * @return array
+     */
 	public function getActions(): array
 	{
 		return [
@@ -38,11 +47,26 @@ class AvailableActions
 		];
     }
 
+    /**
+     * @note
+     * check status
+     *
+     * @param Action $action
+     * @return string|null
+     */
 	public static function getNextStatus(Action $action): ?string
 	{
 		return self::RELATIONS_MAP[$action::getAction()] ?? null;
 	}
 
+    /**
+     * @note
+     * return available actions
+     *
+     * @param Task $task
+     * @param User $user
+     * @return array
+     */
 	public static function getAvailableActions(Task $task, User $user): array
     {
         // NOTE: array_filter - remove unnecessary elements from the array

@@ -3,10 +3,16 @@
 namespace frontend\models;
 
 use yii\base\Model;
-use yii\db\ActiveQuery;
-use yii\db\Expression;
+use yii\db\{ActiveQuery, Expression};
 
 
+/**
+ * @note
+ * filter for tasks
+ *
+ * Class TaskFilter
+ * @package frontend\models
+ */
 class TaskFilter extends Model
 {
     /** @var array */
@@ -17,7 +23,7 @@ class TaskFilter extends Model
     public $period;
 
     /** @note for search */
-    public $title;
+    public string $title = '';
 
     const TIME_PERIOD_ALL = 'all';
     const TIME_PERIOD_DAY = 'day';
@@ -36,6 +42,42 @@ class TaskFilter extends Model
         self::TIME_PERIOD_MONTH => 'За месяц'
     ];
 
+    /**
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            [['categories', 'myCity', 'withoutExecutor', 'remoteWork', 'date',
+                'title'], 'safe'],
+
+            [['myCity', 'withoutExecutor', 'remoteWork'], 'boolean'],
+            [['title'], 'filter', 'filter' => 'htmlspecialchars'],
+            [['title'], 'string']
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'categories' => 'Категории',
+            'myCity' => 'Мой город',
+            'withoutExecutor' => 'Без исполнителя',
+            'remoteWork' => 'Удаленная работа',
+            'period' => 'Период',
+            'search' => 'Поиск по названию',
+        ];
+    }
+
+    /**
+     * @note
+     * filter implementation
+     *
+     * @param ActiveQuery $tasks
+     */
     public function applyFilters(ActiveQuery $tasks): void
     {
         if ($this->categories) {
@@ -56,29 +98,5 @@ class TaskFilter extends Model
         if ($this->title) {
             $tasks->andWhere(['LIKE', 'title', $this->title]);
         }
-    }
-
-    public function attributeLabels(): array
-    {
-        return [
-            'categories'        => 'Категории',
-            'myCity'            => 'Мой город',
-            'withoutExecutor'   => 'Без исполнителя',
-            'remoteWork'        => 'Удаленная работа',
-            'period'            => 'Период',
-            'search'            => 'Поиск по названию',
-        ];
-    }
-
-    public function rules(): array
-    {
-        return [
-            [['categories', 'myCity', 'withoutExecutor', 'remoteWork', 'date',
-                'title'], 'safe'],
-
-            [['myCity', 'withoutExecutor', 'remoteWork'], 'boolean'],
-            [['title'], 'filter', 'filter' => 'htmlspecialchars'],
-            [['title'], 'string']
-        ];
     }
 }

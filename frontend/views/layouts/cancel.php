@@ -1,12 +1,13 @@
 <?php
 
+use frontend\models\forms\LoginForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 /**
- * @var $form ActiveForm
- * @var $model LoginForm
- * @var TYPE_NAME $taskId
+ * @var ActiveForm $form
+ * @var LoginForm $model
+ * @var int $taskId
  */
 
 ?>
@@ -21,7 +22,7 @@ use yii\helpers\Html;
       </div>
 
       <div class="modal-body">
-          <?= Html::beginForm(Yii::$app->urlManager->createUrl('tasks/cancel')); ?>
+          <?= Html::beginForm(Yii::$app->urlManager->createUrl('tasks/abort')); ?>
 
               <p>
                   Вы собираетесь отказаться от выполнения задания.

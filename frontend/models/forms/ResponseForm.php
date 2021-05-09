@@ -5,31 +5,52 @@ namespace frontend\models\forms;
 use frontend\models\TaskRespond;
 use Yii;
 use yii\base\Model;
+use yii\helpers\Html;
 
 
+/**
+ * Class ResponseForm
+ * @package frontend\models\forms
+ */
 class ResponseForm extends Model
 {
-    public $price;
-    public $comment;
+    public int $price = 0;
+    public string $comment = '';
+    public int $taskId = 0;
 
-    public function attributeLabels(): array
-    {
-        return [
-            'price'   => 'Ваша цена',
-            'comment' => 'Комментарий',
-        ];
-    }
-
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
-            [['price', 'comment'], 'required'],
+            [['price', 'comment', 'taskId'], 'required'],
             [['comment'], 'string'],
-            [['price'], 'integer'],
+            [['price', 'taskId'], 'integer'],
+
+            [['comment'], 'filter', 'filter' => [Html::class, 'encode']],
         ];
     }
 
-    public function createResponse()
+    /**
+     * @return array
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'price' => 'Ваша цена',
+            'comment' => 'Комментарий',
+            'taskId' => 'TaskID',
+        ];
+    }
+
+    /**
+     * @note
+     * creating and saving the response
+     *
+     * @return bool
+     */
+    public function createResponse(): bool
     {
         $respond = new TaskRespond();
         $respond->comment = $this->comment;
@@ -38,7 +59,7 @@ class ResponseForm extends Model
         $respond->datetime = date("Y-m-d H:i:s");
         $respond->user_id = Yii::$app->user->identity->getId();
 
-        $respond->task_id = 2;
+        $respond->task_id = $this->taskId;
         $respond->status_id = TaskRespond::STATUS_NEW;
 
         if (!$respond->save()) {

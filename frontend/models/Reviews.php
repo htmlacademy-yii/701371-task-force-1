@@ -2,87 +2,62 @@
 
 namespace frontend\models;
 
+use yii\db\{ActiveRecord, ActiveQuery};
+
 
 /**
- * This is the model class for table "reviews".
+ * @note
+ * this is the model class for table "reviews".
  *
  * @property int $id
  * @property string $description
- * @property float $raiting
  * @property string $created
- * @property float $price
- * @property int|null $status_id
- * @property int|null $account_id
+ * @property float $rating
+ * @property int $task_id
  *
- * @property Users $account
- * @property TaskStatus $status
- * @property Users[] $users
+ * @property Task $task
  */
-class Reviews extends \yii\db\ActiveRecord
+class Reviews extends ActiveRecord
 {
-    const STATUS_NEW = 1;
-
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'reviews';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            [['description', 'raiting', 'price'], 'required'],
+            [['description', 'rating'], 'required'],
             [['description'], 'string'],
-            [['raiting', 'price'], 'number'],
+            [['rating'], 'number'],
             [['created'], 'safe'],
-            [['status_id', 'account_id'], 'integer'],
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['account_id' => 'id']],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
             'description' => 'Description',
-            'raiting' => 'Raiting',
+            'rating' => 'Rating',
             'created' => 'Created',
-            'price' => 'Price',
-            'status_id' => 'Status ID',
-            'account_id' => 'Account ID',
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAccount()
+    public function getTask(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'account_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatus()
-    {
-        return $this->hasOne(TaskStatus::className(), ['id' => 'status_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(Users::className(), ['raiting_id' => 'id']);
+        return $this->hasOne(Task::class, ['id' => 'task_id']);
     }
 }

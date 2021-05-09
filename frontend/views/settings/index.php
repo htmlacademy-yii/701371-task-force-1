@@ -1,14 +1,20 @@
 <?php
 
 use frontend\assets\SettingsFormAsset;
+use frontend\models\City;
+use frontend\models\Notification;
 use frontend\models\forms\SettingsForm;
+use frontend\models\Users;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
 /**
- * @var SettingsForm $settingsForm
  * @var ArrayHelper $categoryMap
+ * @var Notification[] $notificationList
+ * @var SettingsForm $settingsForm
+ * @var Users $user
+ * @var City[] $cities
  */
 
 SettingsFormAsset::register($this);
@@ -33,7 +39,7 @@ SettingsFormAsset::register($this);
                     <div class="account__redaction-section-wrapper">
                         <div class="account__redaction-avatar">
 
-                            <?= Html::img('@web/img/' . Yii::$app->user->identity->avatar->image_path,
+                            <?= Html::img('@web/img/' . Yii::$app->user->identity->getUserAvatarPath(),
                                 [
                                     'alt' => 'Аватар пользователя',
                                     'style' => 'width: 142px; height: 142px; border-radius: 4px;'

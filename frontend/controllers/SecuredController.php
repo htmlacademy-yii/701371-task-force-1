@@ -8,9 +8,19 @@ use yii\web\Controller;
 use Yii;
 
 
+/**
+ * @note
+ * rules for all others pages, enabled / disabled access to auth/non-auth users
+ *
+ * Class SecuredController
+ * @package frontend\controllers
+ */
 abstract class SecuredController extends Controller
 {
-    public function behaviors()
+    /**
+     * @return array
+     */
+    public function behaviors(): array
     {
         return [
             'access' => [

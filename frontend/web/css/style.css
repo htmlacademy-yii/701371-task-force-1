@@ -2508,3 +2508,106 @@ footer {
   background-image: url("../img/star.png"); }
 
 /*# sourceMappingURL=style.css.map */
+
+
+/* NOTE: Vue */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+[v-cloak] {
+  display: none;
+}
+
+.task-actions__rating {
+  width: 700px;
+}
+
+.task-actions__rating p,
+.task-actions__rating ul {
+  line-height: 1.7;
+}
+
+.task-actions__rating .primary {
+  color: #42b983;
+}
+
+.task-actions__rating .btn {
+  color: #42b983;
+  position: relative;
+  place-content: center;
+  place-items: center;
+  width: fit-content;
+  border-radius: 99px;
+  letter-spacing: 0.05em;
+  border: 1px solid #42b983;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-right: 10px;
+  padding: 0.5rem 1.5rem;
+  white-space: nowrap;
+  font-weight: 700;
+  outline: none;
+  background: #fff;
+  transition: all 0.22s;
+}
+
+.task-actions__rating .btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.task-actions__rating .btn:disabled {
+  background: #eee!important;
+  border: #ddd!important;
+  color: #aaa!important;
+  cursor: not-allowed;
+}
+
+.task-actions__rating .btn:active {
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.task-actions__rating .btn.primary {
+  background: #42b983;
+  color: #fff;
+}
+
+.task-actions__rating .container {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.task-actions__rating .steps {
+  position: relative;
+}
+
+.task-actions__rating .steps-list {
+  list-style: none;
+  margin: 0;
+  margin-bottom: 1rem;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-actions__rating .steps-item span {
+  cursor: pointer;
+  border-radius: 50%;
+  padding: .75rem 1rem;
+  font-size: .75rem;
+  background: #cccccc;
+}
+
+.task-actions__rating .steps-content {
+  margin-bottom: 1rem;
+}
+
+.task-actions__rating .steps-item.active span,
+.task-actions__rating .steps-item.done span {
+  background: #42b983;
+}
+
+.task-actions__rating .steps-item.active span {
+  font-weight: bold;
+  color: #ffffff;
+}
+/* NOTE: end: Vue */

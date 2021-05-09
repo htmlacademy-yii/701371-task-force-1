@@ -2,12 +2,12 @@
 
 namespace frontend\models;
 
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
- * This is the model class for table "message".
+ * @note
+ * this is the model class for table "message".
  *
  * @property int $id
  * @property string $message
@@ -22,32 +22,32 @@ use yii\db\ActiveQuery;
 class Message extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'message';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['message'], 'required'],
             [['message'], 'string'],
             [['sender_id', 'reciever_id', 'task_id'], 'integer'],
-            [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['sender_id' => 'id']],
-            [['reciever_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['reciever_id' => 'id']],
+            [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['sender_id' => 'id']],
+            [['reciever_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['reciever_id' => 'id']],
             [['published_at'], 'safe'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -64,7 +64,7 @@ class Message extends ActiveRecord
      */
     public function getSender(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'sender_id']);
+        return $this->hasOne(Users::class, ['id' => 'sender_id']);
     }
 
     /**
@@ -72,6 +72,6 @@ class Message extends ActiveRecord
      */
     public function getReciever(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'reciever_id']);
+        return $this->hasOne(Users::class, ['id' => 'reciever_id']);
     }
 }

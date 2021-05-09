@@ -1,6 +1,21 @@
 <?php
+
 namespace frontend\helpers;
 
+
+/**
+ * @note
+ * helpers
+ * needed for auxiliary situations in different classes
+ */
+
+/**
+ * @note
+ * for last time visit
+ *
+ * Class PluralFormHelper
+ * @package frontend\helpers
+ */
 class PluralFormHelper
 {
     /**
@@ -22,10 +37,8 @@ class PluralFormHelper
             return $option1;
         } elseif ($n >= 2 && $n <= 4) {
             return $option2;
-        } else {
-            return $option3;
         }
+
+        return $option3;
     }
 }
-
-// NOTE: helpers - for auxiliary situations in different classes

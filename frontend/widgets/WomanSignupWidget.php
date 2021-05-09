@@ -1,13 +1,20 @@
 <?php
 
-namespace frontend\components;
+namespace frontend\widgets;
 
 use yii\base\Widget;
 
 
+/**
+ * Class WomanSignupWidget
+ * @package frontend\components
+ */
 class WomanSignupWidget extends Widget
 {
-    public function run()
+    /**
+     * @return string
+     */
+    public function run(): string
     {
         return $this->render('woman');
     }

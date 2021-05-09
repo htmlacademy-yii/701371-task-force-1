@@ -7,10 +7,19 @@ use frontend\models\Task;
 use frontend\models\Users;
 use Yii;
 
-// TODO: is right ?
+
+/**
+ * Class TaskRespondPermissionHelper
+ * @package frontend\helpers
+ */
 class TaskRespondPermissionHelper
 {
-    public static function canViewAllResponds(Task $task, Users $user)
+    /**
+     * @param Task $task
+     * @param Users $user
+     * @return bool
+     */
+    public static function canViewAllResponds(Task $task, Users $user): bool
     {
         return
             $task->responds

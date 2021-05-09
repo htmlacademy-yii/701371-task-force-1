@@ -4,12 +4,13 @@ namespace frontend\controllers;
 
 use frontend\models\UsersImage;
 use frontend\models\UserSpecialization;
-use yii\helpers\ArrayHelper;
 use frontend\models\Category;
 use frontend\models\City;
 use frontend\models\Users;
 use frontend\models\forms\SettingsForm;
 use Yii;
+use yii\db\StaleObjectException;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 
@@ -22,9 +23,16 @@ use yii\web\UploadedFile;
  */
 class SettingsController extends SecuredController
 {
-    public $avatarsPath = '';
-    public $photosPath = '';
-
+    /**
+     * @note
+     * this method also loading user data on page
+     * look in - populate
+     * after this method is saving user data
+     *
+     * @return string
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
     public function actionIndex(): string
     {
         $settingsForm = new SettingsForm;
@@ -62,16 +70,24 @@ class SettingsController extends SecuredController
                 foreach ($files as $file) {
                     $usersImage = new UsersImage();
 
-                    // NOTE: saving files in folder
+                    /**
+                     * @note saving files in folder
+                     */
                     $fileName = $file->baseName . '.' . $file->extension;
                     $file->saveAs('files/' . $fileName);
 
-                    // NOTE: saving file name for db
+                    /**
+                     * @note saving file name for db
+                     */
                     $usersImage->image_path = $fileName;
                     $usersImage->account_id = Yii::$app->user->identity->getId();
                     $usersImage->save();
                 }
 
+                /**
+                 * @note
+                 * if avatar has changed
+                 */
                 $settingsForm->saveAvatar($avatarUploadedFile);
             }
         }
@@ -87,7 +103,14 @@ class SettingsController extends SecuredController
         ));
     }
 
-    public function actionDrop()
+    /**
+     * @note
+     * for drop image
+     *
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDrop(): void
     {
         $id = Yii::$app->request->post('id');
         $userImage = UsersImage::find()

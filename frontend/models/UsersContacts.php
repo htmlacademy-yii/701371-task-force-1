@@ -2,8 +2,7 @@
 
 namespace frontend\models;
 
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
@@ -13,13 +12,14 @@ use yii\db\ActiveQuery;
  * @property int $phone
  * @property string $skype
  * @property string $messanger
+ * @property int $account_id
  *
  * @property Users[] $users
  */
 class UsersContacts extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -27,19 +27,18 @@ class UsersContacts extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
     public function rules(): array
     {
         return [
-            [['phone', 'skype', 'messanger'], 'required'],
-            [['phone'], 'integer'],
-            [['skype', 'messanger'], 'string', 'max' => 64],
+            [['phone', 'skype', 'messanger'], 'safe'],
+            [['account_id'], 'integer'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -48,6 +47,7 @@ class UsersContacts extends ActiveRecord
             'phone' => 'Phone',
             'skype' => 'Skype',
             'messanger' => 'Messanger',
+            'account_id' => 'AccountId',
         ];
     }
 
@@ -56,6 +56,6 @@ class UsersContacts extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['contacts_id' => 'id']);
+        return $this->hasMany(Users::class, ['contacts_id' => 'id']);
     }
 }

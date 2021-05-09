@@ -73,13 +73,15 @@ AppAsset::register($this);
                 </ul>
             </div>
             <div class="header__town">
-                <select class="multiple-select input town-select" size="1" name="town[]">
-                    <option value="Moscow">Москва</option>
-                    <option selected value="SPB">Санкт-Петербург</option>
-                    <option value="Krasnodar">Краснодар</option>
-                    <option value="Irkutsk">Иркутск</option>
-                    <option value="Vladivostok">Владивосток</option>
-                </select>
+                <label>
+                    <select class="multiple-select input town-select" size="1" name="town[]">
+                        <option value="Moscow">Москва</option>
+                        <option selected value="SPB">Санкт-Петербург</option>
+                        <option value="Krasnodar">Краснодар</option>
+                        <option value="Irkutsk">Иркутск</option>
+                        <option value="Vladivostok">Владивосток</option>
+                    </select>
+                </label>
             </div>
             <div class="header__lightbulb"></div>
             <div class="lightbulb__pop-up">
@@ -99,12 +101,14 @@ AppAsset::register($this);
             </div>
             <div class="header__account">
                 <a class="header__account-photo">
-                    <?= Html::img("@web/img/" . Yii::$app->user->identity->getUserAvatarPath(),
-                        [
-                            'alt' => 'Аватар заказчика',
-                            'style' => 'width: 43px; height: 44px;'
-                        ]
-                    ) ?>
+                    <?php if (!Yii::$app->user->isGuest): ?>
+                        <?= Html::img("@web/img/" . Yii::$app->user->identity->getUserAvatarPath(),
+                            [
+                                'alt' => 'Аватар заказчика',
+                                'style' => 'width: 43px; height: 44px;'
+                            ]
+                        ) ?>
+                    <?php endif; ?>
                 </a>
                 <span class="header__account-name">
                     <?= (Yii::$app->user->isGuest) ? 'Гость' : Yii::$app->user->identity->name; ?>
@@ -130,6 +134,7 @@ AppAsset::register($this);
 
     <main class="page-main">
         <div class="main-container page-container">
+            <?php /* @var string $content */?>
             <?= $content ?>
         </div>
     </main>
@@ -149,31 +154,27 @@ AppAsset::register($this);
             <div class="page-footer__links">
                 <ul class="links__list">
                     <li class="links__item">
-                        <a href="">Задания</a>
+                        <a href="<?= Url::to(['tasks/index']); ?>">Задания</a>
                     </li>
                     <li class="links__item">
-                        <a href="">Мой профиль</a>
+                        <a href="<?= Url::to(['settings/index']); ?>">Мой профиль</a>
                     </li>
                     <li class="links__item">
-                        <a href="">Исполнители</a>
+                        <a href="<?= Url::to(['users/index']); ?>">Исполнители</a>
                     </li>
                     <li class="links__item">
-                        <a href="">Регистрация</a>
-                    </li>
-                    <li class="links__item">
-                        <a href="">Создать задание</a>
-                    </li>
-                    <li class="links__item">
-                        <a href="">Справка</a>
+                        <a href="<?= Url::to(['tasks/create']); ?>">Создать задание</a>
                     </li>
                 </ul>
             </div>
             <div class="page-footer__copyright">
                 <a>
-                    <img class="copyright-logo"
-                         src="./img/academy-logo.png"
-                         width="185" height="63"
-                         alt="Логотип HTML Academy">
+                    <?= Html::img("@web/img/academy-logo.png",
+                        [
+                            'alt' => 'Логотип HTML Academy',
+                            'style' => 'width: 185px; height: 63px;'
+                        ]
+                    ) ?>
                 </a>
             </div>
 

@@ -3,13 +3,15 @@
 namespace frontend\controllers;
 
 use frontend\models\Task;
-use function GuzzleHttp\Promise\all;
+use Yii;
 
 
 /**
- * For working with the user's task list
+ * @note
+ * for working with the user's task list
  *
  * Class MyListController
+ * @package frontend\controllers
  */
 class MyListController extends SecuredController
 {
@@ -22,7 +24,7 @@ class MyListController extends SecuredController
      */
     public function actionIndex(int $status = Task::STATUS_NEW): string
     {
-        $user = \Yii::$app->user;
+        $user = Yii::$app->user;
         $tasks = Task::find()
             ->where([
                 'OR',

@@ -49,6 +49,7 @@ phpunit.phar
 /console/config/
 /console/controllers/
 /console/models/
+/console/migrations/old_migrations/
 /console/runtime/
 
 #common -> files
@@ -69,24 +70,15 @@ phpunit.phar
 /common/codeception.yml
 
 #frontend -> files
-/frontend/config/
 /frontend/runtime
 /frontend/tests/
-
-/frontend/models/ContactForm.php
-/frontend/models/PasswordResetRequestForm.php
-/frontend/models/ResendVerificationEmailForm.php
-/frontend/models/ResetPasswordForm.php
-/frontend/models/forms/SignupForm.php
-/frontend/models/VerifyEmailForm.php
 
 /frontend/web/favicon.ico
 /frontend/web/index-test.php
 /frontend/web/index.php
 /frontend/web/robots.txt
+/frontend/web/files/
 
-/frontend/views/layouts/_main.php
-/frontend/views/site/_index.php
 /frontend/views/site/about.php
 /frontend/views/site/contact.php
 /frontend/views/site/error.php
@@ -95,11 +87,6 @@ phpunit.phar
 /frontend/views/site/resendVerificationEmail.php
 /frontend/views/site/resetPassword.php
 /frontend/views/site/signup.php
-/frontend/views/tasks/_index.php
-
-/frontend/controllers/_TasksController.php
-
-/frontend/behaviors
 
 /frontend/codeception.yml
 /frontend/Dockerfile

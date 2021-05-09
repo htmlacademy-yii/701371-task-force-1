@@ -2,8 +2,7 @@
 
 namespace frontend\models;
 
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
@@ -19,7 +18,7 @@ use yii\db\ActiveQuery;
 class UsersCategory extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -27,7 +26,7 @@ class UsersCategory extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -36,20 +35,20 @@ class UsersCategory extends ActiveRecord
             [['category_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Category::className(),
+                'targetClass' => Category::class,
                 'targetAttribute' => ['category_id' => 'id']
             ],
             [['account_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Users::className(),
+                'targetClass' => Users::class,
                 'targetAttribute' => ['account_id' => 'id']
             ],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function attributeLabels(): array
     {
@@ -65,7 +64,7 @@ class UsersCategory extends ActiveRecord
      */
     public function getCategory(): ActiveQuery
     {
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
     /**
@@ -73,6 +72,6 @@ class UsersCategory extends ActiveRecord
      */
     public function getAccount(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'account_id']);
+        return $this->hasOne(Users::class, ['id' => 'account_id']);
     }
 }

@@ -1484,7 +1484,7 @@ CREATE TABLE `users` (
   `views_counter` int(11) NOT NULL DEFAULT '0',
   `hide_account` tinyint(1) NOT NULL DEFAULT '0',
   `show_contacts_to_customer` tinyint(1) NOT NULL DEFAULT '0',
-  `raiting_id` int(11) DEFAULT NULL,
+  `rating_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
   `contacts_id` int(11) DEFAULT NULL,
   `notification_id` int(11) DEFAULT NULL,
@@ -1499,7 +1499,7 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `name`, `password`, `address`, `born`, `created`, `about`, `visit`, `quest_completed`, `views_counter`, `hide_account`, `show_contacts_to_customer`, `raiting_id`, `city_id`, `contacts_id`, `notification_id`, `role_id`, `specialization_id`, `auth_key`, `password_reset_token`, `status`) VALUES
+INSERT INTO `users` (`id`, `email`, `name`, `password`, `address`, `born`, `created`, `about`, `visit`, `quest_completed`, `views_counter`, `hide_account`, `show_contacts_to_customer`, `rating_id`, `city_id`, `contacts_id`, `notification_id`, `role_id`, `specialization_id`, `auth_key`, `password_reset_token`, `status`) VALUES
 (1, 'kbuttress0@1und1.de', 'Karrie Buttress', 'JcfoKBYAB4k', 'Sesame', '2020-06-25 09:06:10', '2019-08-10 00:00:00', NULL, '2020-06-25 09:06:10', 0, 0, 0, 0, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL),
 (2, 'baymer1@hp.com', 'Bob Aymer', 'ZEE54kg', 'Sesame', '2020-06-25 09:06:10', '2018-12-21 00:00:00', NULL, '2020-06-25 09:06:10', 0, 0, 0, 0, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL),
 (3, 'zboulding2@macromedia.com', 'Zilvia Boulding', 'VJyMV1Zat', 'Sesame', '2020-06-25 09:06:10', '2019-07-25 00:00:00', 'Сложно сказать, почему элементы политического процесса лишь\r\n                                добавляют фракционных разногласий и рассмотрены исключительно\r\n                                в разрезе маркетинговых и финансовых предпосылок', '2020-06-25 09:06:10', 0, 0, 0, 0, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL),
@@ -1799,7 +1799,7 @@ ALTER TABLE `user`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `city_id` (`city_id`),
-  ADD KEY `raiting_id` (`raiting_id`),
+  ADD KEY `rating_id` (`rating_id`),
   ADD KEY `contacts_id` (`contacts_id`),
   ADD KEY `fk_users_role_id_to_users_roles_id` (`role_id`),
   ADD KEY `fk_users_specialization_to_user_specialization_id` (`specialization_id`),
@@ -2055,7 +2055,7 @@ ALTER TABLE `task_respond`
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_users_role_id_to_users_roles_id` FOREIGN KEY (`role_id`) REFERENCES `users_roles` (`id`),
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`raiting_id`) REFERENCES `reviews` (`id`),
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`rating_id`) REFERENCES `reviews` (`id`),
   ADD CONSTRAINT `users_ibfk_3` FOREIGN KEY (`contacts_id`) REFERENCES `users_contacts` (`id`);
 
 --

@@ -2,8 +2,10 @@
 
 namespace frontend\controllers;
 
+use Exception;
 use frontend\models\Category;
 use frontend\models\City;
+use frontend\models\Reviews;
 use frontend\models\Task;
 use frontend\models\TaskRespond;
 use frontend\models\TaskFilter;
@@ -16,6 +18,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 
@@ -28,6 +31,12 @@ use yii\web\UploadedFile;
  */
 class TasksController extends SecuredController
 {
+    /**
+     * @note
+     * for rendering tasks
+     *
+     * @return string
+     */
     public function actionIndex(): string
     {
         $taskFilter = new TaskFilter();
@@ -39,10 +48,10 @@ class TasksController extends SecuredController
             'name'
         );
 
-        if (Yii::$app->request->isPost) {
-            $taskFilter->load(Yii::$app->request->post());
-            $taskFilter->applyFilters($tasks);
-        }
+
+        $taskFilter->load(Yii::$app->request->get());
+        $taskFilter->applyFilters($tasks);
+
 
         /**/
 
@@ -79,20 +88,24 @@ class TasksController extends SecuredController
      */
     public function actionView(int $id): string
     {
+        /** @var Task $task */
         $task = Task::find()
             ->where(['id' => $id])
             ->with(['taskFiles', 'owner', 'responds'])
             ->one();
+
+        if ($task === null) {
+            throw new NotFoundHttpException('Такого задания не найдено');
+        }
 
         $user = Users::find()
             ->where(['id' => Yii::$app->user->identity->getId()])
             ->one();
 
         $responseForm = new ResponseForm();
+        $responseForm->taskId = $task->id;
 
-        if ($task === null) {
-            throw new NotFoundHttpException('Такого задания не найдено');
-        }
+        $this->view->registerJsVar('mapCenter', [$task->latitude, $task->longitude]);
 
         return $this->render('view',
             compact(
@@ -105,11 +118,10 @@ class TasksController extends SecuredController
 
     /**
      * @note
-     * for create new task
+     * creating new task
      *
-     * original way: ..index.php?r=tasks/create
-     *
-     * @return string|\yii\web\Response
+     * @return string|Response
+     * @throws Exception
      */
     public function actionCreate()
     {
@@ -142,7 +154,15 @@ class TasksController extends SecuredController
             'cities'));
     }
 
-    public function actionRefuse($respondId)
+    /**
+     * @note
+     * for refuse task
+     *
+     * @param int $respondId
+     * @return Response|null
+     * @throws BadRequestHttpException
+     */
+    public function actionRefuse(int $respondId): ?Response
     {
         $taskRespond = TaskRespond::findOne($respondId);
 
@@ -151,23 +171,27 @@ class TasksController extends SecuredController
         }
 
         if (
-            $taskRespond->status_id == $taskRespond->isNew()
-            || $taskRespond->status_id == $taskRespond->isApproved()
+            $taskRespond->status_id != $taskRespond->isNew()
+            || $taskRespond->status_id != $taskRespond->isApproved()
         ) {
-            $taskRespond->status_id = TaskRespond::STATUS_REFUSED;
-            $taskRespond->save();
-
-            return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
+            throw new BadRequestHttpException("Задание (Refuse) не найдено");
         }
+
+        $taskRespond->status_id = TaskRespond::STATUS_REFUSED;
+        $taskRespond->save();
+
+        return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
     }
 
     /**
-     * @param $respondId
-     * @return \yii\web\Response|null
-     * @throws NotFoundHttpException
+     * @note
+     * for approved task
+     *
+     * @param int $respondId
+     * @return Response|null
      * @throws BadRequestHttpException
      */
-    public function actionApproved($respondId)
+    public function actionApproved(int $respondId): ?Response
     {
         $taskRespond = TaskRespond::findOne($respondId);
 
@@ -175,20 +199,28 @@ class TasksController extends SecuredController
             throw new BadRequestHttpException("Запрашиваемого отклика не существует");
         }
 
-        if ($taskRespond->status_id == $taskRespond->isNew()) {
-            $taskRespond->status_id = TaskRespond::STATUS_APPROVED;
-            $taskRespond->save();
-
-            $task = $taskRespond->task;
-            $task->executor_id = $taskRespond->user_id;
-            $task->status_id = Task::STATUS_WORK;
-            $task->save();
-
-            return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
+        if ($taskRespond->status_id != $taskRespond->isNew()) {
+            throw new BadRequestHttpException("Задание (Approved) не найдено");
         }
+
+        $taskRespond->status_id = TaskRespond::STATUS_APPROVED;
+        $taskRespond->save();
+
+        $task = $taskRespond->task;
+        $task->executor_id = $taskRespond->user_id;
+        $task->status_id = Task::STATUS_WORK;
+        $task->save();
+
+        return $this->redirect(Url::to(['tasks/view', 'id' => $taskRespond->task_id]));
     }
 
-    public function actionResponse()
+    /**
+     * @note
+     * for response task
+     *
+     * @return Response|null
+     */
+    public function actionResponse(): ?Response
     {
         $response = new ResponseForm();
 
@@ -198,16 +230,25 @@ class TasksController extends SecuredController
                 && $response->validate()
                 && $response->createResponse()
             ) {
-                return $this->redirect(['tasks/index']);
+                return $this->redirect(['tasks/view', 'id' => $response->taskId]);
             }
         }
+
+        return null;
     }
 
-    public function actionCancel()
+    /**
+     * @note
+     * for cancel task
+     *
+     * @return Response|null
+     * @throws BadRequestHttpException
+     */
+    public function actionCancel(): ?Response
     {
         $task = Task::findOne(Yii::$app->request->post('taskId'));
 
-        if ($task->isWork()) {
+        if ($task->isNew()) {
             $task->status_id = Task::STATUS_CANCEL;
             $task->save();
             return $this->redirect(Url::to(['tasks/view', 'id' => $task->id]));
@@ -216,13 +257,49 @@ class TasksController extends SecuredController
         }
     }
 
-    public function actionComplete($taskId)
+    /**
+     * @note
+     * for abort task
+     *
+     * @return Response|null
+     * @throws BadRequestHttpException
+     */
+    public function actionAbort(): ?Response
     {
+        $task = Task::findOne(Yii::$app->request->post('taskId'));
+
+        if ($task->isWork() || $task->isFailed() || $task->isResponded() || $task->isNew()) {
+            $task->status_id = Task::STATUS_CANCEL;
+            $task->save();
+            return $this->redirect(Url::to(['tasks/view', 'id' => $task->id]));
+        } else {
+            throw new BadRequestHttpException('Задание не находиться в работе');
+        }
+    }
+
+    /**
+     * @note
+     * for complete task
+     *
+     * @return Response|null
+     * @throws BadRequestHttpException
+     */
+    public function actionComplete(): ?Response
+    {
+        $taskId = Yii::$app->request->post('taskId');
+
         $task = Task::findOne($taskId);
+        $review = new Reviews();
 
         if ($task->isWork()) {
             $task->status_id = Task::STATUS_COMPLETED;
             $task->save();
+
+            $review->task_id = $taskId;
+            $review->description = Yii::$app->request->post('reviews');
+            $review->rating = Yii::$app->request->post('taskRating');
+            $review->save();
+
             return $this->redirect(Url::to(['tasks/view', 'id' => $taskId]));
         } else {
             throw new BadRequestHttpException('Не возможно завершить, провалено');

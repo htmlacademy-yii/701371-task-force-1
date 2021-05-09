@@ -1,10 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TaskForce\components;
 
-use app\components\exception\TaskException;
+use TaskForce\components\exception\TaskException;
 
+
+/**
+ * @note
+ * class for working with task
+ *
+ * Class Task
+ * @package TaskForce\components
+ */
 class Task
 {
 	const STATUS_NEW = 'new';
@@ -13,14 +22,18 @@ class Task
 	const STATUS_COMPLETED = 'completed';
 	const STATUS_FAILED = 'failed';
 
-	const ROLES_ANONYMUS = 'anonymous';
-	const ROLES_REGISTRED = 'registered';
+	const ROLES_ANONYMOUS = 'anonymous';
+	const ROLES_REGISTERED = 'registered';
 
-	private $status;
-	private $executorId;
-	private $clientId;
-	private $completed;
+	private string $status = '';
+	private int $executorId = 0;
+	private int $clientId = 0;
 
+    /**
+     * Task constructor.
+     * @param array $data
+     * @throws TaskException
+     */
 	public function __construct(array $data = []) {
 		foreach ($data as $key => $value) {
 			if (property_exists($this, $key)) {
@@ -33,8 +46,9 @@ class Task
 		}
 	}
 
-	/**/
-
+    /**
+     * @return array
+     */
 	public function getStatuses(): array
 	{
 		return [
@@ -46,16 +60,25 @@ class Task
 		];
 	}
 
+    /**
+     * @return int|null
+     */
 	public function getIdExecutor(): ?int
 	{
 		return $this->executorId;
 	}
 
+    /**
+     * @return int|null
+     */
 	public function getCurrentIdClient(): ?int
 	{
 		return $this->clientId;
 	}
 
+    /**
+     * @return string|null
+     */
 	public function getCurrentStatus(): ?string
 	{
 		return $this->status;

@@ -1,5 +1,6 @@
 <?php
 
+use frontend\models\forms\LoginForm;
 use frontend\models\forms\ResponseForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -52,6 +53,9 @@ use yii\widgets\ActiveForm;
                         ]); ?>
 
                     <?= Html::submitButton('Опубликовать', ['class' => 'button modal-button']); ?>
+
+                    <?= $form->field($responseForm, 'taskId', ['template' => '{input}'])
+                            ->hiddenInput(); ?>
 
                 <?php ActiveForm::end(); ?>
             </div>

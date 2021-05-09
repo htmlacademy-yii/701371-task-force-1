@@ -1,14 +1,13 @@
 <?php
 
-use frontend\models\Task;
 use frontend\models\Users;
-use frontend\models\UsersCategory;
 use frontend\models\UsersFilter;
 use frontend\widgets\ElapsedTimeWidget;
 use frontend\widgets\RatingWidget;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
 
@@ -53,20 +52,24 @@ use yii\widgets\LinkPager;
                                     ]
                                 ) ?>
                             </a>
-                            <span><?= $user->completedTasksCount; ?> заданий</span>
+                            <span><?= count($user->tasks); ?> заданий</span>
                             <span><?= count($user->reviews); ?> отзывов</span>
                         </div>
                         <div class="feedback-card__top--name user__search-card">
-                            <p class="link-name"><a href="#" class="link-regular"><?= $user->name; ?></a></p>
+                            <p class="link-name">
+                                <a href="<?= Url::to(['users/view', 'id' => $user->id]); ?>" class="link-regular">
+                                    <?= $user->name; ?>
+                                </a>
+                            </p>
 
-                            <?php echo RatingWidget::widget(['currentRaiting' => $user->averageRating]); ?>
+                            <?php echo RatingWidget::widget(['currentRating' => $user->averageRating]); ?>
                             <b><?= $user->averageRating; ?></b>
 
                             <p class="user__search-content">
                                 <?= $user->about; ?>
                             </p>
                         </div>
-                        <span class="new-task__time">Был на сайте <?= ElapsedTimeWidget::widget(['currentTime' => $user->visit]); ?> назад</span>
+                        <span class="new-task__time">Был на сайте <?= ElapsedTimeWidget::widget(['timeStamp' => $user->visit]); ?> назад</span>
                     </div>
                     <div class="link-specialization user__search-link--bottom">
 
@@ -116,13 +119,13 @@ use yii\widgets\LinkPager;
 
                                     return <<<HTML
                                       <input class="visually-hidden checkbox__input" 
-                                          id="{$index}" 
+                                          id="$index" 
                                           type="checkbox" 
-                                          name="{$name}" 
-                                          value="{$value}" 
-                                          {$isChecked}>
+                                          name="$name" 
+                                          value="$value" 
+                                          $isChecked>
                                         
-                                      <label for="{$index}">{$label}</label>
+                                      <label for="$index">$label</label>
 HTML;
                               }
                           ]

@@ -4,11 +4,11 @@ namespace frontend\models\forms;
 
 use app\models\UserNotification;
 use DateTime;
-use frontend\models\Users;
-use frontend\models\UsersAvatar;
-use frontend\models\UserSpecialization;
+use Exception;
+use frontend\models\{Users, UsersAvatar, UsersContacts, UserSpecialization};
 use Yii;
 use yii\base\Model;
+use yii\db\StaleObjectException;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
 
@@ -43,48 +43,44 @@ class SettingsForm extends Model
 
     /**/
 
-    /** @note img with avatar */
-    private $avatar;
-
     /** @note for user name */
-    public $name;
-    public $oldName;
+    public string $name;
+    public string $oldName;
 
     /** @note for user eMail */
-    public $email;
-    public $oldEmail;
+    public string $email;
+    public string $oldEmail;
 
     /** @note for user city ID */
-    public $cityId;
-    public $oldCityId;
+    public ?int $cityId;
+    public ?int $oldCityId;
 
     /** @note for user birthday */
-    public $birthday;
-    public $oldBirthday;
+    public string $birthday;
+    public string $oldBirthday;
 
     /** @note for user description */
-    public $description;
-    public $oldDescription;
+    public ?string $description = '';
+    public ?string $oldDescription = '';
 
     /** @note for user password */
-    public $password;
-    public $oldPassword;
-    public $passwordCopy;
-    public $oldPasswordCopy;
+    public string $password = '';
+    public string $oldPassword = '';
+    public string $passwordCopy = '';
+    public string $oldPasswordCopy = '';
 
     /** @note for user uploading files */
-    public $files;
-    public $oldFiles;
+    public array $files = [];
 
     /** @note for user contacts */
-    public $phone;
-    public $oldPhone;
+    public string $phone = '';
+    public string $oldPhone = '';
 
-    public $skype;
-    public $oldSkype;
+    public string $skype;
+    public string $oldSkype;
 
-    public $otherMessenger;
-    public $oldOtherMessenger;
+    public string $otherMessenger;
+    public string $oldOtherMessenger;
 
     /** @note for user check boxes */
     public $specialization;
@@ -93,53 +89,13 @@ class SettingsForm extends Model
     public $notification;
     public $oldNotification;
 
-    /**/
+    /** @note img with avatar */
+    private $avatar;
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public static function tableName()
-    {
-        return 'user_setting';
-    }
-
-    /**/
-
-    public function uploadFiles(): void
-    {
-        /**
-         * @note
-         * get data from a field with no name:
-         * 'name'=>'Image[image]'
-         *
-         * but, with name:
-         * 'name'=>'image'
-         */
-        $this->files = UploadedFile::getInstancesByName('files');
-    }
-
-    /**/
-
-    public function getAvatar(): ?UploadedFile
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @note
-     * sets the user's avatar to the form model
-     */
-    public function setAvatar(): void
-    {
-        $this->avatar = UploadedFile::getInstance($this, 'avatar');
-    }
-
-    /**/
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['email'], 'required'],
@@ -149,10 +105,11 @@ class SettingsForm extends Model
             [['description'], 'string'],
             [['name'], 'string', 'max' => 31],
             [['email', 'passwordCopy', 'skype', 'otherMessenger'], 'string', 'max' => 63],
+
+            [['name', 'description', 'skype', 'phone', 'otherMessenger'],
+                'filter', 'filter' => [Html::class, 'encode']],
         ];
     }
-
-    /**/
 
     /**
      * @return array
@@ -181,16 +138,156 @@ class SettingsForm extends Model
         ];
     }
 
-    /**/
+    /**
+     * @note
+     * get current user avatar
+     *
+     * @return string
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
 
     /**
      * @note
-     * saving user data
-     *
-     * @var Users $user
-     * @throws \Exception
+     * sets the user's avatar to the form model
      */
-    private function saveUserData($user)
+    public function setAvatar(): void
+    {
+        $this->avatar = UploadedFile::getInstance($this, 'avatar');
+    }
+
+    /**
+     * @note
+     * for uploading files
+     */
+    public function uploadFiles(): void
+    {
+        /**
+         * @note
+         * get data from a field with no name:
+         * 'name'=>'Image[image]'
+         *
+         * but, with name:
+         * 'name'=>'image'
+         */
+        $this->files = UploadedFile::getInstancesByName('files');
+    }
+
+    /**
+     * @note
+     * save all user data
+     *
+     * @return bool
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function save(): bool
+    {
+        $user = Users::findOne(Yii::$app->user->identity->getId());
+
+        $this->saveUserData($user);
+        $this->saveUserSpecialization($user);
+        $this->saveUserPassword($user);
+
+
+        /**
+         * @note
+         * loading files look in the controllers -> SettingsController
+         */
+
+        $this->saveUserMessangers($user);
+        $this->saveUserNotification($user);
+
+        if (!$user->save(false)) {
+            var_dump($user->getErrors());
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @note
+     * saving avatar of the current user
+     *
+     * @param $avatarUploadedFile
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function saveAvatar($avatarUploadedFile): void
+    {
+        if (!empty($this->avatar)) {
+            $user = Users::findOne(Yii::$app->user->identity->getId());
+            $avatarModel = new UsersAvatar();
+            $currentAvatar = UsersAvatar::find()
+                ->where(['account_id' => Yii::$app->user->identity->getId()])
+                ->one();
+
+
+            if (!empty($user->avatar)) {
+                $currentAvatar->delete();
+            }
+
+            $fileName = $avatarUploadedFile->baseName . '.' . $avatarUploadedFile->extension;
+            $avatarUploadedFile->saveAs('files/' . $fileName);
+
+            $avatarModel->image_path = $fileName;
+            $avatarModel->account_id = Yii::$app->user->identity->getId();
+            $avatarModel->save();
+        }
+    }
+
+    /**
+     * @note
+     * saving other data user
+     *
+     * @param $id
+     * @throws Exception
+     */
+    public function populate($id): void
+    {
+        /** @var Users $user */
+        $user = Users::findOne($id);
+
+        /** @var UsersContacts $userContacts */
+        $userContacts = UsersContacts::find()
+            ->where(['account_id' => $id])
+            ->one();
+
+        $this->name = $this->oldName = $user->name;
+        $this->email = $this->oldEmail = $user->email;
+
+        /**
+         * @note
+         * drop down list - it determines which element will be selected, magic....
+         */
+        $this->cityId = $this->oldCityId = $user->city_id;
+
+        $this->birthday = $this->oldBirthday = (new DateTime($user->born))->format('Y-m-d');
+        $this->description = $this->oldDescription = $user->about;
+
+        $this->specialization = $this->oldSpecialization = $user->specializationsList
+            ? array_column($user->specializationsList, 'category_id')
+            : [];
+
+        $this->phone = $this->oldPhone = $userContacts->phone ?? '';
+        $this->skype = $this->oldSkype = $userContacts->skype ?? '';
+        $this->otherMessenger = $this->oldOtherMessenger = $userContacts->messanger ?? '';
+
+        $this->notification = $this->oldNotification = $user->notificationsList ? array_column($user->notificationsList, 'notification_type') : [];
+    }
+
+    /**
+     * @note
+     * for saving basic block of user settings
+     *
+     * @param $user
+     * @return void
+     * @throws Exception
+     */
+    private function saveUserData($user): void
     {
         if ($this->name != $this->oldName) {
             $user->name = $this->name;
@@ -211,6 +308,8 @@ class SettingsForm extends Model
         if ($this->description != $this->oldDescription) {
             $user->about = $this->description;
         }
+
+        $user->save();
     }
 
     /**
@@ -219,12 +318,12 @@ class SettingsForm extends Model
      *
      * @param $user
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
-    private function saveUserSpecialization($user)
+    private function saveUserSpecialization($user): void
     {
-        $specializationToAdd = array_diff($this->specialization, $this->oldSpecialization);
-        $specializationToDrop = array_diff($this->oldSpecialization, $this->specialization);
+        $specializationToAdd = array_diff($this->specialization ?: [], $this->oldSpecialization);
+        $specializationToDrop = array_diff($this->oldSpecialization, $this->specialization ?: []);
 
         if ($specializationToAdd) {
             foreach ($specializationToAdd as $specializationId) {
@@ -260,34 +359,49 @@ class SettingsForm extends Model
      *
      * @param $user
      */
-    private function saveUserPassword($user)
+    private function saveUserPassword($user): void
     {
         if (($this->password && $this->oldPassword
-            && $this->passwordCopy && $this->oldPasswordCopy) !== $user->password)
-        {
-            $user->password = $this->password;
+            && $this->passwordCopy && $this->oldPasswordCopy) === $user->password) {
+            return;
         }
+
+        $user->password = $this->password;
+        $user->save();
     }
 
     /**
      * @note
      * saving user phone, skype and messanger
      *
-     * @param $user
+     * @param Users $user
+     * @return bool
      */
-    private function saveUserMessangers($user)
+    private function saveUserMessangers(Users $user): bool
     {
-        if ($this->phone != $this->oldPhone) {
-            $user->contacts->phone = $this->phone;
+        $userContacts = UsersContacts::find()
+            ->where(['account_id' => $user->id])
+            ->one();
+
+        if (!$userContacts) {
+            $userContacts = new UsersContacts();
+        }
+
+        if ($this->phone != $this->oldPhone || $this->phone != '') {
+            $userContacts->phone = $this->phone;
         }
 
         if ($this->skype != $this->oldSkype) {
-            $user->contacts->skype = $this->skype;
+            $userContacts->skype = $this->skype;
         }
 
         if ($this->otherMessenger != $this->oldOtherMessenger) {
-            $user->contacts->messanger = $this->otherMessenger;
+            $userContacts->messanger = $this->otherMessenger;
         }
+
+        $userContacts->account_id = $user->id;
+
+        return $userContacts->save();
     }
 
     /**
@@ -296,12 +410,14 @@ class SettingsForm extends Model
      *
      * @param $user
      */
-    private function saveUserNotification($user) {
-        $notificationToAdd  = array_diff($this->notification, $this->oldNotification);
-        $notificationToDrop = array_diff($this->oldNotification, $this->notification);
+    private function saveUserNotification($user): void
+    {
+        $notificationToAdd  = array_diff($this->notification ?: [], $this->oldNotification);
+        $notificationToDrop = array_diff($this->oldNotification, $this->notification ?: []);
 
         if ($notificationToAdd) {
             foreach ($notificationToAdd as $notificationId) {
+                /** @var UserNotification $notificationModel */
                 $notificationModel = UserNotification::find()
                     ->where(['user_id' => $user->id])
                     ->andWhere(['notification_type' => $notificationId])
@@ -311,20 +427,16 @@ class SettingsForm extends Model
                     $notificationModel = new UserNotification();
                     $notificationModel->user_id = $user->id;
                     $notificationModel->notification_type = $notificationId;
-                    $notificationModel->active = 1;
-                    $notificationModel->save();
-
-                    var_dump($notificationModel->getErrors());
-                } else {
-                    $notificationModel->active = 1;
-                    $notificationModel->save();
-                    var_dump($notificationModel->getErrors());
                 }
+
+                $notificationModel->active = 1;
+                $notificationModel->save();
             }
         }
 
         if ($notificationToDrop) {
             foreach ($notificationToDrop as $notificationId) {
+                /** @var UserNotification $model */
                 $model = UserNotification::find()
                     ->where(['notification_type' => $notificationId, 'user_id' => $user->id])
                     ->one();
@@ -341,95 +453,5 @@ class SettingsForm extends Model
                 $model->save();
             }
         }
-    }
-
-    /**
-     * @note
-     * save all user data
-     *
-     * @return bool
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function save()
-    {
-        $user = Users::findOne(Yii::$app->user->identity->getId());
-
-        $this->saveUserData($user);
-        $this->saveUserSpecialization($user);
-        $this->saveUserPassword($user);
-
-
-        /**
-         * @note
-         * loading files look in the controllers -> SettingsController
-         */
-
-        $this->saveUserMessangers($user);
-        $this->saveUserNotification($user);
-
-        if (!$user->save(false)) {
-            var_dump($user->getErrors());
-            return false;
-        }
-
-        return true;
-    }
-
-    /**/
-
-    /**
-     * @note
-     * saving avatar of the current user
-     *
-     * @param $avatarUploadedFile
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function saveAvatar($avatarUploadedFile)
-    {
-        if (!empty($this->avatar)) {
-            $currentAvatar = UsersAvatar::find()
-                ->where(['account_id' => Yii::$app->user->identity->getId()])
-                ->one();
-            $currentAvatar->delete();
-
-            $avatarModel = new UsersAvatar();
-            $fileName = $avatarUploadedFile->baseName . '.' . $avatarUploadedFile->extension;
-            $avatarUploadedFile->saveAs('files/' . $fileName);
-
-            $avatarModel->image_path = $fileName;
-            $avatarModel->account_id = Yii::$app->user->identity->getId();
-            $avatarModel->save();
-        }
-    }
-
-    /**/
-
-    public function populate($id)
-    {
-        $user = Users::findOne($id);
-
-        $this->name = $this->oldName = $user->name;
-        $this->email = $this->oldEmail = $user->email;
-
-        /**
-         * @note
-         * drop down list - it determines which element will be selected, magic....
-         */
-        $this->cityId = $this->oldCityId = $user->city_id;
-
-        $this->birthday = $this->oldBirthday = (new DateTime($user->born))->format('Y-m-d');
-        $this->description = $this->oldDescription = $user->about;
-
-        $this->specialization = $this->oldSpecialization = $user->specializationsList
-            ? array_column($user->specializationsList, 'category_id')
-            : [];
-
-        $this->phone = $this->oldPhone = Html::encode($user->contacts->phone ?? '');
-        $this->skype = $this->oldSkype = Html::encode($user->contacts->skype ?? '');
-        $this->otherMessenger = $this->oldOtherMessenger = Html::encode(Yii::$app->user->identity->contacts->messanger ?? '');
-
-        $this->notification = $this->oldNotification = $user->notificationsList ? array_column($user->notificationsList, 'notification_type') : [];
     }
 }

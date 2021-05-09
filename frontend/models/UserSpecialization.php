@@ -2,6 +2,8 @@
 
 namespace frontend\models;
 
+use yii\db\{ActiveRecord, ActiveQuery};
+
 
 /**
  * @note
@@ -13,20 +15,26 @@ namespace frontend\models;
  *
  * @property Category $category
  */
-class UserSpecialization extends \yii\db\ActiveRecord
+class UserSpecialization extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @note
+     * set table name
+     *
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'user_specialization';
     }
 
     /**
-     * {@inheritdoc}
+     * @note
+     * for rules validation
+     *
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['category_id', 'user_id'], 'required'],
@@ -36,9 +44,12 @@ class UserSpecialization extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @note
+     * for labels
+     *
+     * @return array
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -47,7 +58,10 @@ class UserSpecialization extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getCategory()
+    /**
+     * @return ActiveQuery
+     */
+    public function getCategory(): ActiveQuery
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }

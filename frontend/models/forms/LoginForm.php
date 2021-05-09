@@ -6,21 +6,23 @@ use yii\base\Model;
 use frontend\models\Users;
 
 
+/**
+ * @note
+ * form for login user
+ *
+ * Class LoginForm
+ * @package frontend\models\forms
+ */
 class LoginForm extends Model
 {
+    public string $email = '';
+    public string $password = '';
+
     private $userBuffer;
 
-    public $email;
-    public $password;
-
-    public function attributeLabels(): array
-    {
-        return [
-            'email' => 'Логин',
-            'password' => 'Пароль',
-        ];
-    }
-
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -37,7 +39,25 @@ class LoginForm extends Model
         ];
     }
 
-    public function validatePassword($attribute, $params)
+    /**
+     * @return array
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'email' => 'Логин',
+            'password' => 'Пароль',
+        ];
+    }
+
+    /**
+     * @note
+     * for validation user password
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function validatePassword($attribute, $params): void
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
@@ -48,7 +68,13 @@ class LoginForm extends Model
         }
     }
 
-    public function getUser()
+    /**
+     * @note
+     * we receive the user by email
+     *
+     * @return Users|null
+     */
+    public function getUser(): ?Users
     {
         if ($this->userBuffer === null) {
             $this->userBuffer = Users::findOne(['email' => $this->email]);

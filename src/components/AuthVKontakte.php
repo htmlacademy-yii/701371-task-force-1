@@ -1,8 +1,6 @@
 <?php
 
-
 namespace TaskForce\components;
-
 
 use app\models\Auth;
 use frontend\models\Users;
@@ -11,6 +9,13 @@ use yii\authclient\OAuth2;
 use yii\web\NotFoundHttpException;
 
 
+/**
+ * @note
+ * VK auth & login, used OAuth
+ *
+ * Class AuthVKontakte
+ * @package TaskForce\components
+ */
 class AuthVKontakte
 {
     /**
@@ -56,7 +61,17 @@ class AuthVKontakte
         }
     }
 
-    private static function registryNewUser($client, $attributes)
+    /**
+     * @note
+     * create user in DB
+     *
+     * @param $client
+     * @param $attributes
+     * @return Users|null
+     * @throws \yii\base\Exception
+     * @throws \yii\db\Exception
+     */
+    private static function registryNewUser($client, $attributes): ?Users
     {
         if (isset($attributes['email']) && Users::find()->where(['email' => $attributes['email']])->exists()) {
             Yii::$app->getSession()->setFlash('error', [

@@ -7,7 +7,8 @@ use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
- * This is the model class for table "users_roles".
+ * @note
+ * this is the model class for table "users_roles".
  *
  * @property int $id
  * @property string $title
@@ -20,7 +21,7 @@ class UsersRoles extends ActiveRecord
     const CUSTOMER_KEY_CODE = 'customer';
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -28,7 +29,7 @@ class UsersRoles extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -40,7 +41,7 @@ class UsersRoles extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -56,10 +57,13 @@ class UsersRoles extends ActiveRecord
      */
     public function getUsers(): ActiveQuery
     {
-        return $this->hasMany(Users::className(), ['role_id' => 'id']);
+        return $this->hasMany(Users::class, ['role_id' => 'id']);
     }
 
-    public function isCustomer()
+    /**
+     * @return bool
+     */
+    public function isCustomer(): bool
     {
         return $this->key_code == self::CUSTOMER_KEY_CODE;
     }

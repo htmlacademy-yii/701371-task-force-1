@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace app\components\exception;
+namespace TaskForce\components\exception;
 use Exception;
 
 class ImportException extends Exception

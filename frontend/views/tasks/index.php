@@ -1,7 +1,10 @@
 <?php
 
+use frontend\models\Category;
+use frontend\models\Task;
 use frontend\models\TaskFilter;
 use frontend\widgets\ElapsedTimeWidget;
+use yii\data\Pagination;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -16,7 +19,7 @@ use yii\widgets\LinkPager;
  * @var Category[] $categories
  * @var TaskFilter[] $taskFilter
  * @var Task[] $tasks
- * @var Task[] $pagesPagination
+ * @var Pagination $pagesPagination
  */
 
 $this->title = 'Главная страница';
@@ -38,7 +41,7 @@ Yii::$app->formatter->language = 'ru-RU';
                                 <a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular">
                                     <h2><?= $task->title; ?></h2>
                                 </a>
-                                <a class="new-task__type link-regular" href="#">
+                                <a class="new-task__type link-regular" href="?TaskFilter[categories]=<?= $task->category->id; ?>">
                                     <p><?= $task->category->name; ?></p>
                                 </a>
 
@@ -50,7 +53,7 @@ Yii::$app->formatter->language = 'ru-RU';
                             <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
                             <p class="new-task__place"><?= $task->address; ?></p>
 
-                            <?= ElapsedTimeWidget::widget(['currentTime' => $task->created]); ?>
+                            <?= ElapsedTimeWidget::widget(['timeStamp' => $task->created]); ?>
 
                         </div>
 
@@ -83,7 +86,7 @@ Yii::$app->formatter->language = 'ru-RU';
         </section>
         <section  class="search-task">
             <div class="search-task__wrapper">
-                <form class="search-task__form" name="test" method="post" action="#">
+                <form class="search-task__form" name="test" method="get" action="#">
                     <fieldset class="search-task__categories">
                         <legend>Категории</legend>
 
@@ -105,13 +108,13 @@ Yii::$app->formatter->language = 'ru-RU';
 
 return <<<HTML
                                         <input class="visually-hidden checkbox__input" 
-                                            id="{$index}" 
+                                            id="$index" 
                                             type="checkbox" 
-                                            name="{$name}" 
-                                            value="{$value}" 
-                                            {$isChecked}>
+                                            name="$name" 
+                                            value="$value" 
+                                            $isChecked>
                                           
-                                        <label for="{$index}">{$label}</label>
+                                        <label for="$index">$label</label>
 HTML;
                                         }
                                     ]

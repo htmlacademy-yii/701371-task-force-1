@@ -47,13 +47,13 @@ AutocompleteAsset::register($this);
 
                     <?= $form->field($taskForm, 'name',
                         [
-                            'labelOptions'  => ['style' => 'color: black;'],
-                            'options'       => ['class' => 'create__task-form form-create'],
+                            'labelOptions' => ['style' => 'color: black;'],
+                            'options' => ['class' => 'create__task-form form-create'],
                         ])
                         ->textInput([
                             'tabindex' => 1,
-                            'class'         => 'input textarea',
-                            'placeholder'   => 'Повесить полку',
+                            'class' => 'input textarea',
+                            'placeholder' => 'Повесить полку',
                         ])
                         ->hint('Кратко опишите суть работы', [
                             'class' => 'form-create__span',
@@ -63,14 +63,14 @@ AutocompleteAsset::register($this);
 
                     <?= $form->field($taskForm, 'description',
                         [
-                            'labelOptions'  => ['style' => 'color: black;'],
-                            'options'       => ['class' => 'create__task-form form-create'],
+                            'labelOptions' => ['style' => 'color: black;'],
+                            'options' => ['class' => 'create__task-form form-create'],
                         ])
                         ->textArea([
                             'tabindex' => 2,
-                            'class'         => 'input textarea',
-                            'placeholder'   => 'Разместите ваш текст',
-                            'rows'          => 7,
+                            'class' => 'input textarea',
+                            'placeholder' => 'Разместите ваш текст',
+                            'rows' => 7,
                         ])
                         ->hint('Укажите все пожелания и детали, 
                             чтобы исполнителям было проще соориентироваться', [
@@ -81,13 +81,13 @@ AutocompleteAsset::register($this);
 
                     <?= $form->field($taskForm, 'category',
                         [
-                            'labelOptions'  => ['style' => 'color: black;'],
-                            'options'       => ['class' => 'create__task-form form-create'],
+                            'labelOptions' => ['style' => 'color: black;'],
+                            'options' => ['class' => 'create__task-form form-create'],
                         ])
                         ->dropDownList($categories, [
                             'tabindex' => 3,
-                            'class'         => 'multiple-select input multiple-select-big',
-                            'placeholder'   => 'Разместите ваш текст',
+                            'class' => 'multiple-select input multiple-select-big',
+                            'placeholder' => 'Разместите ваш текст',
                         ])
                         ->hint('Выберите категорию', [
                             'class' => 'form-create__span',
@@ -97,8 +97,8 @@ AutocompleteAsset::register($this);
 
                     <?= $form->field($taskForm, 'files[]',
                         [
-                            'labelOptions'  => ['style' => 'color: black;'],
-                            'options'       => ['class' => 'create__task-form form-create'],
+                            'labelOptions' => ['style' => 'color: black;'],
+                            'options' => ['class' => 'create__task-form form-create'],
                         ])
                         ->fileInput([
                             'tabindex' => 4,
@@ -111,21 +111,21 @@ AutocompleteAsset::register($this);
 
                     <?= $form->field($taskForm, 'address',
                         [
-                            'labelOptions'  => ['style' => 'color: black;'],
-                            'options'       => ['class' => 'create__task-form form-create'],
+                            'labelOptions' => ['style' => 'color: black;'],
+                            'options' => ['class' => 'create__task-form form-create'],
                         ])
                         ->dropDownList($cities, [
-                            'tabindex'      => 5,
-                            'class'         => 'multiple-select input multiple-select-big',
-                            'placeholder'   => 'Разместите ваш текст',
+                            'tabindex' => 5,
+                            'class' => 'multiple-select input multiple-select-big',
+                            'placeholder' => 'Разместите ваш текст',
                         ]); ?>
 
                     <!-- ** -->
 
                     <div class="create__price-time">
                         <?= $form->field($taskForm, 'budget', [
-                                'labelOptions'  => ['style' => 'color: black;'],
-                                'options'       => ['class' => 'create__task-form form-create'],
+                                'labelOptions' => ['style' => 'color: black;'],
+                                'options' => ['class' => 'create__task-form form-create'],
                             ])
                             ->textarea([
                                 'tabindex' => 6,
@@ -140,8 +140,8 @@ AutocompleteAsset::register($this);
 
                         <?= $form->field($taskForm, 'term',
                             [
-                                'labelOptions'  => ['style' => 'color: black;'],
-                                'options'       => ['class' => 'create__task-form form-create'],
+                                'labelOptions' => ['style' => 'color: black;'],
+                                'options' => ['class' => 'create__task-form form-create'],
                             ])
                             ->input('date', [
                                 'class' => 'input-middle input input-date',

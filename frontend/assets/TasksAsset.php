@@ -12,6 +12,13 @@ class TasksAsset extends AssetBundle
 
     public $js = [
         'js/messenger.js',
+
+        /**
+         * @note
+         * including Vue.js
+         */
+        '//unpkg.com/vue@next',
+        'js/ratingVue.js',
     ];
 
     public $depends = [

@@ -83,8 +83,8 @@ use yii\helpers\Url;
 
                     <div class="new-task__card">
                         <div class="new-task__title">
-                            <a href="#" class="link-regular"><h2><?= $task->title; ?></h2></a>
-                            <a  class="new-task__type link-regular" href="#"><p><?= $task->category->name; ?></p></a>
+                            <a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular"><h2><?= $task->title; ?></h2></a>
+                            <a  class="new-task__type link-regular" href="<?= Yii::$app->urlManager->createUrl(['tasks', 'TaskFilter' => ['categories' => $task->category->id]]); ?>"><p><?= $task->category->name; ?></p></a>
                         </div>
                         <div class="task-status done-status"><?= $task->status->title; ?></div>
                         <p class="new-task_description">
@@ -92,7 +92,7 @@ use yii\helpers\Url;
                         </p>
                         <div class="feedback-card__top ">
                             <a href="#">
-                                <?= Html::img("@web/img/{$task->owner->avatar->image_path}",
+                                <?= Html::img('@web/img/' . $task->owner->getUserAvatarPath(),
                                     [
                                         'alt' => 'Аватар заказчика',
                                         'style' => 'width: 36px; height: 36px;'
@@ -101,7 +101,7 @@ use yii\helpers\Url;
                             </a>
                             <div class="feedback-card__top--name my-list__bottom">
                                 <p class="link-name">
-                                    <a href="#" class="link-regular">
+                                    <a href="<?= Url::to(['users/view', 'id' => $task->owner->id]); ?>" class="link-regular">
                                         <?= $task->owner->name; ?>
                                     </a>
                                 </p>
@@ -117,7 +117,7 @@ use yii\helpers\Url;
                                         ->count(); ?>
                                 </b></a>
 
-                                <?= RatingWidget::widget(['currentRaiting' => $task->owner->averageRating]); ?>
+                                <?= RatingWidget::widget(['currentRating' => $task->owner->averageRating]); ?>
                                 <b><?= round($task->owner->averageRating, 2); ?></b>
                             </div>
                         </div>

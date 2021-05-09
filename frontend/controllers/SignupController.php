@@ -5,14 +5,26 @@ namespace frontend\controllers;
 use frontend\models\City;
 use frontend\models\forms\SignupForm;
 use Yii;
-use yii\filters\AccessControl;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Response;
 
 
+/**
+ * @note
+ * for login & save
+ *
+ * Class SignupController
+ * @package frontend\controllers
+ */
 class SignupController extends Controller
 {
-    public function behaviors()
+    /**
+     * @return array
+     */
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -32,13 +44,12 @@ class SignupController extends Controller
         ];
     }
 
-    /**/
-
     /**
      * @note
-     * ...index.php?r=signup
+     * login & save there
      *
-     * @return string|\yii\web\Response
+     * @return string|Response
+     * @throws Exception
      */
     public function actionIndex()
     {

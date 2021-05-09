@@ -3,7 +3,8 @@
 namespace app\models;
 
 use frontend\models\Users;
-use yii\db\ActiveRecord;
+use yii\db\{ActiveQuery, ActiveRecord};
+
 
 /**
  * This is the model class for table "auth".
@@ -18,30 +19,30 @@ use yii\db\ActiveRecord;
 class Auth extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'auth';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['user_id', 'source', 'source_id'], 'required'],
             [['user_id'], 'integer'],
             [['source', 'source_id'], 'string', 'max' => 255],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -52,12 +53,13 @@ class Auth extends ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * @note
+     * gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(Users::class, ['id' => 'user_id']);
     }
 }

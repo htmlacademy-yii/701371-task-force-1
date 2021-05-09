@@ -4,6 +4,8 @@ namespace frontend\modules\api\controllers;
 
 use frontend\models\Message;
 use frontend\models\Task;
+use yii\base\ExitException;
+use yii\db\ActiveRecord;
 use yii\helpers\Json;
 use yii\web\Controller;
 use Yii;
@@ -13,15 +15,22 @@ class MessagesController extends Controller
 {
     public $enableCsrfValidation = false;
 
-    public function actionGet($id)
+    /**
+     * @param int $id
+     * @throws ExitException
+     */
+    public function actionGet(int $id): void
     {
+        /** @var Task $task */
         $task = Task::findOne($id);
+
+        /** @var Message[] $messages */
         $messages = Message::find()
             ->where([
                 'task_id' => $id,
 
                 /**
-                 * NOTE:
+                 * @note
                  * yii2 translates this to the - IN...
                  * task_id = ? AND sender_id IN (?, ?)
                  */
@@ -41,10 +50,14 @@ class MessagesController extends Controller
             ];
         }
 
-        \Yii::$app->end(Json::encode($data));
+        Yii::$app->end(Json::encode($data));
     }
 
-    public function actionCreate(int $id)
+    /**
+     * @param int $id
+     * @throws ExitException
+     */
+    public function actionCreate(int $id): void
     {
         Yii::$app->response->setStatusCode(201);
         $task = Task::findOne($id);
@@ -60,7 +73,10 @@ class MessagesController extends Controller
 
         $message->save();
 
-        // NOTE: stopping processing of all requests
+        /**
+         * @note
+         * stopping processing of all requests
+         */
         Yii::$app->end(Json::encode([
             'id' => $message->id,
             'message' => $message->message,
@@ -69,7 +85,11 @@ class MessagesController extends Controller
         ]));
     }
 
-    public function actionView(int $id)
+    /**
+     * @param int $id
+     * @return array|ActiveRecord[]
+     */
+    public function actionView(int $id): ?array
     {
         return Message::find()->where(['reciver_id' => $id])->all();
     }

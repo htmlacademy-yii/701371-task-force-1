@@ -1,10 +1,12 @@
 <?php
 
-use frontend\models\SignupForm;
+use frontend\models\forms\SignupForm;
+use frontend\models\City;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 /**
+ * @var City[] $cities
  * @var SignupForm $signupForm
  */
 
@@ -18,8 +20,8 @@ $this->title = 'Регистрация аккаунта';
     <div class="registration-wrapper">
         <?php $form = $filterForm = ActiveForm::begin([
             'options' => [
-                'method'    => 'post',
-                'class'     => 'registration__user-form form-create',
+                'method' => 'post',
+                'class' => 'registration__user-form form-create',
             ],
         ]); ?>
 
@@ -107,7 +109,7 @@ $this->title = 'Регистрация аккаунта';
                 ])
                 ->label('Пароль'); ?>
 
-            <?= Html::submitButton('Cоздать аккаунт', [
+            <?= Html::submitButton('Создать аккаунт', [
                 'class' => 'button button__registration'
             ]); ?>
         <?php ActiveForm::end(); ?>

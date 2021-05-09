@@ -2,12 +2,12 @@
 
 namespace frontend\models;
 
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
- * This is the model class for table "task_status".
+ * @note
+ * this is the model class for table "task_status".
  *
  * @property int $id
  * @property string $title
@@ -17,17 +17,17 @@ use yii\db\ActiveQuery;
 class TaskStatus extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'task_status';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title'], 'required'],
@@ -36,9 +36,9 @@ class TaskStatus extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -51,6 +51,6 @@ class TaskStatus extends ActiveRecord
      */
     public function getTasks(): ActiveQuery
     {
-        return $this->hasMany(Task::className(), ['status_id' => 'id']);
+        return $this->hasMany(Task::class, ['status_id' => 'id']);
     }
 }

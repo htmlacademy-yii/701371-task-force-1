@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
+use frontend\models\Users;
+use yii\db\{ActiveRecord, ActiveQuery};
 
 
 /**
@@ -18,35 +19,28 @@ use yii\db\ActiveRecord;
 class UserNotification extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'user_notification';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['user_id', 'notification_type', 'active'], 'required'],
             [['user_id', 'notification_type', 'active'], 'integer'],
-
-            // NOTE: causes an error
-            /*
-            [['user_id'], 'exist', 'skipOnError' => true,
-                'targetClass' => Users::class,
-                'targetAttribute' => ['user_id' => 'id']],
-            */
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -57,12 +51,13 @@ class UserNotification extends ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * @note
+     * gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(Users::class, ['id' => 'user_id']);
     }
 }

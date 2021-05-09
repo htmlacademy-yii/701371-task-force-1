@@ -165,6 +165,7 @@ AppAsset::register($this);
                         </div>
                     </div>
                     <div class="landing-bottom">
+                        <?php /* @var string $content */?>
                         <?= $content; ?>
                     </div>
                 </div>
@@ -184,31 +185,18 @@ AppAsset::register($this);
                     <div class="page-footer__links">
                         <ul class="links__list">
                             <li class="links__item">
-                                <a href="">Задания</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Мой профиль</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Исполнители</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Регистрация</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Создать задание</a>
-                            </li>
-                            <li class="links__item">
-                                <a href="">Справка</a>
+                                <a href="<?= Url::to(['signup/index']); ?>">Регистрация</a>
                             </li>
                         </ul>
                     </div>
                     <div class="page-footer__copyright">
                         <a href="https://htmlacademy.ru">
-                            <img class="copyright-logo"
-                                 src="./img/academy-logo.png"
-                                 width="185" height="63"
-                                 alt="Логотип HTML Academy">
+                            <?= Html::img("@web/img/academy-logo.png",
+                                [
+                                    'alt' => 'Логотип HTML Academy',
+                                    'style' => 'width: 185px; height: 63px;'
+                                ]
+                            ) ?>
                         </a>
                     </div>
                 </div>
