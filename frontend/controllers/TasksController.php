@@ -48,10 +48,8 @@ class TasksController extends SecuredController
             'name'
         );
 
-
         $taskFilter->load(Yii::$app->request->get());
         $taskFilter->applyFilters($tasks);
-
 
         /**/
 

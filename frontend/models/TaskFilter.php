@@ -37,6 +37,7 @@ class TaskFilter extends Model
     ];
 
     const TIME_PERIODS_TITLES = [
+        self::TIME_PERIOD_ALL => 'За все время',
         self::TIME_PERIOD_DAY => 'За день',
         self::TIME_PERIOD_WEEK => 'За неделю',
         self::TIME_PERIOD_MONTH => 'За месяц'
@@ -49,7 +50,7 @@ class TaskFilter extends Model
     {
         return [
             [['categories', 'myCity', 'withoutExecutor', 'remoteWork', 'date',
-                'title'], 'safe'],
+                'title', 'period'], 'safe'],
 
             [['myCity', 'withoutExecutor', 'remoteWork'], 'boolean'],
             [['title'], 'filter', 'filter' => 'htmlspecialchars'],
@@ -88,8 +89,8 @@ class TaskFilter extends Model
             $tasks->andWhere(['executor_id' => NULL]);
         }
 
-        if ($this->period) {
-            $tasks->andWhere(['> created', new Expression(
+        if ($this->period && $this->period != self::TIME_PERIOD_ALL) {
+            $tasks->andWhere(['>', 'created', new Expression(
                 sprintf( ('CURRENT_TIMESTAMP() - INTERVAL %d DAY'),
                     self::TIME_PERIODS[$this->period]) )
             ]);
@@ -98,5 +99,8 @@ class TaskFilter extends Model
         if ($this->title) {
             $tasks->andWhere(['LIKE', 'title', $this->title]);
         }
+
+        $tasks->andWhere(['status_id' => Task::STATUS_NEW])
+            ->orderBy(['created' => SORT_DESC]);
     }
 }

@@ -35,7 +35,8 @@ class MyListController extends SecuredController
             ->all();
 
         return $this->render('index', compact(
-            'tasks'
+            'tasks',
+            'status'
         ));
     }
 }

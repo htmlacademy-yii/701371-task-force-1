@@ -21,7 +21,13 @@ Vue.component('chat', {
     }
     else {
       this.api_url = '/api/messages/' + this.task;
-      //this.api_url = '/work_yii-application-test/frontend/web/index.php?r=api/messages&id=2' + this.task;
+
+      /**
+       * @note
+       * for local url
+       *
+       * this.api_url = '/work_yii-application-test/frontend/web/index.php?r=api/messages&id=2' + this.task;
+       */
       this.getMessages();
     }
   },
