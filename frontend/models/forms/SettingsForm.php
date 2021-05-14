@@ -102,6 +102,7 @@ class SettingsForm extends Model
             [['cityId', 'phone'], 'integer'],
             [['avatar', 'specialization', 'birthday', 'files', 'notification'], 'safe'],
             [['password', 'passwordCopy'], 'string', 'min' => 6],
+            [['passwordCopy'], 'compare', 'compareAttribute' => 'password', 'skipOnEmpty' => true],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 31],
             [['email', 'passwordCopy', 'skype', 'otherMessenger'], 'string', 'max' => 63],
@@ -361,10 +362,11 @@ class SettingsForm extends Model
      */
     private function saveUserPassword($user): void
     {
-        if (($this->password && $this->oldPassword
-            && $this->passwordCopy && $this->oldPasswordCopy) === $user->password) {
+        if (!$this->password || !$this->passwordCopy) {
             return;
         }
+
+        die('ok');
 
         $user->password = $this->password;
         $user->save();

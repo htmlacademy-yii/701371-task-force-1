@@ -21,7 +21,7 @@ return [
 
     'modules' => [
         'api' => [
-            'class' => 'frontend\modules\api\ApiModule',
+            'class' => 'frontend\modules\api\v1\ApiModule',
         ],
     ],
 

@@ -78,16 +78,16 @@ class NewTaskForm extends Model
             ->where(['id' => $this->address])
             ->one();
 
-        $coordinates = ArrayHelper::getValue(
+        $coordinates = explode(' ', ArrayHelper::getValue(
             Yii::$app->geocoder->getCoordinates($city->title),
             'response.GeoObjectCollection.featureMember.0.GeoObject.Point.pos'
-        );
+        ));
 
         $task->title = $this->name;
         $task->description = $this->description;
         $task->address = $city->title;
-        $task->latitude = stristr($coordinates, ' ', false);
-        $task->longitude = stristr($coordinates, ' ', true);
+        $task->latitude = $coordinates[1];
+        $task->longitude = $coordinates[0];
         $task->price = $this->budget;
         $task->deadline = $this->term;
         $task->category_id = $this->category;

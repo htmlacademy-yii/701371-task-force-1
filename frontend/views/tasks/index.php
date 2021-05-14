@@ -163,7 +163,7 @@ HTML;
                                 TaskFilter::TIME_PERIODS_TITLES,
                                 [
                                     'class' => 'multiple-select input',
-                                    'options' => [TaskFilter::TIME_PERIOD_WEEK => ['Selected' => true]]
+                                    'options' => [TaskFilter::TIME_PERIOD_ALL => ['Selected' => true]]
                                 ]
                             );
                         ?>

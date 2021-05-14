@@ -67,7 +67,7 @@ class m210430_191605_create_tables_for_project extends Migration
             'city_id' => $this->integer(11),
             'executor_id' => $this->integer(11),
             'owner_id' => $this->integer(11)->notNull(),
-            'status_id' => $this->integer(11)->notNull(),
+            'status_id' => $this->integer(11)->notNull()->defaultValue(6),
             'category_id' => $this->integer(11)->notNull(),
         ], 'charset=utf8');
 
